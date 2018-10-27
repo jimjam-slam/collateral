@@ -8,7 +8,7 @@
 #' @export
 report_safely = function(x) {
   map(x,
-    ~ paste0(
+    ~ paste(
       if (is.null(.$result))                            '_' else 'R',
       if (is.null(.$error) | is_empty(.$error$message)) '_' else 'E')) %>%
   as_vector() %>% structure(class = "report_safely")

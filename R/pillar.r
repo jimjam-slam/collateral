@@ -35,7 +35,7 @@ pillar_shaft.report_safely <- function(x, ...) {
   out <- format(x, formatter = report_safely_color)
   # out[is.na(x)] <- NA
   pillar::new_pillar_shaft_simple(out, align = "left",
-    width = 2, min_width = 2, na_indent = 0)
+    width = 3, min_width = 3, na_indent = 0)
 }
 
 #' @importFrom pillar pillar_shaft
@@ -44,6 +44,6 @@ pillar_shaft.report_quietly <- function(x, ...) {
   out <- format(x, formatter = report_quietly_color)
   # out[is.na(x)] <- NA
   pillar::new_pillar_shaft_simple(out, align = "left",
-    width = 4, min_width = 4, na_indent = 0)
+    width = 7, min_width = 7, na_indent = 0)
 }
 
