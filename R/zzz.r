@@ -2,8 +2,8 @@
 # from https://github.com/tidyverse/hms/pull/43/files
 
 .onLoad <- function(...) {
-  register_s3_method("pillar", "pillar_shaft", "report_safely")
-  register_s3_method("pillar", "pillar_shaft", "report_quietly")
+  register_s3_method("pillar", "pillar_shaft", "safely")
+  register_s3_method("pillar", "pillar_shaft", "quietly")
   invisible()
 }
 

@@ -6,8 +6,7 @@ Description: The purrr package allows you to capture the side effects (errors, w
 URL: https://github.com/rensa/collateral
 Depends: R (>= 3.5.0)
 Imports:
-  purrr
-Suggests:
+  purrr,
   crayon,
   pillar
 License: GPL-3 | file LICENSE
