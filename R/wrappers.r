@@ -22,13 +22,13 @@ quietly = function(.f) {
 #' @importFrom purrr capture_error
 capture_error_wrapper = function(...) {
  result = purrr:::capture_error(...)
- class(result) = c(class(result), 'safely')
+ class(result) = c('safely', class(result))
  result
 }
 
 #' @importFrom purrr capture_output
 capture_output_wrapper = function(...) {
  result = purrr:::capture_output(...)
- class(result) = c(class(result), 'quietly')
+ class(result) = c('quietly', class(result))
  result
 }

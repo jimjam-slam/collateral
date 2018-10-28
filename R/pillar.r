@@ -40,8 +40,8 @@ obj_sum.quietly <- function(x) { rep("quietly", length(x)) }
 
 #' @importFrom pillar type_sum
 #' @export
-type_sum.safely <- function(x) { "safely" }
+type_sum.safely <- function(x) { "collat" }
 
 #' @importFrom pillar type_sum
 #' @export
-type_sum.quietly <- function(x) { "quietly" }
+type_sum.quietly <- function(x) { "collat" }
