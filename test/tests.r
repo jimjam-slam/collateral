@@ -1,7 +1,5 @@
 library(tidyverse)
-
-safe_log = collateral::safely(log)
-quiet_log = collateral::quietly(log)
+library(collateral)
 
 test =
   # tidy up and trim down for the example
@@ -15,5 +13,8 @@ test =
     TRUE ~ wt)) %>%
   # nest and do some operations quietly()
   tidyr::nest(-cyl) %>%
-  dplyr::mutate(qlog = map(data, ~ quiet_log(.$wt)))
+  dplyr::mutate(
+    qlog = map_quietly(data, ~ log(.$wt)),
+    slog = map_safely(data, ~ log(.$wt)))
 
+test

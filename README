@@ -1,0 +1,3 @@
+# collateral
+
+Quickly see side effects captured with purrr. The collateral package enhances purrr's safely() and quietly() functions to provide a quick overview of the

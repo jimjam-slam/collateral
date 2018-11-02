@@ -1,34 +1,25 @@
-# because purrr::safely() and purrr::quietly() are closures that return
-# capture_error() and capture_output(), i've redefined them to instead return
-# wrapper fns of mins that addsimply  an s3 class to the output of the purrr
-# equivalents.
-# (these are in purrr/R/output.R)
+# okay, time for another swing: instead of redefining safely() and quietly(), i'll
+# make map() variants that wrap the passed function in safely() or quietly(). turns
+# out it's the list column i need to class, not the elements, so this could work well.
 
+#' @importFrom purrr as_mapper safely map
 #' @export
-safely = function(.f, otherwise = NULL, quiet = TRUE) {
-  .f = as_mapper(.f)
-  function(...) capture_error_wrapper(.f(...), otherwise, quiet)
+map_safely <- function(.x, .f, ...) {
+
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::safely(.f)
+  results <- purrr::map(.x, .f, ...)
+  class(results) <- c('safely_mapped', class(results))
+  results
 }
 
+#' @importFrom purrr as_mapper safely map
 #' @export
-quietly = function(.f) {
-  .f = as_mapper(.f)
-  function(...) capture_output_wrapper(.f(...))
-}
+map_quietly <- function(.x, .f, ...) {
 
-# NB - capture_*() are *internal* purrr functions. this package can't
-# go to cran as long as i use ::: to access them this way!
-
-#' @importFrom purrr capture_error
-capture_error_wrapper = function(...) {
- result = purrr:::capture_error(...)
- class(result) = c('safely', class(result))
- result
-}
-
-#' @importFrom purrr capture_output
-capture_output_wrapper = function(...) {
- result = purrr:::capture_output(...)
- class(result) = c('quietly', class(result))
- result
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- quietly(.f)
+  results <- purrr::map(.x, .f, ...)
+  class(results) <- c('quietly_mapped', class(results))
+  results
 }
