@@ -1,44 +1,54 @@
-# format.X: for each collat_safe()- or collat_quiet()-wrapped output, return a character
-# indicating with components are present
+#' Additional functions required to integrate
+#' \code{\link{map_safely}} and \code{\link{map_quietly}} with
+#' the \code{pillar} package. See the
+#' \url{https://cran.r-project.org/web/packages/tibble/vignettes/extending.html}{extending tibbles vignette}.
+#' @keywords internal
+#' @name collateral_extras
+NULL
 
-# TODO - do i need to define c.XXX and `[.XXX`?
-# ref: https://cran.rstudio.com/web/packages/tibble/vignettes/extending.html
-
+#' @rdname collateral_extras
 #' @export
 safely_mapped <- function(x) {
   as_safely_mapped(x)
 }
 
+#' @rdname collateral_extras
 #' @export
 quietly_mapped <- function(x) {
   as_quietly_mapped(x)
 }
 
+#' @rdname collateral_extras
 #' @export
 as_safely_mapped <- function(x) {
   structure(x, class = "safely_mapped")
 }
 
+#' @rdname collateral_extras
 #' @export
 as_quietly_mapped <- function(x) {
   structure(x, class = "quietly_mapped")
 }
 
+#' @rdname collateral_extras
 #' @export
 c.safely_mapped <- function(x, ...) {
   as_safely_mapped(NextMethod())
 }
 
+#' @rdname collateral_extras
 #' @export
 c.quietly_mapped <- function(x, ...) {
   as_quietly_mapped(NextMethod())
 }
 
+#' @rdname collateral_extras
 #' @export
 `[.safely_mapped` <- function(x, i) {
   as_safely_mapped(NextMethod())
 }
 
+#' @rdname collateral_extras
 #' @export
 `[.quietly_mapped` <- function(x, i) {
   as_quietly_mapped(NextMethod())
@@ -46,6 +56,7 @@ c.quietly_mapped <- function(x, ...) {
 
 # format functions actually parse the output and return styled strings --------
 
+#' @rdname collateral_extras
 #' @importFrom purrr is_empty
 #' @importFrom crayon green red silver
 #' @export
@@ -62,6 +73,7 @@ format.safely_mapped = function(x, ...) {
         sep = ' '))
 }
 
+#' @rdname collateral_extras
 #' @importFrom purrr is_empty map_chr
 #' @importFrom crayon green make_style yellow white silver
 #' @export
@@ -82,6 +94,7 @@ format.quietly_mapped = function(x, ...) {
       sep = ' '))
 }
 
+#' @rdname collateral_extras
 #' @export
 print.safely_mapped = function(x, ...) {
   cat(format(x), sep = '\n')
@@ -89,6 +102,7 @@ print.safely_mapped = function(x, ...) {
 
 }
 
+#' @rdname collateral_extras
 #' @export
 print.quietly_mapped = function(x, ...) {
   cat(format(x), sep = '\n')
