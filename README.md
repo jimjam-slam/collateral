@@ -47,7 +47,7 @@ test
 
 `collateral` uses `pillar` to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.
 
-If you're a fan of iterating over two or more inputs in lockstep, then `map2()` and `pmap()` varaints are also provided:
+If you're a fan of iterating over two or more inputs in lockstep, then `map2()` and `pmap()` variants are also provided:
 
 * `map2_safely()`,
 * `map2_quietly()`,
