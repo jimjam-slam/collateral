@@ -43,7 +43,7 @@ test
 #> 3     8 <tibble [14 x 3]> R O _ _
 ```
 
-![Example of styled `collateral` output](blob/master/man/figures/collateral_example.png)
+![Example of styled `collateral` output](man/figures/collateral_example.png)
 
 `collateral` uses `pillar` to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.
 
