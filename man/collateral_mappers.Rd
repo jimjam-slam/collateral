@@ -4,11 +4,23 @@
 \alias{collateral_mappers}
 \alias{map_safely}
 \alias{map_quietly}
+\alias{map2_safely}
+\alias{map2_quietly}
+\alias{pmap_safely}
+\alias{pmap_quietly}
 \title{Map safely or quietly over a list.}
 \usage{
 map_safely(.x, .f, ...)
 
 map_quietly(.x, .f, ...)
+
+map2_safely(.x, .y, .f, ...)
+
+map2_quietly(.x, .y, .f, ...)
+
+pmap_safely(.l, .f, ...)
+
+pmap_quietly(.l, .f, ...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -16,6 +28,12 @@ map_quietly(.x, .f, ...)
 \item{.f}{A function, formula or atomic vector.}
 
 \item{...}{Other arguments supplied to \code{\link[purrr:map]{map}}}
+
+\item{.y}{A list or atomic vector, of the same length as \code{.x}.}
+
+\item{.l}{A list of lists. The length of \code{.l} determines the number of
+arguments that \code{.f} will be called with. List names will be used if
+present.}
 }
 \value{
 A list of the same length as \code{.x}. The list elemnts contain
@@ -54,4 +72,13 @@ Similarly, \code{map_quietly} will summarise the returned list with a
  }
  If any is missing, an underscore (\code{_}) appears in its
  place.
+
+Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
+ are also provided and function identically to their \code{purrr} counterparts:
+ \enumerate{
+ \item \code{map2_safely}
+ \item \code{map2_quietly}
+ \item \code{pmap_safely}
+ \item \code{pmap_quietly}
+ }
 }

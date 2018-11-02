@@ -30,7 +30,21 @@
 #'  If any is missing, an underscore (\code{_}) appears in its
 #'  place.
 #'
+#'  Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
+#'  are also provided and function identically to their \code{purrr} counterparts:
+#'  \enumerate{
+#'  \item \code{map2_safely}
+#'  \item \code{map2_quietly}
+#'  \item \code{pmap_safely}
+#'  \item \code{pmap_quietly}
+#'  }
+#'
+#'
 #' @param .x A list or atomic vector.
+#' @param .y A list or atomic vector, of the same length as \code{.x}.
+#' @param .l A list of lists. The length of \code{.l} determines the number of
+#'   arguments that \code{.f} will be called with. List names will be used if
+#'   present.
 #' @param .f A function, formula or atomic vector.
 #' @param ... Other arguments supplied to \code{\link[purrr:map]{map}}
 #' @return A list of the same length as \code{.x}. The list elemnts contain
@@ -61,6 +75,54 @@ map_quietly <- function(.x, .f, ...) {
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::quietly(.f)
   results <- purrr::map(.x, .f, ...)
+  class(results) <- c('quietly_mapped', class(results))
+  results
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper safely map2
+#' @export
+map2_safely <- function(.x, .y, .f, ...) {
+
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::safely(.f)
+  results <- purrr::map2(.x, .y, .f, ...)
+  class(results) <- c('safely_mapped', class(results))
+  results
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper quietly map2
+#' @export
+map2_quietly <- function(.x, .y, .f, ...) {
+
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::quietly(.f)
+  results <- purrr::map2(.x, .y, .f, ...)
+  class(results) <- c('quietly_mapped', class(results))
+  results
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper safely pmap
+#' @export
+pmap_safely <- function(.l, .f, ...) {
+
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::safely(.f)
+  results <- purrr::pmap(.l, .f, ...)
+  class(results) <- c('safely_mapped', class(results))
+  results
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper quietly pmap
+#' @export
+pmap_quietly <- function(.l, .f, ...) {
+
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::quietly(.f)
+  results <- purrr::pmap(.l, .f, ...)
   class(results) <- c('quietly_mapped', class(results))
   results
 }

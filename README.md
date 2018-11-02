@@ -47,6 +47,13 @@ test
 
 `collateral` uses `pillar` to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.
 
+If you're a fan of iterating over two or more inputs in lockstep, then `map2()` and `pmap()` varaints are also provided:
+
+* `map2_safely()`,
+* `map2_quietly()`,
+* `pmap_safely()`, and
+* `pmap_quietly()`.
+
 ## Support
 
 If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [get in touch with me](twitter.com/rensa_co)!
