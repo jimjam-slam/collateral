@@ -68,7 +68,7 @@
   <div class="contents col-md-9">
     <div id="collateral" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" style="max-width:180px;">
+<a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
 <p>Automatically map complex operations <code>safely</code> or <code>quietly</code>, and quickly see the captured side effects.</p>
 <p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code>map_safely()</code> and <code>map_quietly()</code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
@@ -108,7 +108,7 @@
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R O _ _</span></a></code></pre></div>
 <p><img src="reference/figures/collateral_example.png" alt="Example of styled collateral output"></p>
 <p><code>collateral</code> uses <code>pillar</code> to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.</p>
-<p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> varaints are also provided:</p>
+<p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> variants are also provided:</p>
 <ul>
 <li>
 <code>map2_safely()</code>,</li>
