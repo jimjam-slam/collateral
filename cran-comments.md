@@ -1,5 +1,6 @@
 ## Test environments
 * Windows install: R 3.50
+* win-builder
 
 ## R CMD check results
 
