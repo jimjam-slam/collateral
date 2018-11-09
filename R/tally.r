@@ -42,56 +42,31 @@
 NULL
 
 #' @rdname tally
-#' @importFrom purrr map_lgl
 #' @export
 tally_results = function(x) {
-  if(!(is(x, 'safely_mapped') | is(x, 'quietly_mapped'))) {
-    stop(paste('tally_results() is only usable on safely_mapped or',
-      'quietly_mapped objects.'))
-  }
-  length(which(map_lgl(x, ~ !is.null(.$result))))
+  length(which(has_results(x)))
 }
 
 #' @rdname tally
-#' @importFrom purrr map_lgl is_empty
 #' @export
 tally_errors = function(x) {
-  if(!is(x, 'safely_mapped')) {
-    stop('tally_errors() is only usable on safely_mapped objects.')
-  }
-  length(which(map_lgl(x,
-    ~ !is.null(.$error) & !is_empty(.$error$message))))
+  length(which(has_errors(x)))
 }
 
 #' @rdname tally
-#' @importFrom purrr map_lgl is_empty
 #' @export
 tally_warnings = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('tally_warnings() is only usable on safely_mapped objects.')
-  }
-  length(which(map_lgl(x,
-    ~ !is.null(.$warning) & !is_empty(.$warning))))
+  length(which(has_warnings(x)))
 }
 
 #' @rdname tally
-#' @importFrom purrr map_lgl is_empty
 #' @export
 tally_messages = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('tally_messages() is only usable on safely_mapped objects.')
-  }
-  length(which(map_lgl(x,
-      ~ !is.null(.$message) & !is_empty(.$message))))
+  length(which(has_messages(x)))
 }
 
 #' @rdname tally
-#' @importFrom purrr map_lgl is_empty
 #' @export
 tally_output = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('tally_output() is only usable on safely_mapped objects.')
-  }
-  length(which(map_lgl(x,
-      ~ !is.null(.$output) & !is_empty(.$output))))
+  length(which(has_output(x)))
 }

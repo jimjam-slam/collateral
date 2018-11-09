@@ -1,5 +1,5 @@
 ---
-title: "Introduction to collateral"
+title: "Accelerating tidy workflows with collateral"
 author: "James Goldie"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -15,6 +15,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+The `collateral` package is all about making it easier to deal with errors, warnings and other varied side effects when repeating an analysis or operation
+
+
+
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 

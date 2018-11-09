@@ -36,10 +36,8 @@ NULL
 #' @importFrom crayon green red
 #' @export
 summary.safely_mapped = function(x, ...) {
-  counts = c(
-    result = length(which(map_lgl(x, ~ !is.null(.$result)))),
-    error = length(which(map_lgl(x,
-      ~ !is.null(.$error) & !is_empty(.$error$message)))))
+
+  counts = c(result = tally_results(x), error = tally_errors(x))
 
   cat(
     paste(length(x), 'elements in total.\n'),
@@ -56,14 +54,8 @@ summary.safely_mapped = function(x, ...) {
 #' @export
 summary.quietly_mapped = function(x, ...) {
 
-  counts = c(
-    result = length(which(map_lgl(x, ~ !is.null(.$result)))),
-    output = length(which(map_lgl(x,
-      ~ !is.null(.$output) & !is_empty(.$output)))),
-    message = length(which(map_lgl(x,
-      ~ !is.null(.$message) & !is_empty(.$message)))),
-    warning = length(which(map_lgl(x,
-      ~ !is.null(.$warning) & !is_empty(.$warning)))))
+  counts = c(result = tally_results(x), output = tally_output(x),
+    message = tally_messages(x), warning = tally_warnings(x))
 
   cat(
     paste(length(x), 'elements in total.\n'),
