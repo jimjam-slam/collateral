@@ -1,6 +1,6 @@
 Package: collateral
 Title: Quickly evaluate captured side effects
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: person("James", "Goldie", email = "me@rensa.co", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5024-6207"))
 Description: The purrr package allows you to capture the side effects (errors, warning, messages and other output) of functions using safely() and quietly(). Using collateral, you can quickly see which elements of a list (or list-column) returned results, which threw errors and which returned warnings or other output.
 URL: https://rensa.co/collateral/index.html, https://github.com/rensa/collateral
@@ -8,6 +8,7 @@ Depends: R (>= 3.1.0)
 Imports:
   purrr,
   crayon,
+  methods,
   pillar
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
@@ -15,6 +16,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 BugReports: https://github.com/rensa/collateral/issues
 Suggests:
+  dplyr,
   knitr,
   magrittr,
   rmarkdown,

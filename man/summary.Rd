@@ -6,12 +6,14 @@
 \alias{summary.quietly_mapped}
 \title{Summarise mapped side effects.}
 \usage{
-\method{summary}{safely_mapped}(x, ...)
+\method{summary}{safely_mapped}(object, ...)
 
-\method{summary}{quietly_mapped}(x, ...)
+\method{summary}{quietly_mapped}(object, ...)
 }
 \arguments{
-\item{x}{A \code{safely_mapped} or \code{quietly_mapped} list to summarise.}
+\item{object}{A \code{safely_mapped} or \code{quietly_mapped} list to summarise.}
+
+\item{...}{Other arguments passed to \code{summary}.}
 }
 \value{
 A named vector containing counts of the components named in

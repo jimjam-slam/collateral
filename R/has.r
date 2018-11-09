@@ -40,6 +40,7 @@ NULL
 
 #' @rdname has
 #' @importFrom purrr map_lgl
+#' @importFrom methods is
 #' @export
 has_results = function(x) {
   if(!(is(x, 'safely_mapped') | is(x, 'quietly_mapped'))) {
@@ -51,6 +52,7 @@ has_results = function(x) {
 
 #' @rdname has
 #' @importFrom purrr map_lgl is_empty
+#' @importFrom methods is
 #' @export
 has_errors = function(x) {
   if(!is(x, 'safely_mapped')) {
@@ -61,6 +63,7 @@ has_errors = function(x) {
 
 #' @rdname has
 #' @importFrom purrr map_lgl is_empty
+#' @importFrom methods is
 #' @export
 has_warnings = function(x) {
   if(!is(x, 'quietly_mapped')) {
@@ -71,6 +74,7 @@ has_warnings = function(x) {
 
 #' @rdname has
 #' @importFrom purrr map_lgl is_empty
+#' @importFrom methods is
 #' @export
 has_messages = function(x) {
   if(!is(x, 'quietly_mapped')) {
@@ -81,6 +85,7 @@ has_messages = function(x) {
 
 #' @rdname has
 #' @importFrom purrr map_lgl is_empty
+#' @importFrom methods is
 #' @export
 has_output = function(x) {
   if(!is(x, 'quietly_mapped')) {

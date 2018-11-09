@@ -1,12 +1,14 @@
 ---
-title: "Accelerating tidy workflows with collateral"
+title: "Accelerating tidy list-column workflows with collateral"
 author: "James Goldie"
 date: "`r Sys.Date()`"
+editor_options:
+  chunk_output_type: console
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to collateral}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Accelerating tidy list-column workflows with collateral}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include = FALSE}
@@ -16,55 +18,215 @@ knitr::opts_chunk$set(
 )
 ```
 
-The `collateral` package is all about making it easier to deal with errors, warnings and other varied side effects when repeating an analysis or operation
+The [`purrr`](https://purrr.tidyverse.org) package has a comprehensive set of tools for wrking with lists and vectors, and especially for iterating operations and analyses with its [`map()`](https://purrr.tidyverse.org/reference/map.html). This style of iteration is particularly powerful when used with the [`tibble`](https://tibble.tidyverse.org/) package, because—unlike regular data frames—tibbles allow you to use lists as data frame columns as well as vectors. That means that complex objects, including models, plots and even other data frames can be stored inside a data frame list-column alongside other data.
 
+The biggest downside of being able to do complex analysis on many list elements is that one little error can bring a lot of computation down. Another is that a warning or other message might get lost: if the 37th sttaistical model you fit of 45 has a problem, are you going to catch it?
 
+`purrr` comes with tools for dealing with errors, warnings and other "side effects", but it's difficult to pair them effectively with `purrr`'s massively powerful iteration tools. And that's where `collateral` comes in: it gives you ways to drop-in replacements for `map()` that use employ these side-effect capturing tools, as well as an array of other helpers to make navigating everything you've captured more pleasant.
 
+# Basic exploratory analysis
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+The aim of this vignette isn't just to get you acquainted with `collateral`'s tools: it's also to demonstrate the value of a tidy list-column workflow. We'll be using the `diamonds` dataset, which comes with the [`ggplot2`](https://ggplot2.tidyverse.org) package. Let's take a look:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+```{r}
+library(tidyverse)
 
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+diamonds
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+This dataset describes the prices and properties of about fifty thousand diamonds. We can see a number of categorical variables, including `cut`, `color` and `clarity`, and several continuous variables, like the `price`.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+How is `price` distributed?
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+```{r}
+ggplot(diamonds) +
+  geom_histogram(aes(x = price, y = stat(count)))
 
-## More Examples
+ggplot(diamonds) +
+  geom_histogram(aes(x = price, y = stat(count))) +
+  scale_x_log10()
+```
+Looking at a histogram with a logarithmic scale, we can see that it has multiple peaks. That probably means that there are several distinct groups in the data. Maybe there's a relationship between `price` and one (or more) of the categorical variables.
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+```{r}
+ggplot(diamonds) +
+  geom_histogram(aes(x = price, y = stat(count))) +
+  facet_wrap(vars(cut), ncol = 1) +
+  scale_x_log10() +
+  ggtitle('Price vs. cut')
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+ggplot(diamonds) +
+  geom_histogram(aes(x = price, y = stat(count))) +
+  facet_wrap(vars(color), ncol = 1) +
+  scale_x_log10() +
+  ggtitle('Price vs. color')
+
 ```
 
-Also a quote using `>`:
+# Grouping the traditional way
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot—in fact, there may be lots of activities we want to do that don't involve plotting at all.
+
+This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/): _split_ data up into groups, _apply_ operations to those groups and _combine_ the results. One way of doing this with base R is to use [`split()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise ccording to the values of the grouping variables.
+
+```{r}
+diamonds %>% split(diamonds$cut)
+```
+
+As it happens, the `purrr::map()` functions work quite well on the output of `split()`:
+
+```{r}
+diamonds %>%
+  split(diamonds$cut) %>%
+  map_dbl(~ mean(.$price))
+```
+
+
+But this starts to get really unwieldy as you add more grouping variables. In particular, "meta data"— data about the groups—is either stuck inside the original data frames or is encoded in the name of each data frame in the list. It's also difficult to do a sequence of operations and keep everything associated with the original groupings:
+
+```{r}
+diamonds_list = diamonds %>% split(list(diamonds$cut, diamonds$color))
+
+map_dbl(diamonds_list, ~ mean(.$price))
+map_dbl(diamonds_list, ~ cor(.$price, .$depth))
+```
+
+Yuck. Nested data frames, which are supported by tibbles, make this much easier to handle:
+
+```{r}
+nested_diamonds =
+  diamonds %>%
+  select(cut, color, clarity, depth, price) %>%
+  nest(-cut, -color)
+
+nested_diamonds
+```
+
+What are we looking at here? We still have our grouping variables as columns, but each unique combination only takes up one row—and we have another, `data`, that says it's a tibble. The column isn't a vector but a list, and if we look at the elements in it we can see the other columns:
+
+```{r}
+nested_diamonds$data[[1]]
+
+nested_diamonds$data[[2]]
+```
+
+Not only do we have our group identifiers associated with each data frame now, but we can create other outputs and keep _them_ associated with the groups too:
+
+```{r}
+nested_diamonds %>%
+  mutate(
+    mean_price = map_dbl(data, ~ mean(.$price)),
+    pd_cor =     map_dbl(data, ~ cor(.$price, .$depth)))
+```
+
+We can even do complex things like build regression models on the groups:
+
+```{r}
+
+diamonds_models =
+  nested_diamonds %>%
+  mutate(
+    price_mod = map(data, ~ lm(.$price ~ .$depth)),
+    price_summary = map(price_mod, summary),
+    price_rsq = map_dbl(price_summary, 'r.squared'))
+
+diamonds_models
+```
+
+(It's hopefully apparent by these R^2^ figures that there isn't much going on here!)
+
+# Dealing with side effects with purrr
+
+We can carry on like this, adding analyses to the groups, but it's also a pretty reckless way to operate. There could be anything going on in these list columns, and without being able to see them from the outside it'd be easy to miss a problem that turns up. Or, we might hit an error and be unsure which group is causing it.
+
+For example, if we remove all of the rows in one of the `data` groups, we'll get this error:
+
+```{r, eval=FALSE}
+nested_diamonds$data[[5]] = nested_diamonds$data[[5]] %>% filter(price < 300)
+
+diamonds_models =
+  nested_diamonds %>%
+  mutate(
+    price_mod = map(data, ~ lm(.$price ~ .$depth)),
+    price_summary = map(price_mod, summary),
+    price_rsq = map_dbl(price_summary, 'r.squared'))
+
+diamonds_models
+#> Error in mutate_impl(.data, dots) : Evaluation error: 0 (non-NA) cases.
+```
+
+We can see that there's _a_ problem here, but we have no idea which group is causing it without inspecting them (at least, we wouldn't if we hadn't just set this up!).
+
+`purrr` tries to tackle this with two functions: [`safely()` and `quietly()`](https://purrr.tidyverse.org/reference/safely.html). The former catches errors; the latter catches warnings, messages and other output. You use it like this:
+
+```{r}
+safe_lm = safely(lm)
+safe_summary = safely(summary)
+
+purrr_models =
+  nested_diamonds %>%
+  mutate(price_mod = map(data, ~ safe_lm(.$price ~ .$depth)))
+
+purrr_models
+```
+This is great! We bulldozed our way through the error, so we still have the other 34 models! In lieu of a list of model objects, `price_mod` is now a list of _lists_: each element of the column is a list with two elements: `$result` and `$error` (`quietly()` returns four components).
+
+```{r}
+purrr_models$price_mod[[1]]
+
+purrr_models$price_mod[[5]]
+
+purrr_models %>% mutate(mod_result = map(price_mod, 'result'))
+```
+We can now extract the `result` element using `map()`, and there's a `NULL` value fo rthe group that failed. But there are still some big problems here:
+
+1. We have to remember to wrap each function in `safely()` or `quietly()` ahead of time; and
+2. We have to check each element of the list column, or carefully extract the results, to locate the problem.
+
+# Collateral: capture, identify and isolate side effects
+
+The idea of `collateral` is to both make these functions easier to use and to make them more powerful. Instead of wrapping our functions ourselves, we use `map()` variants:
+
+```{r}
+library(collateral)
+
+nested_diamonds$data[[5]] = nested_diamonds$data[[5]] %>% filter(price < 300)
+
+collat_models =
+  nested_diamonds %>%
+  mutate(price_mod = map_safely(data, ~ lm(.$price ~ .$depth)))
+
+print(collat_models)
+```
+
+Now `price_mod` is a list of class `collat`, and scanning down it we can see which group hit an error immediately, all rows but the fifth are labelled `R`, for result, but the fifth is labelled `E`, for error.
+
+If you're working in a terminal that supports colour, this stands out even more:
+
+![collat_models output, as seen in a terminal with colour](../man/figures/diamonds_models.png)
+
+This `collateral` list-column is actually completely identical to the manually wrapped-and-mapped solution from `purrr`, other than the class name. The fancy tibble printing is totally separate from the content of the column and is handled using the `pillar` package (which provides extensions for tibble output), so if you're already familiar with the `purrr` workflow you get immediate benefits, and if everything's good you can pull the results out using `map(price_mod, 'result')`, just as before.
+
+But `collateral` comes with additional helpers. You can get a quick `summary` of the problems:
+
+```{r}
+summary(collat_models$price_mod) 
+```
+
+You can also use the `tally_*()` functions in conjunction with [`dplyr::summarise()`](https://dplyr.tidyverse.org/reference/summarise.html
+) to get a count of each component (even if the top-level data frame grouped again!) or `has_*()` to [`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html
+) out the rows that didn't make it (or the ones that did):
+
+```{r}
+collat_models %>%
+  group_by(color) %>%
+  summarise(
+    n_res = tally_results(price_mod),
+    n_err = tally_errors(price_mod))
+    
+collat_models %>%
+  filter(has_errors(price_mod))
+```
+
+
+Together, these tools make debugging problems drastically easier, even if you need to run a thousnad statistical models or analyse 500 datasets.

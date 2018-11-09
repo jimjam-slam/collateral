@@ -16,7 +16,8 @@
 #' effects}. Some list elements might return more than one warning, for
 #' example, and these are not counted separately.
 #'
-#' @param x A \code{safely_mapped} or \code{quietly_mapped} list to summarise.
+#' @param object A \code{safely_mapped} or \code{quietly_mapped} list to summarise.
+#' @param ... Other arguments passed to \code{summary}.
 #' @return A named vector containing counts of the components named in
 #'   \code{\link{map_safely}}.
 #'
@@ -35,14 +36,26 @@ NULL
 #' @importFrom purrr is_empty map_lgl
 #' @importFrom crayon green red
 #' @export
-summary.safely_mapped = function(x, ...) {
+summary.safely_mapped = function(object, ...) {
 
-  counts = c(result = tally_results(x), error = tally_errors(x))
+  counts = c(result = tally_results(object), error = tally_errors(object))
 
   cat(
-    paste(length(x), 'elements in total.\n'),
-    crayon::green(paste(counts['result'], 'elements returned results, and\n')),
-    crayon::red(paste(counts['error'], 'elements encountered errors.\n')),
+    paste0(
+      length(object),
+      ' element',
+      if (length(object) == 1) '' else 's',
+      ' in total.\n'),
+    crayon::green(paste0(
+      counts['result'],
+      ' element',
+      if (counts['result'] == 1) '' else 's',
+      ' returned results, and\n')),
+    crayon::red(paste0(
+      counts['error'],
+      ' element',
+      if (counts['error'] == 1) '' else 's',
+      ' encountered errors.\n')),
     sep = '')
 
   invisible(counts)
@@ -52,19 +65,37 @@ summary.safely_mapped = function(x, ...) {
 #' @importFrom purrr is_empty map_lgl
 #' @importFrom crayon green white yellow make_style
 #' @export
-summary.quietly_mapped = function(x, ...) {
+summary.quietly_mapped = function(object, ...) {
 
-  counts = c(result = tally_results(x), output = tally_output(x),
-    message = tally_messages(x), warning = tally_warnings(x))
+  counts = c(result = tally_results(object), output = tally_output(object),
+    message = tally_messages(object), warning = tally_warnings(object))
 
   cat(
-    paste(length(x), 'elements in total.\n'),
-    crayon::green(paste(counts['result'], 'elements returned results,\n')),
-    crayon::white(paste(counts['output'], 'elements delivered output,\n')),
+    paste0(
+      length(object),
+      ' element',
+      if (length(object) == 1) '' else 's',
+      ' in total.\n'),
+    crayon::green(paste(
+      counts['result'],
+      ' element',
+      if (counts['result'] == 1) '' else 's',
+      ' returned results,\n')),
+    crayon::white(paste(
+      counts['output'],
+      ' element',
+      if (counts['output'] == 1) '' else 's',
+      ' delivered output,\n')),
     crayon::yellow(paste(
-      counts['message'], 'elements delivered messages, and\n')),
+      counts['message'],
+      ' element',
+      if (counts['message'] == 1) '' else 's',
+      ' delivered messages, and\n')),
     crayon::make_style('orange')(paste(
-      counts['warning'], 'elements delivered warnings.\n')),
+      counts['warning'],
+      ' element',
+      if (counts['warning'] == 1) '' else 's',
+      ' delivered warnings.\n')),
     sep = '')
 
   invisible(counts)

@@ -63,7 +63,7 @@ summarise." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ summarise." />
 
     <div class="ref-description">
     
-    <p>Unlike <code>summary</code>, the tally functions return counts of individual
+    <p>Unlike <code><a href='summary.html'>summary</a></code>, the tally functions return counts of individual
 types of side effects. This makes them easy to use with
 <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>.</p>
     
@@ -150,7 +150,7 @@ separately.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 
-<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map_safely</span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>tally_errors</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map_quietly</span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>tally_warnings</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_safely</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>tally_errors</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>tally_warnings</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 <span class='fu'>suppressMessages</span>(<span class='fu'>library</span>(<span class='no'>tidyverse</span>))
 
 <span class='co'># if you're working with list-columns, the tally functions are useful</span>
@@ -165,7 +165,7 @@ separately.</p>
     <span class='fl'>TRUE</span> ~ <span class='no'>wt</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># nest and do some operations quietly()</span>
   <span class='fu'>nest</span>(-<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>qlog</span> <span class='kw'>=</span> <span class='fu'>map_quietly</span>(<span class='no'>data</span>, ~ <span class='fu'>log</span>(<span class='no'>.</span>$<span class='no'>wt</span>))) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>qlog</span> <span class='kw'>=</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>data</span>, ~ <span class='fu'>log</span>(<span class='no'>.</span>$<span class='no'>wt</span>))) <span class='kw'>%&gt;%</span>
   <span class='fu'>summarise</span>(
     <span class='kw'>num_results</span> <span class='kw'>=</span> <span class='fu'>tally_results</span>(<span class='no'>qlog</span>),
     <span class='kw'>num_warnings</span> <span class='kw'>=</span> <span class='fu'>tally_warnings</span>(<span class='no'>qlog</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 2

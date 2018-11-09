@@ -54,6 +54,9 @@ If you're a fan of iterating over two or more inputs in lockstep, then `map2()` 
 * `pmap_safely()`, and
 * `pmap_quietly()`.
 
+`collateral` also provides `tally_*()` and `has_()` functions to help you filter or summarise
+your side effects, as well as a `summary()` mehod. If you haven't used a list-column workflow before, take a look at [the vignette](https://rensa.co/collateral/articles/collateral.html) to see how it's done!
+
 ## Support
 
 If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [get in touch with me](twitter.com/rensa_co)!

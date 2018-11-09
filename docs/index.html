@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">collateral</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
 <a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
 <p>Automatically map complex operations <code>safely</code> or <code>quietly</code>, and quickly see the captured side effects.</p>
-<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code>map_safely()</code> and <code>map_quietly()</code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
+<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code><a href="reference/collateral_mappers.html">map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">map_quietly()</a></code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
 <p>This is especially useful for tidy workflows: you can <a href="https://tidyr.tidyverse.org/reference/nest.html"><code>nest()</code></a> a data frame, apply a complex operation (such as building a regression model or building and saving a plot) to each group and quickly see which groups need to be inspected in more detail:</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -97,7 +97,7 @@
 <a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="co"># nest and do some operations quietly()</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw">map_quietly</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_quietly</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18">test</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
@@ -111,14 +111,15 @@
 <p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> variants are also provided:</p>
 <ul>
 <li>
-<code>map2_safely()</code>,</li>
+<code><a href="reference/collateral_mappers.html">map2_safely()</a></code>,</li>
 <li>
-<code>map2_quietly()</code>,</li>
+<code><a href="reference/collateral_mappers.html">map2_quietly()</a></code>,</li>
 <li>
-<code>pmap_safely()</code>, and</li>
+<code><a href="reference/collateral_mappers.html">pmap_safely()</a></code>, and</li>
 <li>
-<code>pmap_quietly()</code>.</li>
+<code><a href="reference/collateral_mappers.html">pmap_quietly()</a></code>.</li>
 </ul>
+<p><code>collateral</code> also provides <code>tally_*()</code> and <code>has_()</code> functions to help you filter or summarise your side effects, as well as a <code><a href="reference/summary.html">summary()</a></code> mehod. If you haven’t used a list-column workflow before, take a look at <a href="https://rensa.co/collateral/articles/collateral.html">the vignette</a> to see how it’s done!</p>
 </div>
 <div id="support" class="section level2">
 <h2 class="hasAnchor">

@@ -66,7 +66,7 @@ counts." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1</span>
       </span>
     </div>
 
@@ -122,29 +122,33 @@ counts.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for safely_mapped</span>
-<span class='fu'>summary</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for quietly_mapped</span>
-<span class='fu'>summary</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>object</th>
       <td><p>A <code>safely_mapped</code> or <code>quietly_mapped</code> list to summarise.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments passed to <code>summary</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A named vector containing counts of the components named in
-  <code>map_safely</code>.</p>
+  <code><a href='collateral_mappers.html'>map_safely</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Although the output can be used in tidy workflows (for automated testing, for
-example), tally functions like <code>tally_results</code> tend to be more
+example), tally functions like <code><a href='tally.html'>tally_results</a></code> tend to be more
 convenient for this purpose.</p>
 <p>Importantly, the <code>summary</code> functions tell you how many elements
 # returned a type of side effect, <em>not the number of those side
@@ -156,13 +160,13 @@ example, and these are not counted separately.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 
-<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map_safely</span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
+<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_safely</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
 #&gt; 2 elements returned results, and
-#&gt; 1 elements encountered errors.</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map_quietly</span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
-#&gt; 3 elements returned results,
-#&gt; 3 elements delivered output,
-#&gt; 0 elements delivered messages, and
-#&gt; 1 elements delivered warnings.</div><div class='input'>
+#&gt; 1 element encountered errors.</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
+#&gt; 3  element s  returned results,
+#&gt; 3  element s  delivered output,
+#&gt; 0  element s  delivered messages, and
+#&gt; 1  element   delivered warnings.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
