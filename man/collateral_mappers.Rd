@@ -36,7 +36,7 @@ arguments that \code{.f} will be called with. List names will be used if
 present.}
 }
 \value{
-A list of the same length as \code{.x}. The list elemnts contain
+A list of the same length as \code{.x}. The list elements contain
   results and captured side effects as described in
   \code{\link[purrr:safely]{safely}} and
   \code{\link[purrr:quietly]{quietly}}.

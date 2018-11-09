@@ -47,7 +47,7 @@
 #'   present.
 #' @param .f A function, formula or atomic vector.
 #' @param ... Other arguments supplied to \code{\link[purrr:map]{map}}.
-#' @return A list of the same length as \code{.x}. The list elemnts contain
+#' @return A list of the same length as \code{.x}. The list elements contain
 #'   results and captured side effects as described in
 #'   \code{\link[purrr:safely]{safely}} and
 #'   \code{\link[purrr:quietly]{quietly}}.
