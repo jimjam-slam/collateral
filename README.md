@@ -1,4 +1,4 @@
-# collateral
+# collateral <img src="man/figures/logo.svg" align="right" style="max-width:180px;" />
 
 Automatically map complex operations `safely` or `quietly`, and quickly see the captured side effects.
 

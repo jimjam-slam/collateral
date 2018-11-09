@@ -46,7 +46,7 @@
 #'   arguments that \code{.f} will be called with. List names will be used if
 #'   present.
 #' @param .f A function, formula or atomic vector.
-#' @param ... Other arguments supplied to \code{\link[purrr:map]{map}}
+#' @param ... Other arguments supplied to \code{\link[purrr:map]{map}}.
 #' @return A list of the same length as \code{.x}. The list elemnts contain
 #'   results and captured side effects as described in
 #'   \code{\link[purrr:safely]{safely}} and

@@ -94,6 +94,22 @@ format.quietly_mapped = function(x, ...) {
       sep = ' '))
 }
 
+# #' @importFrom knitr knit_print
+# #' @importFrom purrr is_empty map_chr
+# #' @export
+# knit_print.safely_mapped = function(x, ...) {
+#   # styled constants
+#   qu_R = 'R'
+#   qu_E = 'E'
+#   qu_none = '_'
+#
+#   purrr::map_chr(x,
+#     ~ paste(
+#       if (is.null(.$result))                            qu_none else qu_R,
+#       if (is.null(.$error) | is_empty(.$error$message)) qu_none else qu_E,
+#       sep = ' '))
+# }
+
 #' @rdname collateral_extras
 #' @export
 print.safely_mapped = function(x, ...) {

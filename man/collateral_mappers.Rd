@@ -27,7 +27,7 @@ pmap_quietly(.l, .f, ...)
 
 \item{.f}{A function, formula or atomic vector.}
 
-\item{...}{Other arguments supplied to \code{\link[purrr:map]{map}}}
+\item{...}{Other arguments supplied to \code{\link[purrr:map]{map}}.}
 
 \item{.y}{A list or atomic vector, of the same length as \code{.x}.}
 
