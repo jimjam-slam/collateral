@@ -18,9 +18,10 @@
 #' @examples
 #'
 #' library(magrittr)
+#'
 #' list("a", 10, 100) %>% map_safely(log) %>% summary()
 #' list(5, -12, 103) %>% map_quietly(log) %>% summary()
-
+#'
 #' @name summary
 NULL
 
