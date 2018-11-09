@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quickly evaluate captured side effects • collateral</title>
+<title>Quickly Evaluate Captured Side Effects • collateral</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Quickly evaluate captured side effects">
+<script src="pkgdown.js"></script><meta property="og:title" content="Quickly Evaluate Captured Side Effects">
 <meta property="og:description" content="The purrr package allows you to capture the side effects (errors, warning, messages and other output) of functions using safely() and quietly(). Using collateral, you can quickly see which elements of a list (or list-column) returned results, which threw errors and which returned warnings or other output.">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">collateral</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.1.0.1</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9000</span>
       </span>
     </div>
 
@@ -47,6 +47,9 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -69,10 +72,10 @@
   <div class="contents col-md-9">
     <div id="collateral" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" style="max-width:180px;">
+<a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
 <p>Automatically map complex operations <code>safely</code> or <code>quietly</code>, and quickly see the captured side effects.</p>
-<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code>map_safely()</code> and <code>map_quietly()</code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
+<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code><a href="reference/collateral_mappers.html">map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">map_quietly()</a></code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
 <p>This is especially useful for tidy workflows: you can <a href="https://tidyr.tidyverse.org/reference/nest.html"><code>nest()</code></a> a data frame, apply a complex operation (such as building a regression model or building and saving a plot) to each group and quickly see which groups need to be inspected in more detail:</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -98,7 +101,7 @@
 <a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="co"># nest and do some operations quietly()</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw">map_quietly</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_quietly</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18">test</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
@@ -109,17 +112,18 @@
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R O _ _</span></a></code></pre></div>
 <p><img src="reference/figures/collateral_example.png" alt="Example of styled collateral output"></p>
 <p><code>collateral</code> uses <code>pillar</code> to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.</p>
-<p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> varaints are also provided:</p>
+<p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> variants are also provided:</p>
 <ul>
 <li>
-<code>map2_safely()</code>,</li>
+<code><a href="reference/collateral_mappers.html">map2_safely()</a></code>,</li>
 <li>
-<code>map2_quietly()</code>,</li>
+<code><a href="reference/collateral_mappers.html">map2_quietly()</a></code>,</li>
 <li>
-<code>pmap_safely()</code>, and</li>
+<code><a href="reference/collateral_mappers.html">pmap_safely()</a></code>, and</li>
 <li>
-<code>pmap_quietly()</code>.</li>
+<code><a href="reference/collateral_mappers.html">pmap_quietly()</a></code>.</li>
 </ul>
+<p><code>collateral</code> also provides <code>tally_*()</code> and <code>has_()</code> functions to help you filter or summarise your side effects, as well as a <code><a href="reference/summary.html">summary()</a></code> mehod. If you haven’t used a list-column workflow before, take a look at <a href="https://rensa.co/collateral/articles/collateral.html">the vignette</a> to see how it’s done!</p>
 </div>
 <div id="support" class="section level2">
 <h2 class="hasAnchor">

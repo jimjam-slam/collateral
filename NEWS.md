@@ -1,3 +1,11 @@
+# collateral 0.4.2.9000
+
+* Vignette improvements
+
+# collateral 0.4.2
+
+* First CRAN release!
+
 # collateral 0.4.1
 
 * Added a `NEWS.md` file to track changes to the package.

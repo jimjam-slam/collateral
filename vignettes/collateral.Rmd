@@ -18,13 +18,22 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 The [`purrr`](https://purrr.tidyverse.org) package has a comprehensive set of tools for wrking with lists and vectors, and especially for iterating operations and analyses with its [`map()`](https://purrr.tidyverse.org/reference/map.html). This style of iteration is particularly powerful when used with the [`tibble`](https://tibble.tidyverse.org/) package, because—unlike regular data frames—tibbles allow you to use lists as data frame columns as well as vectors. That means that complex objects, including models, plots and even other data frames can be stored inside a data frame list-column alongside other data.
 
 The biggest downside of being able to do complex analysis on many list elements is that one little error can bring a lot of computation down. Another is that a warning or other message might get lost: if the 37th sttaistical model you fit of 45 has a problem, are you going to catch it?
 
 `purrr` comes with tools for dealing with errors, warnings and other "side effects", but it's difficult to pair them effectively with `purrr`'s massively powerful iteration tools. And that's where `collateral` comes in: it gives you ways to drop-in replacements for `map()` that use employ these side-effect capturing tools, as well as an array of other helpers to make navigating everything you've captured more pleasant.
 
-# Basic exploratory analysis
+# Contents
+
+* [Basic exploratory analysis](#eda)
+* [Grouping the traditional way](#basegrouping)
+* [Nesting and handling side effects with purrr](#purrrnesting)
+* [Collateral: capture, identify and isolate side effects](#collateraluse)
+* [Filtering on, and summarising, side effects](#helpers)
+
+# Basic exploratory analysis {#eda}
 
 The aim of this vignette isn't just to get you acquainted with `collateral`'s tools: it's also to demonstrate the value of a tidy list-column workflow. We'll be using the `diamonds` dataset, which comes with the [`ggplot2`](https://ggplot2.tidyverse.org) package. Let's take a look:
 
@@ -63,7 +72,7 @@ ggplot(diamonds) +
 
 ```
 
-# Grouping the traditional way
+# Grouping the traditional way {#basegrouping}
 
 It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot—in fact, there may be lots of activities we want to do that don't involve plotting at all.
 
@@ -133,9 +142,9 @@ diamonds_models =
 diamonds_models
 ```
 
-(It's hopefully apparent by these R^2^ figures that there isn't much going on here!)
+(These are pretty lousy models, but they'll do for our purposes!)
 
-# Dealing with side effects with purrr
+# Nesting and handling side effects with purrr {#purrrnesting}
 
 We can carry on like this, adding analyses to the groups, but it's also a pretty reckless way to operate. There could be anything going on in these list columns, and without being able to see them from the outside it'd be easy to miss a problem that turns up. Or, we might hit an error and be unsure which group is causing it.
 
@@ -183,7 +192,7 @@ We can now extract the `result` element using `map()`, and there's a `NULL` valu
 1. We have to remember to wrap each function in `safely()` or `quietly()` ahead of time; and
 2. We have to check each element of the list column, or carefully extract the results, to locate the problem.
 
-# Collateral: capture, identify and isolate side effects
+# Collateral: capture, identify and isolate side effects {#collateraluse}
 
 The idea of `collateral` is to both make these functions easier to use and to make them more powerful. Instead of wrapping our functions ourselves, we use `map()` variants:
 
@@ -205,9 +214,23 @@ If you're working in a terminal that supports colour, this stands out even more:
 
 ![collat_models output, as seen in a terminal with colour](../man/figures/diamonds_models.png)
 
-This `collateral` list-column is actually completely identical to the manually wrapped-and-mapped solution from `purrr`, other than the class name. The fancy tibble printing is totally separate from the content of the column and is handled using the `pillar` package (which provides extensions for tibble output), so if you're already familiar with the `purrr` workflow you get immediate benefits, and if everything's good you can pull the results out using `map(price_mod, 'result')`, just as before.
+This `collateral` list-column is actually completely identical to the manually wrapped-and-mapped solution from `purrr`, other than the class name. The fancy tibble printing is totally separate from the content of the column and is handled using the `pillar` package (which provides extensions for tibble output), so if you're already familiar with the `purrr` workflow you get immediate benefits.
 
-But `collateral` comes with additional helpers. You can get a quick `summary` of the problems:
+You can, of course, pull out the results you would've gotten from a regular map (assuming you didn't hit any errors), and you'll probably _want_ to do that in order to continue operating on those results. You can also extract other side effects, although keep in mind that:
+
+1. Unlike other kinds of output, errors aren't just simple character vectors. Generally, you'll want the `error$message`.
+2. Sometimes an operation might deliver more than one warning, message or output. That means that you may need to concatenate several warnings together, for example.
+
+```{r}
+collat_models %>%
+  mutate(
+    mod_result = map(price_mod, 'result'),
+    mod_error = map(price_mod, c('error', 'message')))
+```
+
+# Filtering on, and summarising, side effects {#helpers}
+
+`collateral` also comes with some additional helpers. You can get a quick `summary` of the side effects:
 
 ```{r}
 summary(collat_models$price_mod) 
@@ -226,7 +249,10 @@ collat_models %>%
     
 collat_models %>%
   filter(has_errors(price_mod))
+
+collat_models %>%
+  filter(!has_results(price_mod))
 ```
 
 
-Together, these tools make debugging problems drastically easier, even if you need to run a thousnad statistical models or analyse 500 datasets.
+Together, these tools make debugging problems drastically easier, even if you need to run a thousand statistical models or analyse 500 datasets.

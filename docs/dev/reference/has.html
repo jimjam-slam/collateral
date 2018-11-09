@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summarise mapped side effects. — summary • collateral</title>
+<title>Filter elements that contain a type of side effect. — has • collateral</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,14 +30,11 @@
 
 
 
-<meta property="og:title" content="Summarise mapped side effects. — summary" />
+<meta property="og:title" content="Filter elements that contain a type of side effect. — has" />
 
-<meta property="og:description" content="The summary method for a safely_mapped or quietly_mapped
-list (or list-column) prints out the total number of elements (rows), as well
-as the number that each returned results and errors (for
-safely_mapped) or returned results, output, messages and warnings (for
-quietly_mapped). It also invisibly returns a named vector with these
-counts." />
+<meta property="og:description" content="Returns a logical vector indicating which elements contain a type of side
+effect. If you have a large data frame or list, you can use this to isolate
+the element that contain warnings, for example, or messages.s" />
 <meta name="twitter:card" content="summary" />
 
 <meta name="robots" content="noindex">
@@ -108,68 +105,73 @@ counts." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summarise mapped side effects.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rensa/collateral/blob/master/R/summary.r'><code>R/summary.r</code></a></small>
-    <div class="hidden name"><code>summary.Rd</code></div>
+    <h1>Filter elements that contain a type of side effect.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rensa/collateral/blob/master/R/has.r'><code>R/has.r</code></a></small>
+    <div class="hidden name"><code>has.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <code>summary</code> method for a <code>safely_mapped</code> or <code>quietly_mapped</code>
-list (or list-column) prints out the total number of elements (rows), as well
-as the number that each returned results and errors (for
-<code>safely_mapped</code>) or returned results, output, messages and warnings (for
-<code>quietly_mapped</code>). It also invisibly returns a named vector with these
-counts.</p>
+    <p>Returns a logical vector indicating which elements contain a type of side
+effect. If you have a large data frame or list, you can use this to isolate
+the element that contain warnings, for example, or messages.s</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for safely_mapped</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>has_results</span>(<span class='no'>x</span>)
 
-<span class='co'># S3 method for quietly_mapped</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>has_errors</span>(<span class='no'>x</span>)
+
+<span class='fu'>has_warnings</span>(<span class='no'>x</span>)
+
+<span class='fu'>has_messages</span>(<span class='no'>x</span>)
+
+<span class='fu'>has_output</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>A <code>safely_mapped</code> or <code>quietly_mapped</code> list to summarise.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other arguments passed to <code>summary</code>.</p></td>
+      <th>x</th>
+      <td><p>A <code>safely_mapped</code> or <code>quietly_mapped</code> list to tally.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named vector containing counts of the components named in
-  <code><a href='collateral_mappers.html'>map_safely</a></code>.</p>
+    <p>A logical vector, of the same length as <code>x</code>, which is <code>TRUE</code> for
+  elements that contain a type of side effect and <code>FALSE</code> otherwise.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Although the output can be used in tidy workflows (for automated testing, for
-example), tally functions like <code><a href='tally.html'>tally_results</a></code> tend to be more
-convenient for this purpose.</p>
-<p>Importantly, the <code>summary</code> functions tell you how many elements
-# returned a type of side effect, <em>not the number of those side
-effects</em>. Some list elements might return more than one warning, for
-example, and these are not counted separately.</p>
+    <p>The <code>has_*()</code> functions power the <code>tally_*()</code> functions and, in turn,
+the <code>summary</code> methods.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>library</span>(<span class='no'>magrittr</span>)
 
-<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_safely</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
-#&gt; 2 elements returned results, and
-#&gt; 1 element encountered errors.</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>summary</span>()</div><div class='output co'>#&gt; 3 elements in total.
-#&gt; 3  element s  returned results,
-#&gt; 3  element s  delivered output,
-#&gt; 0  element s  delivered messages, and
-#&gt; 1  element   delivered warnings.</div><div class='input'>
+<span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_safely</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>has_errors</span>()</div><div class='output co'>#&gt; [1]  TRUE FALSE FALSE</div><div class='input'><span class='fu'>list</span>(<span class='fl'>5</span>, -<span class='fl'>12</span>, <span class='fl'>103</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>log</span>) <span class='kw'>%&gt;%</span> <span class='fu'>has_warnings</span>()</div><div class='output co'>#&gt; [1] FALSE  TRUE FALSE</div><div class='input'>
+<span class='fu'>suppressMessages</span>(<span class='fu'>library</span>(<span class='no'>tidyverse</span>))
+
+<span class='co'># if you're working with list-columns, the tally functions are useful</span>
+<span class='co'># in conjunction with dplyr::summarise()</span>
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>rownames_to_column</span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"car"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as_data_frame</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>select</span>(<span class='no'>car</span>, <span class='no'>cyl</span>, <span class='no'>disp</span>, <span class='no'>wt</span>) <span class='kw'>%&gt;%</span>
+  <span class='co'># spike some rows in cyl == 4 to make them fail</span>
+  <span class='fu'>mutate</span>(<span class='kw'>wt</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
+    <span class='no'>wt</span> <span class='kw'>&lt;</span> <span class='fl'>2</span> ~ -<span class='no'>wt</span>,
+    <span class='fl'>TRUE</span> ~ <span class='no'>wt</span>)) <span class='kw'>%&gt;%</span>
+  <span class='co'># nest and do some operations quietly()</span>
+  <span class='fu'>nest</span>(-<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>qlog</span> <span class='kw'>=</span> <span class='fu'><a href='collateral_mappers.html'>map_quietly</a></span>(<span class='no'>data</span>, ~ <span class='fu'>log</span>(<span class='no'>.</span>$<span class='no'>wt</span>))) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter</span>(<span class='fu'>has_warnings</span>(<span class='no'>qlog</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;     cyl data              qlog    
+#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;
+#&gt; 1     4 &lt;tibble [11 x 3]&gt; R O _ W </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
