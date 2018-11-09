@@ -16,8 +16,7 @@
 \alias{print.quietly_mapped}
 \title{Additional functions required to integrate
 \code{\link{map_safely}} and \code{\link{map_quietly}} with
-the \code{pillar} package. See the
-\url{https://cran.r-project.org/web/packages/tibble/vignettes/extending.html}{extending tibbles vignette}.}
+the \code{pillar} package.}
 \usage{
 safely_mapped(x)
 
@@ -46,7 +45,6 @@ as_quietly_mapped(x)
 \description{
 Additional functions required to integrate
 \code{\link{map_safely}} and \code{\link{map_quietly}} with
-the \code{pillar} package. See the
-\url{https://cran.r-project.org/web/packages/tibble/vignettes/extending.html}{extending tibbles vignette}.
+the \code{pillar} package.
 }
 \keyword{internal}
