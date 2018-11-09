@@ -94,7 +94,6 @@ suppressMessages(library(tidyverse))
 
 # if you're using tibbles, you can also iterate over list-columns,
 # such as nested data frames
-
 mtcars \%>\%
   rownames_to_column(var = "car") \%>\%
   as_data_frame() \%>\%

@@ -27,8 +27,13 @@ counts.
 }
 \details{
 Although the output can be used in tidy workflows (for automated testing, for
-example), the tally functions (such as \code{\link{tally_results}}) tend to
-be more convenient for this purpose.
+example), the \code{\link{tally}} functions tend to be more convenient for
+this purpose.
+
+#' Importantly, the \code{summary} functions tell you how many elements
+# returned a type of side effect, \emph{not the number of those side
+effects}. Some list elements might return more than one warning, for
+example, and these are not counted separately.
 }
 \examples{
 

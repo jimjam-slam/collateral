@@ -68,7 +68,7 @@ add a class to the returned output list in order to format it
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -209,7 +209,6 @@ present.</p></td>
 <span class='fu'>suppressMessages</span>(<span class='fu'>library</span>(<span class='no'>tidyverse</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'ggplot2' was built under R version 3.5.1</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'dplyr' was built under R version 3.5.1</span></div><div class='input'>
 <span class='co'># if you're using tibbles, you can also iterate over list-columns,</span>
 <span class='co'># such as nested data frames</span>
-
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>rownames_to_column</span>(<span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"car"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as_data_frame</span>() <span class='kw'>%&gt;%</span>
