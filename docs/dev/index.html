@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">collateral</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9000</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9001</span>
       </span>
     </div>
 
@@ -74,13 +74,19 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
-<p>Automatically map complex operations <code>safely</code> or <code>quietly</code>, and quickly see the captured side effects.</p>
-<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::safely()</a></code></a> and <code><a href="http://www.rdocumentation.org/packages/purrr/topics/safely">purrr::quietly()</a></code>, providing variants of <a href="https://purrr.tidyverse.org/reference/map.html"><code>map()</code></a>—<code><a href="reference/collateral_mappers.html">map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">map_quietly()</a></code>—that automatically apply the appropriate function wrapper <em>and</em> print the resulting output nicely.</p>
-<p>This is especially useful for tidy workflows: you can <a href="https://tidyr.tidyverse.org/reference/nest.html"><code>nest()</code></a> a data frame, apply a complex operation (such as building a regression model or building and saving a plot) to each group and quickly see which groups need to be inspected in more detail:</p>
+<p>Map complex operations <code>safely</code> or <code>quietly</code>, quickly see the captured side effectsand quickly spot and isolate captured side effects.</p>
+<p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code>purrr</code>’s side effect-capturing functions</a>, giving you:</p>
+<ul>
+<li>drop-in <code>map()</code> variants, allowing you to capture side effects from functions mapped over lists, vectors and list-columns;</li>
+<li>fancy tibble output, allowing you to see which rows delivered errors or side effects; and</li>
+<li>helpers for summarising side effects or filtering tibbles and lists for present side effects.</li>
+</ul>
+<p>If you’re not familiar with <code>purrr</code> or haven’t used a list-column workflow in R before, the <a href="https://rensa.co/collateral/articles/collateral.html"><code>collateral</code> vignette</a> shows you how it works, the benefits for your analysis and how <code>collateral</code> simplifies the process of handling complex mapped operations.</p>
+<p>If you’re already familiar with <code>purrr</code>, the <a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read">tl;dr</a> is that <a href="https://rensa.co/collateral/reference/collateral_mappers.html"><code><a href="reference/collateral_mappers.html">collateral::map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">collateral::map_quietly()</a></code> (and their <code>map2</code> and <code>pmap</code> variants)</a> will automatically wrap your supplied function in <code>safely()</code> or <code>quietly()</code> and will provide enhanced <code>print()</code>ed output and tibble displays. You can then use the <a href="https://rensa.co/collateral/reference/has.html"><code>has_*()</code></a> and <a href="https://rensa.co/collateral/reference/tally.html"><code>tally_*()</code></a> functions to filter or summarise the returned tibbles or lists.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>We’ll submit to CRAN soon, but for now, use <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> to install <code>collateral</code>:</p>
+<p><code>collateral</code> is in the CRAN submission queue, but in the mean time, use <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> to install <code>collateral</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'rensa/collateral'</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
@@ -111,24 +117,12 @@
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R O _ W</span></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R O _ _</span></a></code></pre></div>
 <p><img src="reference/figures/collateral_example.png" alt="Example of styled collateral output"></p>
-<p><code>collateral</code> uses <code>pillar</code> to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.</p>
-<p>If you’re a fan of iterating over two or more inputs in lockstep, then <code>map2()</code> and <code>pmap()</code> variants are also provided:</p>
-<ul>
-<li>
-<code><a href="reference/collateral_mappers.html">map2_safely()</a></code>,</li>
-<li>
-<code><a href="reference/collateral_mappers.html">map2_quietly()</a></code>,</li>
-<li>
-<code><a href="reference/collateral_mappers.html">pmap_safely()</a></code>, and</li>
-<li>
-<code><a href="reference/collateral_mappers.html">pmap_quietly()</a></code>.</li>
-</ul>
-<p><code>collateral</code> also provides <code>tally_*()</code> and <code>has_()</code> functions to help you filter or summarise your side effects, as well as a <code><a href="reference/summary.html">summary()</a></code> mehod. If you haven’t used a list-column workflow before, take a look at <a href="https://rensa.co/collateral/articles/collateral.html">the vignette</a> to see how it’s done!</p>
+<p><code>collateral</code> uses <code>pillar</code> to style output, so supported terminals will also color the output!</p>
 </div>
 <div id="support" class="section level2">
 <h2 class="hasAnchor">
 <a href="#support" class="anchor"></a>Support</h2>
-<p>If you have a problem with <code>collateral</code>, please don’t hesitate to <a href="https://github.com/rensa/collateral/issues/new">file an issue</a> or <a href="twitter.com/rensa_co">get in touch with me</a>!</p>
+<p>If you have a problem with <code>collateral</code>, please don’t hesitate to <a href="https://github.com/rensa/collateral/issues/new">file an issue</a> or <a href="twitter.com/rensa_co">contact me</a>!</p>
 </div>
 </div>
   </div>

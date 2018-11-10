@@ -1,14 +1,20 @@
 # collateral <img src="man/figures/logo.svg" align="right" width="180px" />
 
-Automatically map complex operations `safely` or `quietly`, and quickly see the captured side effects.
+Map complex operations `safely` or `quietly`, quickly see the captured side effectsand quickly spot and isolate captured side effects.
 
-The `collateral` package extends the power of [`purrr::safely()`](https://purrr.tidyverse.org/reference/safely.html) and `purrr::quietly()`, providing variants of [`map()`](https://purrr.tidyverse.org/reference/map.html)—`map_safely()` and `map_quietly()`—that automatically apply the appropriate function wrapper _and_ print the resulting output nicely.
+The `collateral` package extends the power of [`purrr`'s side effect-capturing functions](https://purrr.tidyverse.org/reference/safely.html), giving you:
 
-This is especially useful for tidy workflows: you can [`nest()`](https://tidyr.tidyverse.org/reference/nest.html) a data frame, apply a complex operation (such as building a regression model or building and saving a plot) to each group and quickly see which groups need to be inspected in more detail:
+* drop-in `map()` variants, allowing you to capture side effects from functions mapped over lists, vectors and list-columns;
+* fancy tibble output, allowing you to see which rows delivered errors or side effects; and
+* helpers for summarising side effects or filtering tibbles and lists for present side effects.
+
+If you're not familiar with `purrr` or haven't used a list-column workflow in R before, the [`collateral` vignette](https://rensa.co/collateral/articles/collateral.html) shows you how it works, the benefits for your analysis and how `collateral` simplifies the process of handling complex mapped operations.
+
+If you're already familiar with `purrr`, the [tl;dr](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read) is that [`collateral::map_safely()` and `collateral::map_quietly()` (and their `map2` and `pmap` variants)](https://rensa.co/collateral/reference/collateral_mappers.html) will automatically wrap your supplied function in `safely()` or `quietly()` and will provide enhanced `print()`ed output and tibble displays. You can then use the [`has_*()`](https://rensa.co/collateral/reference/has.html) and [`tally_*()`](https://rensa.co/collateral/reference/tally.html) functions to filter or summarise the returned tibbles or lists.
 
 ## Installation
 
-We'll submit to CRAN soon, but for now, use [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html) to install `collateral`:
+`collateral` is in the CRAN submission queue, but in the mean time, use [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html) to install `collateral`:
 
 ```r
 devtools::install_github('rensa/collateral')
@@ -45,18 +51,8 @@ test
 
 ![Example of styled `collateral` output](man/figures/collateral_example.png)
 
-`collateral` uses `pillar` to style output, so supported terminals will also color the output! Properly styling knitted output is still on the to-do list, though.
-
-If you're a fan of iterating over two or more inputs in lockstep, then `map2()` and `pmap()` variants are also provided:
-
-* `map2_safely()`,
-* `map2_quietly()`,
-* `pmap_safely()`, and
-* `pmap_quietly()`.
-
-`collateral` also provides `tally_*()` and `has_()` functions to help you filter or summarise
-your side effects, as well as a `summary()` mehod. If you haven't used a list-column workflow before, take a look at [the vignette](https://rensa.co/collateral/articles/collateral.html) to see how it's done!
+`collateral` uses `pillar` to style output, so supported terminals will also color the output!
 
 ## Support
 
-If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [get in touch with me](twitter.com/rensa_co)!
+If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [contact me](twitter.com/rensa_co)!
