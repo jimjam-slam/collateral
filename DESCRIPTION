@@ -22,3 +22,4 @@ Suggests:
   rmarkdown,
   tidyverse
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)

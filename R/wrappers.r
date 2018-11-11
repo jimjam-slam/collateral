@@ -31,57 +31,51 @@ pmap_wrapper <- function(.l){
 
 #' Map safely or quietly over a list.
 #'
-#' \code{map_safely} and \code{map_quietly} are variants of
-#' \code{\link[purrr:map]{map}} that:
-#' \enumerate{
-#'   \item wrap the supplied function \code{.f} with either
-#'     \code{\link[purrr:safely]{safely}} or
-#'     \code{\link[purrr:quietly]{quietly}}, and
-#'   \item add a class to the returned output list in order to format it
+#' `map_safely` and `map_quietly` are variants of
+#' [purrr::map()] that:
+#'   1. wrap the supplied function `.f` with either
+#'     [purrr::safely()] or
+#'     [purrr::quietly()], and
+#'   1. add a class to the returned output list in order to format it
 #'     nicely when it (or a tibble it appears in) is printed.
-#'  }
 #'
-#'  \code{map_safely} will summarise the returned list with a fixed-width
+#'  `map_safely` will summarise the returned list with a fixed-width
 #'  string of two (spaced) columns:
-#'  \enumerate{
-#'    \item If a \code{result} component is present, \code{R} appears, and
-#'    \item If an \code{error} component is present, \code{E} appears.
-#'  }
-#'  If either component is missing, an underscore (\code{_}) appears in its
+#'    1. If a `result` component is present, `R` appears, and
+#'    1. If an `error` component is present, `E` appears.
+#'
+#'  If either component is missing, an underscore (`_`) appears in its
 #'  place.
 #'
-#'  Similarly, \code{map_quietly} will summarise the returned list with a
+#'  Similarly, `map_quietly` will summarise the returned list with a
 #'  fixed-width string of four (spaced) columns:
-#'  \enumerate{
-#'    \item If a \code{result} component is present, \code{R} appears,
-#'    \item If an \code{output} component is present, \code{O} appears,
-#'    \item If a \code{messages} component is present, \code{M} appears, and
-#'    \item If a \code{warnings} component is present, \code{W} appears.
-#'  }
-#'  If any is missing, an underscore (\code{_}) appears in its
+#'    1. If a `result` component is present, `R`} appears,
+#'    1. If an `output` component is present, `O`} appears,
+#'    1. If a `messages` component is present, `M`} appears, and
+#'    1. If a `warnings` component is present, `W`} appears.
+#'
+#'  If any is missing, an underscore (`_`) appears in its
 #'  place.
 #'
 #'  Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
-#'  are also provided and function identically to their \code{purrr} counterparts:
-#'  \enumerate{
-#'  \item \code{map2_safely}
-#'  \item \code{map2_quietly}
-#'  \item \code{pmap_safely}
-#'  \item \code{pmap_quietly}
-#'  }
+#'  are also provided and function identically to their `purrr` counterparts:
+#'  1. `map2_safely`
+#'  1. `map2_quietly`
+#'  1. `pmap_safely`
+#'  1. `pmap_quietly`
 #'
 #'
 #' @param .x A list or atomic vector.
-#' @param .y A list or atomic vector, of the same length as \code{.x}.
-#' @param .l A list of lists. The length of \code{.l} determines the number of
-#'   arguments that \code{.f} will be called with. List names will be used if
+#' @param .y A list or atomic vector, of the same length as `.x`.
+#' @param .l A list of lists. The length of `.l` determines the number of
+#'   arguments that `.f` will be called with. List names will be used if
 #'   present.
 #' @param .f A function, formula or atomic vector.
-#' @param ... Other arguments supplied to \code{\link[purrr:map]{map}}.
-#' @return A list of the same length as \code{.x}. The list elements contain
+#' @param ... Other arguments supplied to [purrr::map()].
+#' @return A list of the same length as `.x}. The list elements contain
 #'   results and captured side effects as described in
-#'   \code{\link[purrr:safely]{safely}} and
-#'   \code{\link[purrr:quietly]{quietly}}.
+#'   [purrr::safely()] and
+#'   [purrr::quietly()].
 #' @name collateral_mappers
 #'
 #' @examples
