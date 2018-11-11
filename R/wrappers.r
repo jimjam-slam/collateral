@@ -1,3 +1,34 @@
+safe_mapper <- function(.f, .mapper, ...){
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::safely(.f)
+  results <- .mapper(.f, ...)
+  class(results) <- c('safely_mapped', class(results))
+  results
+}
+
+quiet_mapper <- function(.f, .mapper, ...) {
+  .f <- purrr::as_mapper(.f, ...)
+  .f <- purrr::quietly(.f)
+  results <- .mapper(.f, ...)
+  class(results) <- c('quietly_mapped', class(results))
+  results
+}
+
+map2_wrapper <- function(.x, .y){
+  function(.f, ...)
+    purrr::map2(.x, .y, .f, ...)
+}
+
+map_wrapper <- function(.x){
+  function(.f, ...)
+    purrr::map(.x, .f, ...)
+}
+
+pmap_wrapper <- function(.l){
+  function(.f, ...)
+    purrr::pmap(.l, .f, ...)
+}
+
 #' Map safely or quietly over a list.
 #'
 #' \code{map_safely} and \code{map_quietly} are variants of
@@ -83,70 +114,48 @@ NULL
 #' @importFrom purrr as_mapper safely map
 #' @export
 map_safely <- function(.x, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::safely(.f)
-  results <- purrr::map(.x, .f, ...)
-  class(results) <- c('safely_mapped', class(results))
-  results
+  .map <- map_wrapper(.x)
+  safe_mapper(.f, .map, ...)
 }
+
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper quietly map
 #' @export
 map_quietly <- function(.x, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::quietly(.f)
-  results <- purrr::map(.x, .f, ...)
-  class(results) <- c('quietly_mapped', class(results))
-  results
+  .map <- map_wrapper(.x)
+  quiet_mapper(.f, .map, ...)
 }
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper safely map2
 #' @export
 map2_safely <- function(.x, .y, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::safely(.f)
-  results <- purrr::map2(.x, .y, .f, ...)
-  class(results) <- c('safely_mapped', class(results))
-  results
+  .map2 <- map2_wrapper(.x, .y)
+  safe_mapper(.f, .map2, ...)
 }
+
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper quietly map2
 #' @export
 map2_quietly <- function(.x, .y, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::quietly(.f)
-  results <- purrr::map2(.x, .y, .f, ...)
-  class(results) <- c('quietly_mapped', class(results))
-  results
+  .map2 <- map2_wrapper(.x, .y)
+  quiet_mapper(.f, .map2, ...)
 }
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper safely pmap
 #' @export
 pmap_safely <- function(.l, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::safely(.f)
-  results <- purrr::pmap(.l, .f, ...)
-  class(results) <- c('safely_mapped', class(results))
-  results
+  .pmap <- map_wrapper(.l)
+  safe_mapper(.f, .pmap, ...)
 }
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper quietly pmap
 #' @export
 pmap_quietly <- function(.l, .f, ...) {
-
-  .f <- purrr::as_mapper(.f, ...)
-  .f <- purrr::quietly(.f)
-  results <- purrr::pmap(.l, .f, ...)
-  class(results) <- c('quietly_mapped', class(results))
-  results
+  .pmap <- map_wrapper(.l)
+  quiet_mapper(.f, .pmap, ...)
 }
