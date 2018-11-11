@@ -33,26 +33,25 @@ pmap_wrapper <- function(.l){
 #'
 #' `map_safely` and `map_quietly` are variants of
 #' [purrr::map()] that:
-#'   1. wrap the supplied function `.f` with either
-#'     [purrr::safely()] or
-#'     [purrr::quietly()], and
-#'   1. add a class to the returned output list in order to format it
-#'     nicely when it (or a tibble it appears in) is printed.
+#' 1. wrap the supplied function `.f` with either [purrr::safely()] or
+#' [purrr::quietly()], and
+#' 1. add a class to the returned output list in order to format it nicely when
+#' it (or a tibble it appears in) is printed.
 #'
-#'  `map_safely` will summarise the returned list with a fixed-width
-#'  string of two (spaced) columns:
-#'    1. If a `result` component is present, `R` appears, and
-#'    1. If an `error` component is present, `E` appears.
+#' `map_safely` will summarise the returned list with a fixed-width
+#' string of two (spaced) columns:
+#' 1. If a `result` component is present, `R` appears, and
+#' 1. If an `error` component is present, `E` appears.
 #'
-#'  If either component is missing, an underscore (`_`) appears in its
-#'  place.
+#' If either component is missing, an underscore (`_`) appears in its
+#' place.
 #'
-#'  Similarly, `map_quietly` will summarise the returned list with a
-#'  fixed-width string of four (spaced) columns:
-#'    1. If a `result` component is present, `R`} appears,
-#'    1. If an `output` component is present, `O`} appears,
-#'    1. If a `messages` component is present, `M`} appears, and
-#'    1. If a `warnings` component is present, `W`} appears.
+#' Similarly, `map_quietly` will summarise the returned list with a
+#' fixed-width string of four (spaced) columns:
+#' 1. If a `result` component is present, `R` appears,
+#' 1. If an `output` component is present, `O` appears,
+#' 1. If a `messages` component is present, `M` appears, and
+#' 1. If a `warnings` component is present, `W` appears.
 #'
 #'  If any is missing, an underscore (`_`) appears in its
 #'  place.
@@ -72,7 +71,7 @@ pmap_wrapper <- function(.l){
 #'   present.
 #' @param .f A function, formula or atomic vector.
 #' @param ... Other arguments supplied to [purrr::map()].
-#' @return A list of the same length as `.x}. The list elements contain
+#' @return A list of the same length as `.x`. The list elements contain
 #'   results and captured side effects as described in
 #'   [purrr::safely()] and
 #'   [purrr::quietly()].
