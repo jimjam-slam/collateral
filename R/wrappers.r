@@ -1,17 +1,23 @@
-safe_mapper <- function(.f, .mapper, ...){
-  .f <- purrr::as_mapper(.f, ...)
+#' @export
+safe_mapper <- function(.f){
+  .f <- purrr::as_mapper(.f)
   .f <- purrr::safely(.f)
-  results <- .mapper(.f, ...)
-  class(results) <- c('safely_mapped', class(results))
-  results
+  function(...){
+    res <- .f(...)
+    class(res) <- c("safely_mapped", class(res))
+    res
+  }
 }
 
-quiet_mapper <- function(.f, .mapper, ...) {
-  .f <- purrr::as_mapper(.f, ...)
+#' @export
+quiet_mapper <- function(.f){
+  .f <- purrr::as_mapper(.f)
   .f <- purrr::quietly(.f)
-  results <- .mapper(.f, ...)
-  class(results) <- c('quietly_mapped', class(results))
-  results
+  function(...){
+    res <- .f(...)
+    class(res) <- c("quietly_mapped", class(res))
+    res
+  }
 }
 
 map2_wrapper <- function(.x, .y){

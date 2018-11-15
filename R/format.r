@@ -65,11 +65,10 @@ format.safely_mapped = function(x, ...) {
   qu_E = crayon::red('E')
   qu_none = crayon::silver('_')
 
-  purrr::map_chr(x,
-    ~ paste(
-        if (is.null(.$result))                            qu_none else qu_R,
-        if (is.null(.$error) | is_empty(.$error$message)) qu_none else qu_E,
-        sep = ' '))
+  paste(
+        if (is.null(x$result))                            qu_none else qu_R,
+        if (is.null(x$error) | is_empty(x$error$message)) qu_none else qu_E,
+        sep = ' ')
 }
 
 #' @rdname collateral_extras
@@ -84,13 +83,13 @@ format.quietly_mapped = function(x, ...) {
   qu_O = crayon::white('O')
   qu_none = crayon::silver('_')
 
-  purrr::map_chr(x,
-    ~ paste(
-      if (is.null(.$result))                            qu_none else qu_R,
-      if (is.null(.$output)  | is_empty(.$output))      qu_none else qu_O,
-      if (is.null(.$message) | is_empty(.$message))     qu_none else qu_M,
-      if (is.null(.$warning) | is_empty(.$warning))     qu_none else qu_W,
-      sep = ' '))
+
+  paste(
+      if (is.null(x$result))                            qu_none else qu_R,
+      if (is.null(x$output)  | is_empty(x$output))      qu_none else qu_O,
+      if (is.null(x$message) | is_empty(x$message))     qu_none else qu_M,
+      if (is.null(x$warning) | is_empty(x$warning))     qu_none else qu_W,
+      sep = ' ')
 }
 
 # #' @importFrom knitr knit_print

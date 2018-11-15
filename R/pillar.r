@@ -19,8 +19,8 @@ pillar_shaft.quietly_mapped <- function(x, ...) {
 
 #' @importFrom pillar type_sum
 #' @export
-type_sum.safely_mapped <- function(x) { "collat" }
+type_sum.safely_mapped <- function(x) { format(x) }
 
 #' @importFrom pillar type_sum
 #' @export
-type_sum.quietly_mapped <- function(x) { "collat" }
+type_sum.quietly_mapped <- function(x) { format(x) }
