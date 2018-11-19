@@ -14,7 +14,13 @@ If you're already familiar with `purrr`, the [tl;dr](https://en.wikipedia.org/wi
 
 ## Installation
 
-`collateral` is in the CRAN submission queue, but in the mean time, use [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html) to install `collateral`:
+You can install `collateral` on CRAN:
+
+```r
+install.packages('collateral')
+```
+
+Or install the development version using  [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html):
 
 ```r
 devtools::install_github('rensa/collateral')

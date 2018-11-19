@@ -86,36 +86,38 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p><code>collateral</code> is in the CRAN submission queue, but in the mean time, use <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> to install <code>collateral</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'rensa/collateral'</span>)</a></code></pre></div>
+<p>You can install <code>collateral</code> on CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">'collateral'</span>)</a></code></pre></div>
+<p>Or install the development version using <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'rensa/collateral'</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(collateral)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">test =</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="co"># tidy up and trim down for the example</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span>mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(car, cyl, disp, wt) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="co"># spike some rows in cyl == 4 to make them fail</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wt =</span> dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span><span class="op">-</span>wt,</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="co"># nest and do some operations quietly()</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_quietly</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">test</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;     cyl data              qlog</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R O _ _</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R O _ W</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R O _ _</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(collateral)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">test =</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="co"># tidy up and trim down for the example</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span>mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw">as_data_frame</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(car, cyl, disp, wt) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="co"># spike some rows in cyl == 4 to make them fail</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wt =</span> dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span><span class="op">-</span>wt,</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="st">  </span><span class="co"># nest and do some operations quietly()</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_quietly</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(.<span class="op">$</span>wt)))</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">test</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt;     cyl data              qlog</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R O _ _</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R O _ W</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R O _ _</span></a></code></pre></div>
 <p><img src="reference/figures/collateral_example.png" alt="Example of styled collateral output"></p>
 <p><code>collateral</code> uses <code>pillar</code> to style output, so supported terminals will also color the output!</p>
 </div>
@@ -131,6 +133,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=collateral">https://​cloud.r-project.org/​package=collateral</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/rensa/collateral">https://​github.com/​rensa/​collateral</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/rensa/collateral/issues">https://​github.com/​rensa/​collateral/​issues</a>
