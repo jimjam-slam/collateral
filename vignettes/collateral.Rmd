@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 ```
 
 
-The [`purrr`](https://purrr.tidyverse.org) package has a comprehensive set of tools for wrking with lists and vectors, and especially for iterating operations and analyses with its [`map()`](https://purrr.tidyverse.org/reference/map.html). This style of iteration is particularly powerful when used with the [`tibble`](https://tibble.tidyverse.org/) package, because—unlike regular data frames—tibbles allow you to use lists as data frame columns as well as vectors. That means that complex objects, including models, plots and even other data frames can be stored inside a data frame list-column alongside other data.
+The [`purrr`](https://purrr.tidyverse.org) package has a comprehensive set of tools for working with lists and vectors, and especially for iterating operations and analyses with its [`map()`](https://purrr.tidyverse.org/reference/map.html). This style of iteration is particularly powerful when used with the [`tibble`](https://tibble.tidyverse.org/) package, because—unlike regular data frames—tibbles allow you to use lists as data frame columns as well as vectors. That means that complex objects, including models, plots and even other data frames can be stored inside a data frame list-column alongside other data.
 
-The biggest downside of being able to do complex analysis on many list elements is that one little error can bring a lot of computation down. Another is that a warning or other message might get lost: if the 37th sttaistical model you fit of 45 has a problem, are you going to catch it?
+The biggest downside of being able to do complex analysis on many list elements is that one little error can bring a lot of computation down. Another is that a warning or other message might get lost: if the 37th statistical model you fit of 45 has a problem, are you going to catch it?
 
 `purrr` comes with tools for dealing with errors, warnings and other "side effects", but it's difficult to pair them effectively with `purrr`'s massively powerful iteration tools. And that's where `collateral` comes in: it gives you ways to drop-in replacements for `map()` that use employ these side-effect capturing tools, as well as an array of other helpers to make navigating everything you've captured more pleasant.
 
@@ -74,9 +74,9 @@ ggplot(diamonds) +
 
 # Grouping the traditional way {#basegrouping}
 
-It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot—in fact, there may be lots of activities we want to do that don't involve plotting at all.
+It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot. In fact, there may be lots of activities we want to do that don't involve plotting at all.
 
-This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/): _split_ data up into groups, _apply_ operations to those groups and _combine_ the results. One way of doing this with base R is to use [`split()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise ccording to the values of the grouping variables.
+This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/): _split_ data up into groups, _apply_ operations to those groups and _combine_ the results. One way of doing this with base R is to use [`split()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise according to the values of the grouping variables.
 
 ```{r}
 diamonds %>% split(diamonds$cut)
@@ -91,7 +91,7 @@ diamonds %>%
 ```
 
 
-But this starts to get really unwieldy as you add more grouping variables. In particular, "meta data"— data about the groups—is either stuck inside the original data frames or is encoded in the name of each data frame in the list. It's also difficult to do a sequence of operations and keep everything associated with the original groupings:
+But this starts to get really unwieldy as you add more grouping variables. In particular, "meta data"— data about the groups—are either stuck inside the original data frames or are encoded in the name of each data frame in the list. It's also difficult to do a sequence of operations and keep everything associated with the original groupings:
 
 ```{r}
 diamonds_list = diamonds %>% split(list(diamonds$cut, diamonds$color))
@@ -146,7 +146,7 @@ diamonds_models
 
 # Nesting and handling side effects with purrr {#purrrnesting}
 
-We can carry on like this, adding analyses to the groups, but it's also a pretty reckless way to operate. There could be anything going on in these list columns, and without being able to see them from the outside it'd be easy to miss a problem that turns up. Or, we might hit an error and be unsure which group is causing it.
+We can carry on like this, adding analyses to the groups, but it's also a pretty reckless way to operate. There could be anything going on in these list columns, and without being able to see them from the outside it'd be easy to miss a problem that turns up. In addition, we might hit an error and be unsure which group is causing it.
 
 For example, if we remove all of the rows in one of the `data` groups, we'll get this error:
 
@@ -187,7 +187,7 @@ purrr_models$price_mod[[5]]
 
 purrr_models %>% mutate(mod_result = map(price_mod, 'result'))
 ```
-We can now extract the `result` element using `map()`, and there's a `NULL` value fo rthe group that failed. But there are still some big problems here:
+We can now extract the `result` element using `map()`, and there's a `NULL` value for the group that failed. But there are still some big problems here:
 
 1. We have to remember to wrap each function in `safely()` or `quietly()` ahead of time; and
 2. We have to check each element of the list column, or carefully extract the results, to locate the problem.
