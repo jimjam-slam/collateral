@@ -1,6 +1,6 @@
 # collateral <img src="man/figures/logo.svg" align="right" width="180px" />
 
-Map complex operations `safely` or `quietly`, quickly see the captured side effectsand quickly spot and isolate captured side effects.
+Map complex operations `safely` or `quietly`, quickly see the captured side effects and quickly spot and isolate captured side effects.
 
 The `collateral` package extends the power of [`purrr`'s side effect-capturing functions](https://purrr.tidyverse.org/reference/safely.html), giving you:
 
