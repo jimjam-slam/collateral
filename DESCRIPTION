@@ -17,6 +17,7 @@ RoxygenNote: 6.1.1
 BugReports: https://github.com/rensa/collateral/issues
 Suggests:
   dplyr,
+  furrr,
   knitr,
   magrittr,
   rmarkdown,

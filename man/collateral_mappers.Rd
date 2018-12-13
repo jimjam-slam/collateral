@@ -8,6 +8,12 @@
 \alias{map2_quietly}
 \alias{pmap_safely}
 \alias{pmap_quietly}
+\alias{future_map_safely}
+\alias{future_map_quietly}
+\alias{future_map2_safely}
+\alias{future_map2_quietly}
+\alias{future_pmap_safely}
+\alias{future_pmap_quietly}
 \title{Map safely or quietly over a list.}
 \usage{
 map_safely(.x, .f, ...)
@@ -21,6 +27,18 @@ map2_quietly(.x, .y, .f, ...)
 pmap_safely(.l, .f, ...)
 
 pmap_quietly(.l, .f, ...)
+
+future_map_safely(...)
+
+future_map_quietly(...)
+
+future_map2_safely(...)
+
+future_map2_quietly(...)
+
+future_pmap_safely(...)
+
+future_pmap_quietly(...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -80,6 +98,17 @@ Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating ov
  \item \code{map2_quietly}
  \item \code{pmap_safely}
  \item \code{pmap_quietly}
+ }
+
+Parallel variants based on \code{\href{https://davisvaughan.github.io/furrr/}{furrr}}
+ are available:
+ \enumerate{
+ \item \code{future_map_safely}
+ \item \code{future_map_quietly}
+ \item \code{future_map2_safely}
+ \item \code{future_map2_quietly}
+ \item \code{future_pmap_safely}
+ \item \code{future_pmap_quietly}
  }
 }
 \examples{

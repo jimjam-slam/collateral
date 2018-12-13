@@ -39,6 +39,16 @@
 #'  \item \code{pmap_quietly}
 #'  }
 #'
+#'  Parallel variants based on \code{\href{https://davisvaughan.github.io/furrr/}{furrr}}
+#'  are available:
+#'  \enumerate{
+#'  \item \code{future_map_safely}
+#'  \item \code{future_map_quietly}
+#'  \item \code{future_map2_safely}
+#'  \item \code{future_map2_quietly}
+#'  \item \code{future_pmap_safely}
+#'  \item \code{future_pmap_quietly}
+#'  }
 #'
 #' @param .x A list or atomic vector.
 #' @param .y A list or atomic vector, of the same length as \code{.x}.
@@ -86,67 +96,97 @@ map_safely <- function(.x, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::safely(.f)
-  results <- purrr::map(.x, .f, ...)
+  results <- map(.x, .f, ...)
   class(results) <- c('safely_mapped', class(results))
   results
 }
 
 #' @rdname collateral_mappers
-#' @importFrom purrr as_mapper quietly map
+#' @importFrom purrr as_mapper quietly
 #' @export
 map_quietly <- function(.x, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::quietly(.f)
-  results <- purrr::map(.x, .f, ...)
+  results <- map(.x, .f, ...)
   class(results) <- c('quietly_mapped', class(results))
   results
 }
 
 #' @rdname collateral_mappers
-#' @importFrom purrr as_mapper safely map2
+#' @importFrom purrr as_mapper safely
 #' @export
 map2_safely <- function(.x, .y, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::safely(.f)
-  results <- purrr::map2(.x, .y, .f, ...)
+  results <- map2(.x, .y, .f, ...)
   class(results) <- c('safely_mapped', class(results))
   results
 }
 
 #' @rdname collateral_mappers
-#' @importFrom purrr as_mapper quietly map2
+#' @importFrom purrr as_mapper quietly
 #' @export
 map2_quietly <- function(.x, .y, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::quietly(.f)
-  results <- purrr::map2(.x, .y, .f, ...)
+  results <- map2(.x, .y, .f, ...)
   class(results) <- c('quietly_mapped', class(results))
   results
 }
 
 #' @rdname collateral_mappers
-#' @importFrom purrr as_mapper safely pmap
+#' @importFrom purrr as_mapper safely
 #' @export
 pmap_safely <- function(.l, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::safely(.f)
-  results <- purrr::pmap(.l, .f, ...)
+  results <- pmap(.l, .f, ...)
   class(results) <- c('safely_mapped', class(results))
   results
 }
 
 #' @rdname collateral_mappers
-#' @importFrom purrr as_mapper quietly pmap
+#' @importFrom purrr as_mapper quietly
 #' @export
 pmap_quietly <- function(.l, .f, ...) {
 
   .f <- purrr::as_mapper(.f, ...)
   .f <- purrr::quietly(.f)
-  results <- purrr::pmap(.l, .f, ...)
+  results <- pmap(.l, .f, ...)
   class(results) <- c('quietly_mapped', class(results))
   results
 }
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_map_safely <- purrr::partial(map_safely, .parallel = TRUE)
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_map_quietly <- purrr::partial(map_safely, .parallel = TRUE)
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_map2_safely <- purrr::partial(map2_safely, .parallel = TRUE)
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_map2_quietly <- purrr::partial(map2_safely, .parallel = TRUE)
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_pmap_safely <- purrr::partial(pmap_safely, .parallel = TRUE)
+
+#' @rdname collateral_mappers
+#' @importFrom purrr partial
+#' @export
+future_pmap_quietly <- purrr::partial(pmap_safely, .parallel = TRUE)
