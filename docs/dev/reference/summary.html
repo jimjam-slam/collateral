@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Summarise mapped side effects. — summary" />
 
-<meta property="og:description" content="The summary method for a safely_mapped or quietly_mapped
+<meta property="og:description" content="The summary() method for a safely_mapped or quietly_mapped
 list (or list-column) prints out the total number of elements (rows), as well
 as the number that each returned results and errors (for
 safely_mapped) or returned results, output, messages and warnings (for
@@ -66,7 +66,7 @@ counts." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9001</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9002</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ counts." />
 
     <div class="ref-description">
     
-    <p>The <code>summary</code> method for a <code>safely_mapped</code> or <code>quietly_mapped</code>
+    <p>The <code>summary()</code> method for a <code>safely_mapped</code> or <code>quietly_mapped</code>
 list (or list-column) prints out the total number of elements (rows), as well
 as the number that each returned results and errors (for
 <code>safely_mapped</code>) or returned results, output, messages and warnings (for
@@ -139,22 +139,22 @@ counts.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed to <code>summary</code>.</p></td>
+      <td><p>Other arguments passed to <code>summary()</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A named vector containing counts of the components named in
-  <code><a href='collateral_mappers.html'>map_safely</a></code>.</p>
+<code><a href='collateral_mappers.html'>map_safely()</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Although the output can be used in tidy workflows (for automated testing, for
-example), tally functions like <code><a href='tally.html'>tally_results</a></code> tend to be more
+example), tally functions like <code><a href='tally.html'>tally_results()</a></code> tend to be more
 convenient for this purpose.</p>
-<p>Importantly, the <code>summary</code> functions tell you how many elements
-# returned a type of side effect, <em>not the number of those side
+<p>Importantly, the <code>summary()</code> method tells you how many elements were
+returned a type of side effect, <em>not the number of those side
 effects</em>. Some list elements might return more than one warning, for
 example, and these are not counted separately.</p>
     

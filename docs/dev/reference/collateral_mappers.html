@@ -32,13 +32,12 @@
 
 <meta property="og:title" content="Map safely or quietly over a list. — collateral_mappers" />
 
-<meta property="og:description" content="map_safely and map_quietly are variants of
-map that:
-wrap the supplied function .f with either
-    safely or
-    quietly, and
-add a class to the returned output list in order to format it
-    nicely when it (or a tibble it appears in) is printed.
+<meta property="og:description" content="map_safely() and map_quietly() are variants of
+purrr::map() that:
+wrap the supplied function .f with either purrr::safely() or
+purrr::quietly(), and
+add a class to the returned output list in order to format it nicely when
+it (or a tibble it appears in) is printed.
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -68,7 +67,7 @@ add a class to the returned output list in order to format it
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9001</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9002</span>
       </span>
     </div>
 
@@ -117,13 +116,12 @@ add a class to the returned output list in order to format it
 
     <div class="ref-description">
     
-    <p><code>map_safely</code> and <code>map_quietly</code> are variants of
-<code><a href='http://www.rdocumentation.org/packages/purrr/topics/map'>map</a></code> that:</p><ol>
-<li><p>wrap the supplied function <code>.f</code> with either
-    <code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>safely</a></code> or
-    <code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>quietly</a></code>, and</p></li>
-<li><p>add a class to the returned output list in order to format it
-    nicely when it (or a tibble it appears in) is printed.</p></li>
+    <p><code>map_safely()</code> and <code>map_quietly()</code> are variants of
+<code><a href='https://purrr.tidyverse.org/reference/map.html'>purrr::map()</a></code> that:</p><ol>
+<li><p>wrap the supplied function <code>.f</code> with either <code><a href='https://purrr.tidyverse.org/reference/safely.html'>purrr::safely()</a></code> or
+<code><a href='https://purrr.tidyverse.org/reference/safely.html'>purrr::quietly()</a></code>, and</p></li>
+<li><p>add a class to the returned output list in order to format it nicely when
+it (or a tibble it appears in) is printed.</p></li>
 </ol>
     
     </div>
@@ -138,7 +136,19 @@ add a class to the returned output list in order to format it
 
 <span class='fu'>pmap_safely</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
-<span class='fu'>pmap_quietly</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>pmap_quietly</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_map_safely</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_map_quietly</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_map2_safely</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_map2_quietly</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_pmap_safely</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>future_pmap_quietly</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,7 +163,8 @@ add a class to the returned output list in order to format it
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments supplied to <code><a href='http://www.rdocumentation.org/packages/purrr/topics/map'>map</a></code>.</p></td>
+      <td><p>Other arguments supplied to <code><a href='https://purrr.tidyverse.org/reference/map.html'>purrr::map()</a></code> or its variants, or to
+<code><a href='http://www.rdocumentation.org/packages/furrr/topics/future_map'>furrr::future_map()</a></code> or its variants..</p></td>
     </tr>
     <tr>
       <th>.y</th>
@@ -170,32 +181,44 @@ present.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of the same length as <code>.x</code>. The list elements contain
-  results and captured side effects as described in
-  <code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>safely</a></code> and
-  <code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>quietly</a></code>.</p>
+results and captured side effects as described in
+<code><a href='https://purrr.tidyverse.org/reference/safely.html'>purrr::safely()</a></code> and
+<code><a href='https://purrr.tidyverse.org/reference/safely.html'>purrr::quietly()</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>map_safely</code> will summarise the returned list with a fixed-width
- string of two (spaced) columns:</p><ol>
+    <p><code>map_safely()</code> will summarise the returned list with a fixed-width
+string of two (spaced) columns:</p><ol>
 <li><p>If a <code>result</code> component is present, <code>R</code> appears, and</p></li>
 <li><p>If an <code>error</code> component is present, <code>E</code> appears.</p></li>
-</ol><p>If either component is missing, an underscore (<code>_</code>) appears in its
- place.</p>
-<p>Similarly, <code>map_quietly</code> will summarise the returned list with a
- fixed-width string of four (spaced) columns:</p><ol>
+</ol>
+    <p>If either component is missing, an underscore (<code>_</code>) appears in its
+place.</p>
+<p>Similarly, <code>map_quietly()</code> will summarise the returned list with a
+fixed-width string of four (spaced) columns:</p><ol>
 <li><p>If a <code>result</code> component is present, <code>R</code> appears,</p></li>
 <li><p>If an <code>output</code> component is present, <code>O</code> appears,</p></li>
 <li><p>If a <code>messages</code> component is present, <code>M</code> appears, and</p></li>
 <li><p>If a <code>warnings</code> component is present, <code>W</code> appears.</p></li>
-</ol><p>If any is missing, an underscore (<code>_</code>) appears in its
- place.</p>
+</ol>
+    <p>If any is missing, an underscore (<code>_</code>) appears in its
+place.</p>
 <p>Variants for <a href='https://purrr.tidyverse.org/reference/map2.html'>iterating over two or more inputs simultaneously</a>
- are also provided and function identically to their <code>purrr</code> counterparts:</p><ol>
-<li><p><code>map2_safely</code></p></li>
-<li><p><code>map2_quietly</code></p></li>
-<li><p><code>pmap_safely</code></p></li>
-<li><p><code>pmap_quietly</code></p></li>
+are also provided and function identically to their <code>purrr</code> counterparts:</p><ol>
+<li><p><code>map2_safely()</code></p></li>
+<li><p><code>map2_quietly()</code></p></li>
+<li><p><code>pmap_safely()</code></p></li>
+<li><p><code>pmap_quietly()</code></p></li>
+</ol>
+    <p>Further variants, prefixed by <code>future_</code>, allow safe or quiet mapping to
+happen in parallel if you have the <a href='https://cran.r-project.org/package=furrr'>furrr</a>
+package installed:</p><ol>
+<li><p><code>future_map_safely()</code></p></li>
+<li><p><code>future_map_quietly()</code></p></li>
+<li><p><code>future_map2_safely()</code></p></li>
+<li><p><code>future_map2_quietly()</code></p></li>
+<li><p><code>future_pmap_safely()</code></p></li>
+<li><p><code>future_pmap_quietly()</code></p></li>
 </ol>
     
 

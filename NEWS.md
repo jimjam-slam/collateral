@@ -1,5 +1,8 @@
-# collateral 0.4.2.9000
+# collateral 0.5.0
 
+* Added `future_` variants that integrate with the [`furrr`](https://cran.r-project.org/package=furrr) package to allow parallel processing
+* Some internal rejiggering
+* Custom pkgodwn site theme!
 * Vignette improvements
 
 # collateral 0.4.2

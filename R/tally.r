@@ -1,15 +1,15 @@
-#' Get counts of types of mapped side effects.
+#' Determine how many elements contain a type of mapped side effect.
 #'
-#' Unlike \code{\link{summary}}, the tally functions return counts of individual
+#' Unlike [summary()], the tally functions return counts of individual
 #' types of side effects. This makes them easy to use with
-#' \code{\link[dplyr]{summarise}}.
+#' [dplyr::summarise()].
 #'
-#' Importantly, the \code{tally} functions tell you how many elements returned a type
-#' of side effect, \emph{not the number of those side effects}. Some list elements
+#' Importantly, the tally functions tell you how many _elements_ returned a type
+#' of side effect, not how many _side effects_ were returned. Some list elements
 #' might return more than one warning, for example, and these are not counted
 #' separately.
 #'
-#' @param x A \code{safely_mapped} or \code{quietly_mapped} list to tally.
+#' @param x A ``safely_mapped` or `quietly_mapped` list to tally.
 #' @return An integer vector of length 1.
 #'
 #' @examples

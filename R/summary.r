@@ -1,25 +1,25 @@
 #' Summarise mapped side effects.
 #'
-#' The \code{summary} method for a \code{safely_mapped} or \code{quietly_mapped}
+#' The `summary()` method for a `safely_mapped` or `quietly_mapped`
 #' list (or list-column) prints out the total number of elements (rows), as well
 #' as the number that each returned results and errors (for
-#' \code{safely_mapped}) or returned results, output, messages and warnings (for
-#' \code{quietly_mapped}). It also invisibly returns a named vector with these
+#' `safely_mapped`) or returned results, output, messages and warnings (for
+#' `quietly_mapped`). It also invisibly returns a named vector with these
 #' counts.
 #'
 #' Although the output can be used in tidy workflows (for automated testing, for
-#' example), tally functions like \code{\link{tally_results}} tend to be more
+#' example), tally functions like [tally_results()] tend to be more
 #' convenient for this purpose.
 #'
-#' Importantly, the \code{summary} functions tell you how many elements
-#' # returned a type of side effect, \emph{not the number of those side
-#' effects}. Some list elements might return more than one warning, for
+#' Importantly, the `summary()` method tells you how many elements were
+#' returned a type of side effect, _not the number of those side
+#' effects_. Some list elements might return more than one warning, for
 #' example, and these are not counted separately.
 #'
-#' @param object A \code{safely_mapped} or \code{quietly_mapped} list to summarise.
-#' @param ... Other arguments passed to \code{summary}.
+#' @param object A `safely_mapped` or `quietly_mapped` list to summarise.
+#' @param ... Other arguments passed to `summary()`.
 #' @return A named vector containing counts of the components named in
-#'   \code{\link{map_safely}}.
+#'   [map_safely()].
 #'
 #' @examples
 #'

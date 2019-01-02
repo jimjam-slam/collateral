@@ -1,15 +1,15 @@
-#' Filter elements that contain a type of side effect.
+#' Determine which elements contain a type of side effect.
 #'
 #' Returns a logical vector indicating which elements contain a type of side
 #' effect. If you have a large data frame or list, you can use this to isolate
 #' the element that contain warnings, for example, or messages.s
 #'
-#' The \code{has_*()} functions power the \code{tally_*()} functions and, in turn,
-#' the \code{summary} methods.
+#' The `has_*()` functions power the `tally_*()`` functions and, in turn,
+#' the [summary()] method.
 #'
-#' @param x A \code{safely_mapped} or \code{quietly_mapped} list to tally.
-#' @return A logical vector, of the same length as \code{x}, which is \code{TRUE} for
-#'   elements that contain a type of side effect and \code{FALSE} otherwise.
+#' @param x A `safely_mapped` or `quietly_mapped` list to tally.
+#' @return A logical vector, of the same length as `x`, which is `TRUE` for
+#'   elements that contain a type of side effect and `FALSE` otherwise.
 #'
 #' @examples
 #'

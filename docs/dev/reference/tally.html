@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get counts of types of mapped side effects. — tally • collateral</title>
+<title>Determine how many elements contain a type of mapped side effect. — tally • collateral</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Get counts of types of mapped side effects. — tally" />
+<meta property="og:title" content="Determine how many elements contain a type of mapped side effect. — tally" />
 
-<meta property="og:description" content="Unlike summary, the tally functions return counts of individual
+<meta property="og:description" content="Unlike summary(), the tally functions return counts of individual
 types of side effects. This makes them easy to use with
-summarise." />
+dplyr::summarise()." />
 <meta name="twitter:card" content="summary" />
 
 <meta name="robots" content="noindex">
@@ -63,7 +63,7 @@ summarise." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collateral</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9001</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development package">0.4.2.9002</span>
       </span>
     </div>
 
@@ -105,16 +105,16 @@ summarise." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get counts of types of mapped side effects.</h1>
+    <h1>Determine how many elements contain a type of mapped side effect.</h1>
     <small class="dont-index">Source: <a href='https://github.com/rensa/collateral/blob/master/R/tally.r'><code>R/tally.r</code></a></small>
     <div class="hidden name"><code>tally.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Unlike <code><a href='summary.html'>summary</a></code>, the tally functions return counts of individual
+    <p>Unlike <code><a href='summary.html'>summary()</a></code>, the tally functions return counts of individual
 types of side effects. This makes them easy to use with
-<code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>.</p>
+<code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code>.</p>
     
     </div>
 
@@ -133,7 +133,7 @@ types of side effects. This makes them easy to use with
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>safely_mapped</code> or <code>quietly_mapped</code> list to tally.</p></td>
+      <td><p>A ``safely_mapped<code>or</code>quietly_mapped` list to tally.</p></td>
     </tr>
     </table>
     
@@ -143,8 +143,8 @@ types of side effects. This makes them easy to use with
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Importantly, the <code>tally</code> functions tell you how many elements returned a type
-of side effect, <em>not the number of those side effects</em>. Some list elements
+    <p>Importantly, the tally functions tell you how many <em>elements</em> returned a type
+of side effect, not how many <em>side effects</em> were returned. Some list elements
 might return more than one warning, for example, and these are not counted
 separately.</p>
     

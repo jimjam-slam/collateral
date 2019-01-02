@@ -7,7 +7,7 @@
 \alias{tally_warnings}
 \alias{tally_messages}
 \alias{tally_output}
-\title{Get counts of types of mapped side effects.}
+\title{Determine how many elements contain a type of mapped side effect.}
 \usage{
 tally_results(x)
 
@@ -20,19 +20,19 @@ tally_messages(x)
 tally_output(x)
 }
 \arguments{
-\item{x}{A \code{safely_mapped} or \code{quietly_mapped} list to tally.}
+\item{x}{A ``safely_mapped\code{or}quietly_mapped` list to tally.}
 }
 \value{
 An integer vector of length 1.
 }
 \description{
-Unlike \code{\link{summary}}, the tally functions return counts of individual
+Unlike \code{\link[=summary]{summary()}}, the tally functions return counts of individual
 types of side effects. This makes them easy to use with
-\code{\link[dplyr]{summarise}}.
+\code{\link[dplyr:summarise]{dplyr::summarise()}}.
 }
 \details{
-Importantly, the \code{tally} functions tell you how many elements returned a type
-of side effect, \emph{not the number of those side effects}. Some list elements
+Importantly, the tally functions tell you how many \emph{elements} returned a type
+of side effect, not how many \emph{side effects} were returned. Some list elements
 might return more than one warning, for example, and these are not counted
 separately.
 }

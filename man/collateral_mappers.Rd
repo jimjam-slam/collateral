@@ -8,6 +8,12 @@
 \alias{map2_quietly}
 \alias{pmap_safely}
 \alias{pmap_quietly}
+\alias{future_map_safely}
+\alias{future_map_quietly}
+\alias{future_map2_safely}
+\alias{future_map2_quietly}
+\alias{future_pmap_safely}
+\alias{future_pmap_quietly}
 \title{Map safely or quietly over a list.}
 \usage{
 map_safely(.x, .f, ...)
@@ -21,13 +27,26 @@ map2_quietly(.x, .y, .f, ...)
 pmap_safely(.l, .f, ...)
 
 pmap_quietly(.l, .f, ...)
+
+future_map_safely(.x, .f, ...)
+
+future_map_quietly(.x, .f, ...)
+
+future_map2_safely(.x, .y, .f, ...)
+
+future_map2_quietly(.x, .y, .f, ...)
+
+future_pmap_safely(.l, .f, ...)
+
+future_pmap_quietly(.l, .f, ...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
 
 \item{.f}{A function, formula or atomic vector.}
 
-\item{...}{Other arguments supplied to \code{\link[purrr:map]{purrr::map()}}.}
+\item{...}{Other arguments supplied to \code{\link[purrr:map]{purrr::map()}} or its variants, or to
+\code{\link[furrr:future_map]{furrr::future_map()}} or its variants..}
 
 \item{.y}{A list or atomic vector, of the same length as \code{.x}.}
 
@@ -42,7 +61,7 @@ results and captured side effects as described in
 \code{\link[purrr:quietly]{purrr::quietly()}}.
 }
 \description{
-\code{map_safely} and \code{map_quietly} are variants of
+\code{map_safely()} and \code{map_quietly()} are variants of
 \code{\link[purrr:map]{purrr::map()}} that:
 \enumerate{
 \item wrap the supplied function \code{.f} with either \code{\link[purrr:safely]{purrr::safely()}} or
@@ -52,7 +71,7 @@ it (or a tibble it appears in) is printed.
 }
 }
 \details{
-\code{map_safely} will summarise the returned list with a fixed-width
+\code{map_safely()} will summarise the returned list with a fixed-width
 string of two (spaced) columns:
 \enumerate{
 \item If a \code{result} component is present, \code{R} appears, and
@@ -62,7 +81,7 @@ string of two (spaced) columns:
 If either component is missing, an underscore (\code{_}) appears in its
 place.
 
-Similarly, \code{map_quietly} will summarise the returned list with a
+Similarly, \code{map_quietly()} will summarise the returned list with a
 fixed-width string of four (spaced) columns:
 \enumerate{
 \item If a \code{result} component is present, \code{R} appears,
@@ -77,10 +96,22 @@ place.
 Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
 are also provided and function identically to their \code{purrr} counterparts:
 \enumerate{
-\item \code{map2_safely}
-\item \code{map2_quietly}
-\item \code{pmap_safely}
-\item \code{pmap_quietly}
+\item \code{map2_safely()}
+\item \code{map2_quietly()}
+\item \code{pmap_safely()}
+\item \code{pmap_quietly()}
+}
+
+Further variants, prefixed by \code{future_}, allow safe or quiet mapping to
+happen in parallel if you have the \href{https://cran.r-project.org/package=furrr}{furrr}
+package installed:
+\enumerate{
+\item \code{future_map_safely()}
+\item \code{future_map_quietly()}
+\item \code{future_map2_safely()}
+\item \code{future_map2_quietly()}
+\item \code{future_pmap_safely()}
+\item \code{future_pmap_quietly()}
 }
 }
 \examples{

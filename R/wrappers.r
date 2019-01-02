@@ -46,14 +46,14 @@ pmap_wrapper <- function(.l, .parallel = FALSE){
 
 #' Map safely or quietly over a list.
 #'
-#' `map_safely` and `map_quietly` are variants of
+#' `map_safely()` and `map_quietly()` are variants of
 #' [purrr::map()] that:
 #' 1. wrap the supplied function `.f` with either [purrr::safely()] or
 #' [purrr::quietly()], and
 #' 1. add a class to the returned output list in order to format it nicely when
 #' it (or a tibble it appears in) is printed.
 #'
-#' `map_safely` will summarise the returned list with a fixed-width
+#' `map_safely()` will summarise the returned list with a fixed-width
 #' string of two (spaced) columns:
 #' 1. If a `result` component is present, `R` appears, and
 #' 1. If an `error` component is present, `E` appears.
@@ -61,7 +61,7 @@ pmap_wrapper <- function(.l, .parallel = FALSE){
 #' If either component is missing, an underscore (`_`) appears in its
 #' place.
 #'
-#' Similarly, `map_quietly` will summarise the returned list with a
+#' Similarly, `map_quietly()` will summarise the returned list with a
 #' fixed-width string of four (spaced) columns:
 #' 1. If a `result` component is present, `R` appears,
 #' 1. If an `output` component is present, `O` appears,
@@ -71,12 +71,22 @@ pmap_wrapper <- function(.l, .parallel = FALSE){
 #'  If any is missing, an underscore (`_`) appears in its
 #'  place.
 #'
-#'  Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
+#'  Variants for [iterating over two or more inputs simultaneously](https://purrr.tidyverse.org/reference/map2.html)
 #'  are also provided and function identically to their `purrr` counterparts:
-#'  1. `map2_safely`
-#'  1. `map2_quietly`
-#'  1. `pmap_safely`
-#'  1. `pmap_quietly`
+#'  1. `map2_safely()`
+#'  1. `map2_quietly()`
+#'  1. `pmap_safely()`
+#'  1. `pmap_quietly()`
+#'
+#'  Further variants, prefixed by `future_`, allow safe or quiet mapping to
+#'  happen in parallel if you have the [`furrr`](https://cran.r-project.org/package=furrr)
+#'  package installed:
+#'  1. `future_map_safely()`
+#'  1. `future_map_quietly()`
+#'  1. `future_map2_safely()`
+#'  1. `future_map2_quietly()`
+#'  1. `future_pmap_safely()`
+#'  1. `future_pmap_quietly()`
 #'
 #'
 #' @param .x A list or atomic vector.
@@ -85,7 +95,8 @@ pmap_wrapper <- function(.l, .parallel = FALSE){
 #'   arguments that `.f` will be called with. List names will be used if
 #'   present.
 #' @param .f A function, formula or atomic vector.
-#' @param ... Other arguments supplied to [purrr::map()].
+#' @param ... Other arguments supplied to [purrr::map()] or its variants, or to
+#'   [furrr::future_map()] or its variants..
 #' @return A list of the same length as `.x`. The list elements contain
 #'   results and captured side effects as described in
 #'   [purrr::safely()] and
