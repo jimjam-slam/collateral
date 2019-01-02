@@ -1,0 +1,74 @@
+/* extra css */
+
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab:700');
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: "Zilla Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+.navbar {
+  font-family: "Zilla Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  background: #E5A700;
+  border-color: #231F20;
+}
+
+.navbar-default .navbar-link {
+  color: #231F20;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #231F20;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #231F20;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #231F20;
+}
+
+.navbar-default .navbar-toggle:hover .icon-bar,
+.navbar-default .navbar-toggle:focus .icon-bar {
+  background-color: #E5A700;
+}
+
+.navbar-default .navbar-collapse {
+  border-color: #231F20;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #231F20;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #231F20;
+  text-decoration: underline;
+}
+
+.navbar-default .navbar-nav > li.active > a,
+.navbar-default .navbar-nav > li.active > a:hover,
+.navbar-default .navbar-nav > li.active > a:focus {
+  background-color: #231F20;
+  color: #E5A700;
+}
+
+/* other styling */
+
+.caption {
+  color: #999;
+  font-style: italic;
+}
+
+
+/* fix for images in articles not wrapping text properly */
+.contents p img {
+  display: block;
+}
+
+/* logo on front page
+.page-header h1 img {
+  padding-left: 10px;
+}
