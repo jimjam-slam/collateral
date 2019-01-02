@@ -14,19 +14,34 @@ quiet_mapper <- function(.f, .mapper, ...) {
   results
 }
 
-map2_wrapper <- function(.x, .y){
-  function(.f, ...)
-    purrr::map2(.x, .y, .f, ...)
+map2_wrapper <- function(.x, .y, .parallel = FALSE){
+  if (.parallel) {
+    function(.f, ...)
+      furrr::future_map2(.x, .y, .f, ...)
+  } else {
+    function(.f, ...)
+      purrr::map2(.x, .y, .f, ...)
+  }
 }
 
-map_wrapper <- function(.x){
-  function(.f, ...)
-    purrr::map(.x, .f, ...)
+map_wrapper <- function(.x, .parallel = FALSE){
+  if (.parallel) {
+    function(.f, ...)
+      furrr::future_map(.x, .f, ...)
+  } else {
+    function(.f, ...)
+      purrr::map(.x, .f, ...)
+  }
 }
 
-pmap_wrapper <- function(.l){
-  function(.f, ...)
-    purrr::pmap(.l, .f, ...)
+pmap_wrapper <- function(.l, .parallel = FALSE){
+  if (.parallel) {
+    function(.f, ...)
+      furrr::future_pmap(.l, .f, ...)
+  } else {
+    function(.f, ...)
+      purrr::pmap(.l, .f, ...)
+  }
 }
 
 #' Map safely or quietly over a list.
@@ -103,6 +118,8 @@ pmap_wrapper <- function(.l){
 #'
 NULL
 
+# non-parallel (purrr) collateral mappers
+
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper safely map
 #' @export
@@ -110,7 +127,6 @@ map_safely <- function(.x, .f, ...) {
   .map <- map_wrapper(.x)
   safe_mapper(.f, .map, ...)
 }
-
 
 #' @rdname collateral_mappers
 #' @importFrom purrr as_mapper quietly map
@@ -150,5 +166,56 @@ pmap_safely <- function(.l, .f, ...) {
 #' @export
 pmap_quietly <- function(.l, .f, ...) {
   .pmap <- map_wrapper(.l)
+  quiet_mapper(.f, .pmap, ...)
+}
+
+# parallel (furrr) collateral mappers
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper safely map
+#' @export
+future_map_safely <- function(.x, .f, ...) {
+  .map <- map_wrapper(.x, .parallel = TRUE)
+  safe_mapper(.f, .map, ...)
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper quietly map
+#' @export
+future_map_quietly <- function(.x, .f, ...) {
+  .map <- map_wrapper(.x, .parallel = TRUE)
+  quiet_mapper(.f, .map, ...)
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper safely map2
+#' @export
+future_map2_safely <- function(.x, .y, .f, ...) {
+  .map2 <- map2_wrapper(.x, .y, .parallel = TRUE)
+  safe_mapper(.f, .map2, ...)
+}
+
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper quietly map2
+#' @export
+future_map2_quietly <- function(.x, .y, .f, ...) {
+  .map2 <- map2_wrapper(.x, .y, .parallel = TRUE)
+  quiet_mapper(.f, .map2, ...)
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper safely pmap
+#' @export
+future_pmap_safely <- function(.l, .f, ...) {
+  .pmap <- map_wrapper(.l, .parallel = TRUE)
+  safe_mapper(.f, .pmap, ...)
+}
+
+#' @rdname collateral_mappers
+#' @importFrom purrr as_mapper quietly pmap
+#' @export
+future_pmap_quietly <- function(.l, .f, ...) {
+  .pmap <- map_wrapper(.l, .parallel = TRUE)
   quiet_mapper(.f, .pmap, ...)
 }
