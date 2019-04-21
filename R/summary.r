@@ -31,7 +31,6 @@
 #' @name summary
 NULL
 
-
 #' @rdname summary
 #' @importFrom purrr is_empty map_lgl
 #' @importFrom crayon green red

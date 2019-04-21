@@ -43,9 +43,12 @@ NULL
 #' @importFrom methods is
 #' @export
 has_results = function(x) {
-  if(!(is(x, 'safely_mapped') | is(x, 'quietly_mapped'))) {
-    stop(paste('Only usable on safely_mapped or',
-      'quietly_mapped objects.'))
+  if (!(
+    is(x, 'safely_mapped') |
+    is(x, 'quietly_mapped') |
+    is(x, 'peacefully_mapped'))) {
+    stop(paste('Only usable on safely_mapped,',
+      'quietly_mapped or peacefully_mapped objects.'))
   }
   map_lgl(x, ~ !is.null(.$result))
 }
@@ -55,8 +58,8 @@ has_results = function(x) {
 #' @importFrom methods is
 #' @export
 has_errors = function(x) {
-  if(!is(x, 'safely_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'safely_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on safely_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$error) & !is_empty(.$error$message))
 }
@@ -66,8 +69,8 @@ has_errors = function(x) {
 #' @importFrom methods is
 #' @export
 has_warnings = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$warning) & !is_empty(.$warning))
 }
@@ -77,8 +80,8 @@ has_warnings = function(x) {
 #' @importFrom methods is
 #' @export
 has_messages = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$message) & !is_empty(.$message))
 }
@@ -88,8 +91,8 @@ has_messages = function(x) {
 #' @importFrom methods is
 #' @export
 has_output = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$output) & !is_empty(.$output))
 }
