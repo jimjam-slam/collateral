@@ -40,21 +40,18 @@ summary.safely_mapped = function(object, ...) {
   counts = c(result = tally_results(object), error = tally_errors(object))
 
   cat(
-    paste0(
+    paste(
       length(object),
-      ' element',
-      if (length(object) == 1) '' else 's',
-      ' in total.\n'),
-    crayon::green(paste0(
+      if (length(object) == 1) 'element' else 'elements',
+      'in total.\n'),
+    crayon::green(paste(
       counts['result'],
-      ' element',
-      if (counts['result'] == 1) '' else 's',
-      ' returned results, and\n')),
-    crayon::red(paste0(
+      if (counts['result'] == 1) 'element' else 'elements',
+      'returned results, and\n')),
+    crayon::red(paste(
       counts['error'],
-      ' element',
-      if (counts['error'] == 1) '' else 's',
-      ' encountered errors.\n')),
+      if (counts['error'] == 1) 'element' else 'elements',
+      'encountered errors.\n')),
     sep = '')
 
   invisible(counts)
@@ -66,35 +63,72 @@ summary.safely_mapped = function(object, ...) {
 #' @export
 summary.quietly_mapped = function(object, ...) {
 
-  counts = c(result = tally_results(object), output = tally_output(object),
+  counts = c(
+    result = tally_results(object), output = tally_output(object),
     message = tally_messages(object), warning = tally_warnings(object))
 
   cat(
-    paste0(
+    paste(
       length(object),
-      ' element',
-      if (length(object) == 1) '' else 's',
-      ' in total.\n'),
+      if (length(object) == 1) 'element' else 'elements',
+      'in total.\n'),
     crayon::green(paste(
       counts['result'],
-      ' element',
-      if (counts['result'] == 1) '' else 's',
-      ' returned results,\n')),
+      if (counts['result'] == 1) 'element' else 'elements',
+      'returned results,\n')),
     crayon::white(paste(
       counts['output'],
-      ' element',
-      if (counts['output'] == 1) '' else 's',
-      ' delivered output,\n')),
+      if (counts['output'] == 1) 'element' else 'elements',
+      'delivered output,\n')),
     crayon::yellow(paste(
       counts['message'],
-      ' element',
-      if (counts['message'] == 1) '' else 's',
-      ' delivered messages, and\n')),
+      if (counts['message'] == 1) 'element' else 'elements',
+      'delivered messages, and\n')),
     crayon::make_style('orange')(paste(
       counts['warning'],
-      ' element',
-      if (counts['warning'] == 1) '' else 's',
-      ' delivered warnings.\n')),
+      if (counts['warning'] == 1) 'element' else 'elements',
+      'delivered warnings.\n')),
+    sep = '')
+
+  invisible(counts)
+}
+
+#' @rdname summary
+#' @importFrom purrr is_empty map_lgl
+#' @importFrom crayon green white yellow red make_style
+#' @export
+summary.peacefully_mapped = function(object, ...) {
+
+  counts = c(
+    result = tally_results(object), output = tally_output(object),
+    message = tally_messages(object), warning = tally_warnings(object),
+    error = tally_errors(object))
+
+  cat(
+    paste(
+      length(object),
+      if (length(object) == 1) 'element' else 'elements',
+      'in total.\n'),
+    crayon::green(paste(
+      counts['result'],
+      if (counts['result'] == 1) 'element' else 'elements',
+      'returned results,\n')),
+    crayon::white(paste(
+      counts['output'],
+      if (counts['output'] == 1) 'element' else 'elements',
+      'delivered output,\n')),
+    crayon::yellow(paste(
+      counts['message'],
+      if (counts['message'] == 1) 'element' else 'elements',
+      'delivered messages,\n')),
+    crayon::make_style('orange')(paste(
+      counts['warning'],
+      if (counts['warning'] == 1) 'element' else 'elements',
+      'delivered warnings, and\n')),
+    crayon::red(paste(
+      counts['error'],
+      if (counts['error'] == 1) 'element' else 'elements',
+      'threw an error.')),
     sep = '')
 
   invisible(counts)

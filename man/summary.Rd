@@ -4,11 +4,14 @@
 \alias{summary}
 \alias{summary.safely_mapped}
 \alias{summary.quietly_mapped}
+\alias{summary.peacefully_mapped}
 \title{Summarise mapped side effects.}
 \usage{
 \method{summary}{safely_mapped}(object, ...)
 
 \method{summary}{quietly_mapped}(object, ...)
+
+\method{summary}{peacefully_mapped}(object, ...)
 }
 \arguments{
 \item{object}{A \code{safely_mapped} or \code{quietly_mapped} list to summarise.}
