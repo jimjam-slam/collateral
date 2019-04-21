@@ -4,41 +4,59 @@
 \alias{collateral_mappers}
 \alias{map_safely}
 \alias{map_quietly}
+\alias{map_peacefully}
 \alias{map2_safely}
 \alias{map2_quietly}
+\alias{map2_peacefully}
 \alias{pmap_safely}
 \alias{pmap_quietly}
+\alias{pmap_peacefully}
 \alias{future_map_safely}
 \alias{future_map_quietly}
+\alias{future_map_peacefully}
 \alias{future_map2_safely}
 \alias{future_map2_quietly}
+\alias{future_map2_peacefully}
 \alias{future_pmap_safely}
 \alias{future_pmap_quietly}
+\alias{future_pmap_peacefully}
 \title{Map safely or quietly over a list.}
 \usage{
 map_safely(.x, .f, ...)
 
 map_quietly(.x, .f, ...)
 
+map_peacefully(.x, .f, ...)
+
 map2_safely(.x, .y, .f, ...)
 
 map2_quietly(.x, .y, .f, ...)
+
+map2_peacefully(.x, .y, .f, ...)
 
 pmap_safely(.l, .f, ...)
 
 pmap_quietly(.l, .f, ...)
 
+pmap_peacefully(.l, .f, ...)
+
 future_map_safely(.x, .f, ...)
 
 future_map_quietly(.x, .f, ...)
+
+future_map_peacefully(.x, .f, ...)
 
 future_map2_safely(.x, .y, .f, ...)
 
 future_map2_quietly(.x, .y, .f, ...)
 
+future_map2_peacefully(.x, .y, .f, ...)
+
 future_pmap_safely(.l, .f, ...)
 
 future_pmap_quietly(.l, .f, ...)
+
+future_pmap_peacefully(.l, .f, ...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
