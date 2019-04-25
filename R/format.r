@@ -91,8 +91,8 @@ format.safely_mapped = function(x, ...) {
 
   purrr::map_chr(x,
     ~ paste(
-        if (is.null(.$result))                            qu_none else qu_R,
-        if (is.null(.$error) | is_empty(.$error$message)) qu_none else qu_E,
+        if (is_empty(.$result))                     qu_none else qu_R,
+        if (is_empty(.$error$message))              qu_none else qu_E,
         sep = ' '))
 }
 
@@ -110,10 +110,10 @@ format.quietly_mapped = function(x, ...) {
 
   purrr::map_chr(x,
     ~ paste(
-      if (is.null(.$result))                            qu_none else qu_R,
-      if (is.null(.$output)  | is_empty(.$output))      qu_none else qu_O,
-      if (is.null(.$message) | is_empty(.$message))     qu_none else qu_M,
-      if (is.null(.$warning) | is_empty(.$warning))     qu_none else qu_W,
+      if (is_empty(.$result))                       qu_none else qu_R,
+      if (is_empty(.$output) | all(.$output == '')) qu_none else qu_O,
+      if (is_empty(.$message))                      qu_none else qu_M,
+      if (is_empty(.$warning))                      qu_none else qu_W,
       sep = ' '))
 }
 
@@ -132,11 +132,11 @@ format.peacefully_mapped = function(x, ...) {
 
   purrr::map_chr(x,
     ~ paste(
-      if (is.null(.$result))                            qu_none else qu_R,
-      if (is.null(.$output)  | is_empty(.$output))      qu_none else qu_O,
-      if (is.null(.$message) | is_empty(.$message))     qu_none else qu_M,
-      if (is.null(.$warning) | is_empty(.$warning))     qu_none else qu_W,
-      if (is.null(.$error)   | is_empty(.$error))       qu_none else qu_E,
+      if (is_empty(.$result))                        qu_none else qu_R,
+      if (is_empty(.$output) | all(.$output == ''))  qu_none else qu_O,
+      if (is_empty(.$message))                       qu_none else qu_M,
+      if (is_empty(.$warning))                       qu_none else qu_W,
+      if (is_empty(.$error))                         qu_none else qu_E,
       sep = ' '))
 }
 
