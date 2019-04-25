@@ -16,11 +16,12 @@ LazyData: true
 RoxygenNote: 6.1.1
 BugReports: https://github.com/rensa/collateral/issues
 Suggests:
-  dplyr,
-  furrr,
-  knitr,
-  magrittr,
-  rmarkdown,
-  tidyverse
+    dplyr,
+    furrr,
+    knitr,
+    magrittr,
+    rmarkdown,
+    tidyverse,
+    testthat
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
