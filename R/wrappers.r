@@ -121,6 +121,9 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #'   present.
 #' @param .f A function, formula or atomic vector, as specified by
 #'   [purrr::as_mapper()].
+#' @param otherwise Default value to use when an error occurs.
+#' @param quiet Hide errors (`TRUE`, the default), or display them as they
+#'   occur?
 #' @param ... Other arguments supplied to [purrr::map()] or its variants, or to
 #'   [furrr::future_map()] or its variants..
 #' @return A list of the same length as `.x`. Each element of the returned list
@@ -143,7 +146,7 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #' # such as nested data frames
 #' mtcars %>%
 #'   rownames_to_column(var = "car") %>%
-#'   as_data_frame() %>%
+#'   as_tibble() %>%
 #'   select(car, cyl, disp, wt) %>%
 #'   # spike some rows in cyl == 4 to make them fail
 #'   mutate(wt = dplyr::case_when(

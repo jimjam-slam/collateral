@@ -28,7 +28,7 @@ devtools::install_github('rensa/collateral')
 
 ## Example
 
-```r
+```{r}
 library(tidyverse)
 library(collateral)
 
@@ -36,7 +36,7 @@ test =
   # tidy up and trim down for the example
   mtcars %>%
   rownames_to_column(var = "car") %>%
-  as_data_frame() %>%
+  as_tibble() %>%
   select(car, cyl, disp, wt) %>%
   # spike some rows in cyl == 4 to make them fail
   mutate(wt = dplyr::case_when(
@@ -47,17 +47,11 @@ test =
   mutate(qlog = map_quietly(data, ~ log(.$wt)))
 
 test
-#> # A tibble: 3 x 4
-#>     cyl data              qlog
-#>   <dbl> <list>            <collat>
-#> 1     6 <tibble [7 x 3]>  R O _ _
-#> 2     4 <tibble [11 x 3]> R O _ W
-#> 3     8 <tibble [14 x 3]> R O _ _
 ```
 
-![Example of styled `collateral` output](man/figures/collateral_example.png)
+<!-- ![Example of styled `collateral` output](man/figures/collateral_example.png)
 
-`collateral` uses `pillar` to style output, so supported terminals will also color the output!
+`collateral` uses `pillar` to style output, so supported terminals will also color the output! -->
 
 ## Support
 
