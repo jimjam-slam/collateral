@@ -31,9 +31,11 @@ test_that("map_safely correctly structures output", {
   expect_s3_class(
     map_safely(test_dfs, ~ log(.$wt)),
     'safely_mapped')
-  map(
+  walk(
     map_safely(test_dfs, ~ log(.$wt)),
-    expect_named, expected = c('result', 'error'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'error'))
 })
 
 test_that("map_quietly correctly structures output", {
@@ -43,9 +45,11 @@ test_that("map_quietly correctly structures output", {
   expect_s3_class(
     map_quietly(test_dfs, ~ log(.$wt)),
     'quietly_mapped')
-  map(
+  walk(
     map_quietly(test_dfs, ~ log(.$wt)),
-    expect_named, expected = c('result', 'warnings', 'messages', 'output'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'output', 'warnings', 'messages'))
 })
 
 test_that("map_peacefully correctly structures output", {
@@ -58,6 +62,7 @@ test_that("map_peacefully correctly structures output", {
   map(
     map_peacefully(test_dfs, ~ log(.$wt)),
     expect_named,
+    ignore.order = TRUE,
     expected = c('result', 'error', 'warnings', 'messages', 'output'))
 })
 
@@ -72,7 +77,9 @@ test_that("map2_safely correctly structures output", {
     'safely_mapped')
   map(
     map2_safely(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
-    expect_named, expected = c('result', 'error'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'error'))
 })
 
 test_that("map2_quietly correctly structures output", {
@@ -82,9 +89,11 @@ test_that("map2_quietly correctly structures output", {
   expect_s3_class(
     map2_quietly(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
     'quietly_mapped')
-  map(
+  walk(
     map2_quietly(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
-    expect_named, expected = c('result', 'warnings', 'messages', 'output'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'output', 'warnings', 'messages'))
 })
 
 test_that("map2_peacefully correctly structures output", {
@@ -97,6 +106,7 @@ test_that("map2_peacefully correctly structures output", {
   map(
     map2_peacefully(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
     expect_named,
+    ignore.order = TRUE,
     expected = c('result', 'error', 'warnings', 'messages', 'output'))
 })
 
@@ -117,7 +127,9 @@ test_that("pmap_safely correctly structures output", {
     pmap_safely(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
-    expect_named, expected = c('result', 'error'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'error'))
 })
 
 test_that("pmap_quietly correctly structures output", {
@@ -131,11 +143,13 @@ test_that("pmap_quietly correctly structures output", {
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
     'quietly_mapped')
-  map(
+  walk(
     pmap_quietly(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
-    expect_named, expected = c('result', 'warnings', 'messages', 'output'))
+    expect_named,
+    ignore.order = TRUE,
+    expected = c('result', 'output', 'warnings', 'messages'))
 })
 
 test_that("pmap_peacefully correctly structures output", {
@@ -149,12 +163,13 @@ test_that("pmap_peacefully correctly structures output", {
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
     'peacefully_mapped')
-  map(
+  walk(
     pmap_peacefully(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
     expect_named,
-    expected = c('result', 'error', 'warnings', 'messages', 'output'))
+    ignore.order = TRUE,
+    expected = c('result', 'output', 'warnings', 'messages', 'error'))
 })
 
 # TODO - setup tests for future_map_* variants

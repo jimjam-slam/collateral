@@ -64,6 +64,11 @@ future_pmap_peacefully(.l, .f, ...)
 \item{.f}{A function, formula or atomic vector, as specified by
 \code{\link[purrr:as_mapper]{purrr::as_mapper()}}.}
 
+\item{otherwise}{Default value to use when an error occurs.}
+
+\item{quiet}{Hide errors (\code{TRUE}, the default), or display them as they
+occur?}
+
 \item{...}{Other arguments supplied to \code{\link[purrr:map]{purrr::map()}} or its variants, or to
 \code{\link[furrr:future_map]{furrr::future_map()}} or its variants..}
 
@@ -143,7 +148,7 @@ suppressMessages(library(tidyverse))
 # such as nested data frames
 mtcars \%>\%
   rownames_to_column(var = "car") \%>\%
-  as_data_frame() \%>\%
+  as_tibble() \%>\%
   select(car, cyl, disp, wt) \%>\%
   # spike some rows in cyl == 4 to make them fail
   mutate(wt = dplyr::case_when(
