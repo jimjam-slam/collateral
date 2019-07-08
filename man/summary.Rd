@@ -4,23 +4,26 @@
 \alias{summary}
 \alias{summary.safely_mapped}
 \alias{summary.quietly_mapped}
+\alias{summary.peacefully_mapped}
 \title{Summarise mapped side effects.}
 \usage{
 \method{summary}{safely_mapped}(object, ...)
 
 \method{summary}{quietly_mapped}(object, ...)
+
+\method{summary}{peacefully_mapped}(object, ...)
 }
 \arguments{
 \item{object}{A \code{safely_mapped} or \code{quietly_mapped} list to summarise.}
 
-\item{...}{Other arguments passed to \code{summary}.}
+\item{...}{Other arguments passed to \code{summary()}.}
 }
 \value{
 A named vector containing counts of the components named in
-  \code{\link{map_safely}}.
+\code{\link[=map_safely]{map_safely()}}.
 }
 \description{
-The \code{summary} method for a \code{safely_mapped} or \code{quietly_mapped}
+The \code{summary()} method for a \code{safely_mapped} or \code{quietly_mapped}
 list (or list-column) prints out the total number of elements (rows), as well
 as the number that each returned results and errors (for
 \code{safely_mapped}) or returned results, output, messages and warnings (for
@@ -29,11 +32,11 @@ counts.
 }
 \details{
 Although the output can be used in tidy workflows (for automated testing, for
-example), tally functions like \code{\link{tally_results}} tend to be more
+example), tally functions like \code{\link[=tally_results]{tally_results()}} tend to be more
 convenient for this purpose.
 
-Importantly, the \code{summary} functions tell you how many elements
-# returned a type of side effect, \emph{not the number of those side
+Importantly, the \code{summary()} method tells you how many elements were
+returned a type of side effect, \emph{not the number of those side
 effects}. Some list elements might return more than one warning, for
 example, and these are not counted separately.
 }

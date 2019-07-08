@@ -4,16 +4,22 @@
 \alias{collateral_extras}
 \alias{safely_mapped}
 \alias{quietly_mapped}
+\alias{peacefully_mapped}
 \alias{as_safely_mapped}
 \alias{as_quietly_mapped}
+\alias{as_peacefully_mapped}
 \alias{c.safely_mapped}
 \alias{c.quietly_mapped}
+\alias{c.peacefully_mapped}
 \alias{[.safely_mapped}
 \alias{[.quietly_mapped}
+\alias{[.peacefully_mapped}
 \alias{format.safely_mapped}
 \alias{format.quietly_mapped}
+\alias{format.peacefully_mapped}
 \alias{print.safely_mapped}
 \alias{print.quietly_mapped}
+\alias{print.peacefully_mapped}
 \title{Additional functions required to integrate
 \code{\link{map_safely}} and \code{\link{map_quietly}} with
 the \code{pillar} package.}
@@ -22,25 +28,37 @@ safely_mapped(x)
 
 quietly_mapped(x)
 
+peacefully_mapped(x)
+
 as_safely_mapped(x)
 
 as_quietly_mapped(x)
+
+as_peacefully_mapped(x)
 
 \method{c}{safely_mapped}(x, ...)
 
 \method{c}{quietly_mapped}(x, ...)
 
+\method{c}{peacefully_mapped}(x, ...)
+
 \method{[}{safely_mapped}(x, i)
 
 \method{[}{quietly_mapped}(x, i)
+
+\method{[}{peacefully_mapped}(x, i)
 
 \method{format}{safely_mapped}(x, ...)
 
 \method{format}{quietly_mapped}(x, ...)
 
+\method{format}{peacefully_mapped}(x, ...)
+
 \method{print}{safely_mapped}(x, ...)
 
 \method{print}{quietly_mapped}(x, ...)
+
+\method{print}{peacefully_mapped}(x, ...)
 }
 \description{
 Additional functions required to integrate

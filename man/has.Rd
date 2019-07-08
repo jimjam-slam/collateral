@@ -7,7 +7,7 @@
 \alias{has_warnings}
 \alias{has_messages}
 \alias{has_output}
-\title{Filter elements that contain a type of side effect.}
+\title{Determine which elements contain a type of side effect.}
 \usage{
 has_results(x)
 
@@ -24,7 +24,7 @@ has_output(x)
 }
 \value{
 A logical vector, of the same length as \code{x}, which is \code{TRUE} for
-  elements that contain a type of side effect and \code{FALSE} otherwise.
+elements that contain a type of side effect and \code{FALSE} otherwise.
 }
 \description{
 Returns a logical vector indicating which elements contain a type of side
@@ -32,8 +32,8 @@ effect. If you have a large data frame or list, you can use this to isolate
 the element that contain warnings, for example, or messages.s
 }
 \details{
-The \code{has_*()} functions power the \code{tally_*()} functions and, in turn,
-the \code{summary} methods.
+The \code{has_*()} functions power the `tally_*()`` functions and, in turn,
+the \code{\link[=summary]{summary()}} method.
 }
 \examples{
 
@@ -48,7 +48,7 @@ suppressMessages(library(tidyverse))
 # in conjunction with dplyr::summarise()
 mtcars \%>\%
   rownames_to_column(var = "car") \%>\%
-  as_data_frame() \%>\%
+  as_tibble() \%>\%
   select(car, cyl, disp, wt) \%>\%
   # spike some rows in cyl == 4 to make them fail
   mutate(wt = dplyr::case_when(

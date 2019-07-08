@@ -1,7 +1,17 @@
 Package: collateral
 Title: Quickly Evaluate Captured Side Effects
-Version: 0.4.2.9001
-Authors@R: person("James", "Goldie", email = "me@rensa.co", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5024-6207"))
+Version: 0.5.0.9001
+Authors@R: c(
+  person("James", "Goldie",
+    email = "me@rensa.co",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-5024-6207")),
+  person("Jean-Francois", "Zinque",
+    email = "jzinque@gmail.com",
+    role = "ctb"),
+  person("Mikhail", "Balyasin",
+    email = "mikhail.balyasin+blog@gmail.com",
+    role = "ctb"))
 Description: The purrr package allows you to capture the side effects (errors, warning, messages and other output) of functions using safely() and quietly(). Using collateral, you can quickly see which elements of a list (or list-column) returned results, which threw errors and which returned warnings or other output.
 URL: https://rensa.co/collateral/index.html, https://github.com/rensa/collateral
 Depends: R (>= 3.1.0)
@@ -16,9 +26,12 @@ LazyData: true
 RoxygenNote: 6.1.1
 BugReports: https://github.com/rensa/collateral/issues
 Suggests:
-  dplyr,
-  knitr,
-  magrittr,
-  rmarkdown,
-  tidyverse
+    dplyr,
+    furrr,
+    knitr,
+    magrittr,
+    rmarkdown,
+    tidyverse,
+    testthat
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)

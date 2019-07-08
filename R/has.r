@@ -1,15 +1,15 @@
-#' Filter elements that contain a type of side effect.
+#' Determine which elements contain a type of side effect.
 #'
 #' Returns a logical vector indicating which elements contain a type of side
 #' effect. If you have a large data frame or list, you can use this to isolate
 #' the element that contain warnings, for example, or messages.s
 #'
-#' The \code{has_*()} functions power the \code{tally_*()} functions and, in turn,
-#' the \code{summary} methods.
+#' The `has_*()` functions power the `tally_*()`` functions and, in turn,
+#' the [summary()] method.
 #'
-#' @param x A \code{safely_mapped} or \code{quietly_mapped} list to tally.
-#' @return A logical vector, of the same length as \code{x}, which is \code{TRUE} for
-#'   elements that contain a type of side effect and \code{FALSE} otherwise.
+#' @param x A `safely_mapped` or `quietly_mapped` list to tally.
+#' @return A logical vector, of the same length as `x`, which is `TRUE` for
+#'   elements that contain a type of side effect and `FALSE` otherwise.
 #'
 #' @examples
 #'
@@ -24,7 +24,7 @@
 #' # in conjunction with dplyr::summarise()
 #' mtcars %>%
 #'   rownames_to_column(var = "car") %>%
-#'   as_data_frame() %>%
+#'   as_tibble() %>%
 #'   select(car, cyl, disp, wt) %>%
 #'   # spike some rows in cyl == 4 to make them fail
 #'   mutate(wt = dplyr::case_when(
@@ -43,9 +43,12 @@ NULL
 #' @importFrom methods is
 #' @export
 has_results = function(x) {
-  if(!(is(x, 'safely_mapped') | is(x, 'quietly_mapped'))) {
-    stop(paste('Only usable on safely_mapped or',
-      'quietly_mapped objects.'))
+  if (!(
+    is(x, 'safely_mapped') |
+    is(x, 'quietly_mapped') |
+    is(x, 'peacefully_mapped'))) {
+    stop(paste('Only usable on safely_mapped,',
+      'quietly_mapped or peacefully_mapped objects.'))
   }
   map_lgl(x, ~ !is.null(.$result))
 }
@@ -55,8 +58,8 @@ has_results = function(x) {
 #' @importFrom methods is
 #' @export
 has_errors = function(x) {
-  if(!is(x, 'safely_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'safely_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on safely_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$error) & !is_empty(.$error$message))
 }
@@ -66,8 +69,8 @@ has_errors = function(x) {
 #' @importFrom methods is
 #' @export
 has_warnings = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$warning) & !is_empty(.$warning))
 }
@@ -77,8 +80,8 @@ has_warnings = function(x) {
 #' @importFrom methods is
 #' @export
 has_messages = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$message) & !is_empty(.$message))
 }
@@ -88,8 +91,8 @@ has_messages = function(x) {
 #' @importFrom methods is
 #' @export
 has_output = function(x) {
-  if(!is(x, 'quietly_mapped')) {
-    stop('Only usable on safely_mapped objects.')
+  if (!(is(x, 'quietly_mapped') | is(x, 'peacefully_mapped'))) {
+    stop('Only usable on quietly_mapped or peacefully_mapped objects.')
   }
   map_lgl(x, ~ !is.null(.$output) & !is_empty(.$output))
 }

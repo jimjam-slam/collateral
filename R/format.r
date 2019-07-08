@@ -19,6 +19,12 @@ quietly_mapped <- function(x) {
 
 #' @rdname collateral_extras
 #' @export
+peacefully_mapped <- function(x) {
+  as_peacefully_mapped(x)
+}
+
+#' @rdname collateral_extras
+#' @export
 as_safely_mapped <- function(x) {
   structure(x, class = "safely_mapped")
 }
@@ -27,6 +33,12 @@ as_safely_mapped <- function(x) {
 #' @export
 as_quietly_mapped <- function(x) {
   structure(x, class = "quietly_mapped")
+}
+
+#' @rdname collateral_extras
+#' @export
+as_peacefully_mapped <- function(x) {
+  structure(x, class = "peacefully_mapped")
 }
 
 #' @rdname collateral_extras
@@ -43,6 +55,12 @@ c.quietly_mapped <- function(x, ...) {
 
 #' @rdname collateral_extras
 #' @export
+c.peacefully_mapped <- function(x, ...) {
+  as_peacefully_mapped(NextMethod())
+}
+
+#' @rdname collateral_extras
+#' @export
 `[.safely_mapped` <- function(x, i) {
   as_safely_mapped(NextMethod())
 }
@@ -51,6 +69,12 @@ c.quietly_mapped <- function(x, ...) {
 #' @export
 `[.quietly_mapped` <- function(x, i) {
   as_quietly_mapped(NextMethod())
+}
+
+#' @rdname collateral_extras
+#' @export
+`[.peacefully_mapped` <- function(x, i) {
+  as_peacefully_mapped(NextMethod())
 }
 
 # format functions actually parse the output and return styled strings --------
@@ -67,8 +91,8 @@ format.safely_mapped = function(x, ...) {
 
   purrr::map_chr(x,
     ~ paste(
-        if (is.null(.$result))                            qu_none else qu_R,
-        if (is.null(.$error) | is_empty(.$error$message)) qu_none else qu_E,
+        if (is_empty(.$result))                     qu_none else qu_R,
+        if (is_empty(.$error$message))              qu_none else qu_E,
         sep = ' '))
 }
 
@@ -86,10 +110,33 @@ format.quietly_mapped = function(x, ...) {
 
   purrr::map_chr(x,
     ~ paste(
-      if (is.null(.$result))                            qu_none else qu_R,
-      if (is.null(.$output)  | is_empty(.$output))      qu_none else qu_O,
-      if (is.null(.$message) | is_empty(.$message))     qu_none else qu_M,
-      if (is.null(.$warning) | is_empty(.$warning))     qu_none else qu_W,
+      if (is_empty(.$result))                       qu_none else qu_R,
+      if (is_empty(.$output) | all(.$output == '')) qu_none else qu_O,
+      if (is_empty(.$message))                      qu_none else qu_M,
+      if (is_empty(.$warning))                      qu_none else qu_W,
+      sep = ' '))
+}
+
+#' @rdname collateral_extras
+#' @importFrom purrr is_empty map_chr
+#' @importFrom crayon green make_style red yellow white silver
+#' @export
+format.peacefully_mapped = function(x, ...) {
+  # styled constants
+  qu_R = crayon::green('R')
+  qu_E = crayon::red('E')
+  qu_W = crayon::make_style('orange')('W')
+  qu_M = crayon::yellow('M')
+  qu_O = crayon::white('O')
+  qu_none = crayon::silver('_')
+
+  purrr::map_chr(x,
+    ~ paste(
+      if (is_empty(.$result))                        qu_none else qu_R,
+      if (is_empty(.$output) | all(.$output == ''))  qu_none else qu_O,
+      if (is_empty(.$message))                       qu_none else qu_M,
+      if (is_empty(.$warning))                       qu_none else qu_W,
+      if (is_empty(.$error))                         qu_none else qu_E,
       sep = ' '))
 }
 
@@ -120,6 +167,13 @@ print.safely_mapped = function(x, ...) {
 #' @rdname collateral_extras
 #' @export
 print.quietly_mapped = function(x, ...) {
+  cat(format(x), sep = '\n')
+  invisible(x)
+}
+
+#' @rdname collateral_extras
+#' @export
+print.peacefully_mapped = function(x, ...) {
   cat(format(x), sep = '\n')
   invisible(x)
 }
