@@ -49,7 +49,7 @@ suppressMessages(library(tidyverse))
 # in conjunction with dplyr::summarise()
 mtcars \%>\%
   rownames_to_column(var = "car") \%>\%
-  as_data_frame() \%>\%
+  as_tibble() \%>\%
   select(car, cyl, disp, wt) \%>\%
   # spike some rows in cyl == 4 to make them fail
   mutate(wt = dplyr::case_when(

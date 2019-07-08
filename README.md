@@ -32,8 +32,29 @@ devtools::install_github('rensa/collateral')
 
 ## Example
 
-```{r}
+
+```r
 library(tidyverse)
+```
+
+```
+## [37m-- [1mAttaching packages[22m --------------------------------------- tidyverse 1.2.1 --[39m
+```
+
+```
+## [37m[32mv[37m [34mggplot2[37m 3.2.0     [32mv[37m [34mpurrr  [37m 0.3.2
+## [32mv[37m [34mtibble [37m 2.1.3     [32mv[37m [34mdplyr  [37m 0.8.3
+## [32mv[37m [34mtidyr  [37m 0.8.3     [32mv[37m [34mstringr[37m 1.4.0
+## [32mv[37m [34mreadr  [37m 1.3.1     [32mv[37m [34mforcats[37m 0.4.0[39m
+```
+
+```
+## [37m-- [1mConflicts[22m ------------------------------------------ tidyverse_conflicts() --
+## [31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
+## [31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m
+```
+
+```r
 library(collateral)
 
 test =
@@ -51,6 +72,15 @@ test =
   mutate(qlog = map_quietly(data, ~ log(.$wt)))
 
 test
+```
+
+```
+## [38;5;246m# A tibble: 3 x 3[39m
+##     cyl data              qlog    
+##   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<list>[39m[23m            [3m[38;5;246m<collat>[39m[23m
+## [38;5;250m1[39m     6 [38;5;246m<tibble [7 x 3]>[39m  [32mR[39m [90m_[39m [90m_[39m [90m_[39m 
+## [38;5;250m2[39m     4 [38;5;246m<tibble [11 x 3]>[39m [32mR[39m [90m_[39m [90m_[39m [38;5;214mW[39m 
+## [38;5;250m3[39m     8 [38;5;246m<tibble [14 x 3]>[39m [32mR[39m [90m_[39m [90m_[39m [90m_[39m
 ```
 
 <!-- ![Example of styled `collateral` output](man/figures/collateral_example.png)
