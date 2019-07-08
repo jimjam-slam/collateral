@@ -20,39 +20,39 @@
 \alias{future_pmap_safely}
 \alias{future_pmap_quietly}
 \alias{future_pmap_peacefully}
-\title{Map safely or quietly over a list.}
+\title{Map over a list while capturing side effects.}
 \usage{
-map_safely(.x, .f, ...)
+map_safely(.x, .f, otherwise = NULL, quiet = TRUE, ...)
 
 map_quietly(.x, .f, ...)
 
 map_peacefully(.x, .f, ...)
 
-map2_safely(.x, .y, .f, ...)
+map2_safely(.x, .y, .f, otherwise = NULL, quiet = TRUE, ...)
 
 map2_quietly(.x, .y, .f, ...)
 
 map2_peacefully(.x, .y, .f, ...)
 
-pmap_safely(.l, .f, ...)
+pmap_safely(.l, .f, otherwise = NULL, quiet = TRUE, ...)
 
 pmap_quietly(.l, .f, ...)
 
 pmap_peacefully(.l, .f, ...)
 
-future_map_safely(.x, .f, ...)
+future_map_safely(.x, .f, otherwise = NULL, quiet = TRUE, ...)
 
 future_map_quietly(.x, .f, ...)
 
 future_map_peacefully(.x, .f, ...)
 
-future_map2_safely(.x, .y, .f, ...)
+future_map2_safely(.x, .y, .f, otherwise = NULL, quiet = TRUE, ...)
 
 future_map2_quietly(.x, .y, .f, ...)
 
 future_map2_peacefully(.x, .y, .f, ...)
 
-future_pmap_safely(.l, .f, ...)
+future_pmap_safely(.l, .f, otherwise = NULL, quiet = TRUE, ...)
 
 future_pmap_quietly(.l, .f, ...)
 
@@ -61,7 +61,8 @@ future_pmap_peacefully(.l, .f, ...)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A function, formula or atomic vector.}
+\item{.f}{A function, formula or atomic vector, as specified by
+\code{\link[purrr:as_mapper]{purrr::as_mapper()}}.}
 
 \item{...}{Other arguments supplied to \code{\link[purrr:map]{purrr::map()}} or its variants, or to
 \code{\link[furrr:future_map]{furrr::future_map()}} or its variants..}
@@ -73,20 +74,16 @@ arguments that \code{.f} will be called with. List names will be used if
 present.}
 }
 \value{
-A list of the same length as \code{.x}. The list elements contain
-results and captured side effects as described in
-\code{\link[purrr:safely]{purrr::safely()}} and
-\code{\link[purrr:quietly]{purrr::quietly()}}.
+A list of the same length as \code{.x}. Each element of the returned list
+is itself a named list, s tructured according to the captured side effects.
+The Details section elaborates on these side effects.
 }
 \description{
-\code{map_safely()} and \code{map_quietly()} are variants of
-\code{\link[purrr:map]{purrr::map()}} that:
-\enumerate{
-\item wrap the supplied function \code{.f} with either \code{\link[purrr:safely]{purrr::safely()}} or
-\code{\link[purrr:quietly]{purrr::quietly()}}, and
-\item add a class to the returned output list in order to format it nicely when
-it (or a tibble it appears in) is printed.
-}
+\code{map_safely()}, \code{map_quietly()} and \code{map_peacefully()} are variants of
+\code{\link[purrr:map]{purrr::map()}} that wrap the supplied function \code{.f} using \code{\link[purrr:safely]{purrr::safely()}}
+and \code{\link[purrr:quietly]{purrr::quietly()}} in order to capture various side effects. Lists mapped
+in this way have an associated class added to them, allowing them to
+succinctly summarise captured side effects when displayed in a tibble.
 }
 \details{
 \code{map_safely()} will summarise the returned list with a fixed-width
