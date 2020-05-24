@@ -77,11 +77,14 @@
 
     
     
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="collateral" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
-<p>Map complex operations <code>safely</code> or <code>quietly</code>, quickly see the captured side effectsand quickly spot and isolate captured side effects.</p>
+<!-- badges: start -->
+<!-- badges: end -->
+<p>Map complex operations <code>safely</code> or <code>quietly</code> (or both: <code>peacefully</code>!), quickly see the captured side effects, and quickly spot and isolate captured side effects.</p>
 <p>The <code>collateral</code> package extends the power of <a href="https://purrr.tidyverse.org/reference/safely.html"><code>purrr</code>’s side effect-capturing functions</a>, giving you:</p>
 <ul>
 <li>drop-in <code>map()</code> variants, allowing you to capture side effects from functions mapped over lists, vectors and list-columns;</li>
@@ -93,49 +96,68 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install <code>collateral</code> on CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">'collateral'</span>)</a></code></pre></div>
-<p>Or install the development version using <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'rensa/collateral'</span>)</a></code></pre></div>
+<p>You can install the released version of collateral from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"collateral"</span>)</span></code></pre></div>
+<p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"rensa/collateral"</span>)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a></code></pre></div>
-<pre><code>## -- Attaching packages --------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
-<pre><code>## v ggplot2 3.2.0     v purrr   0.3.2
-## v tibble  2.1.3     v dplyr   0.8.3
-## v tidyr   0.8.3     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.4.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(collateral)</a>
-<a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3">test =</a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="co"># tidy up and trim down for the example</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span>mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">select</span>(car, cyl, disp, wt) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="co"># spike some rows in cyl == 4 to make them fail</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wt =</span> dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</a>
-<a class="sourceLine" id="cb7-11" title="11">    wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span><span class="op">-</span>wt,</a>
-<a class="sourceLine" id="cb7-12" title="12">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="co"># nest and do some operations quietly()</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>cyl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_quietly</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(.<span class="op">$</span>wt)))</a>
-<a class="sourceLine" id="cb7-16" title="16"></a>
-<a class="sourceLine" id="cb7-17" title="17">test</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##     cyl data              qlog    
-##   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;
-## 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ 
-## 2     4 &lt;tibble [11 x 3]&gt; R _ _ W 
-## 3     8 &lt;tibble [14 x 3]&gt; R _ _ _</code></pre>
-<!-- ![Example of styled `collateral` output](man/figures/collateral_example.png)
-
-`collateral` uses `pillar` to style output, so supported terminals will also color the output! -->
+<p>This example uses the famous <code>mtcars</code> dataset—but first, we’re going to sabotage a few of the rows by making them negative. The <code>log</code> function produces <code>NaN</code> with a warning when you give it a neagtive number.</p>
+<p>It’d be easy to miss this in a non-interactive script if you didn’t explicitly test for the presence of <code>NaN</code>! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/message">suppressPackageStartupMessages</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse))</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; Warning: package 'tibble' was built under R version 3.6.3</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.6.3</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; Warning: package 'purrr' was built under R version 3.6.3</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; Warning: package 'forcats' was built under R version 3.6.3</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(collateral)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>test =</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="co"># tidy up and trim down for the example</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="st">  </span><span class="kw">select</span>(car, cyl, disp, wt) <span class="op">%&gt;%</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="st">  </span><span class="co"># spike some rows in cyl == 4 to make them fail</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wt =</span> dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</span>
+<span id="cb3-16"><a href="#cb3-16"></a>    wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span><span class="op">-</span>wt,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="st">  </span><span class="co"># nest and do some operations peacefully</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="st">  </span><span class="kw">nest</span>(<span class="dt">data =</span> <span class="op">-</span>cyl) <span class="op">%&gt;%</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_peacefully</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(.<span class="op">$</span>wt)))</span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a>test</span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; # A tibble: 3 x 3</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt;     cyl data              qlog     </span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></span></code></pre></div>
+<p>Here, we can see that all operations produced output (because <code>NaN</code> is still output)—but a few of them also produced warnings! You can then see those warnings…</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">qlog_warning =</span> <span class="kw">map_chr</span>(qlog, <span class="st">'warnings'</span>, <span class="dt">.null =</span> <span class="ot">NA</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; # A tibble: 3 x 4</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt;     cyl data              qlog      qlog_warning </span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _ &lt;NA&gt;         </span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _ NaNs produced</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _ &lt;NA&gt;</span></span></code></pre></div>
+<p>… filter on them…</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="reference/has.html">has_warnings</a></span>(qlog))</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; # A tibble: 2 x 3</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;     cyl data              qlog     </span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 2     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></span></code></pre></div>
+<p>… or summarise them, for either interactive or non-interactive purposes:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="reference/summary.html">summary</a></span>(test<span class="op">$</span>qlog)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; 3 elements in total.</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; 3 elements returned results,</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; 3 elements delivered output,</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; 0 elements delivered messages,</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; 1 element delivered warnings, and</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; 0 elements threw an error.</span></span></code></pre></div>
 </div>
 <div id="support" class="section level2">
 <h2 class="hasAnchor">

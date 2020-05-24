@@ -153,7 +153,7 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #'     wt < 2 ~ -wt,
 #'     TRUE ~ wt)) %>%
 #'   # nest and do some operations quietly()
-#'   nest(-cyl) %>%
+#'   nest(data = -cyl) %>%
 #'   mutate(qlog = map_quietly(data, ~ log(.$wt)))
 #'
 NULL
