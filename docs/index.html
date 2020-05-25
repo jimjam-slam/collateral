@@ -6,21 +6,28 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quickly Evaluate Captured Side Effects • collateral</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Quickly Evaluate Captured Side Effects">
 <meta property="og:description" content="The purrr package allows you to capture the side effects (errors, warning, messages and other output) of functions using safely() and quietly(). Using collateral, you can quickly see which elements of a list (or list-column) returned results, which threw errors and which returned warnings or other output.">
-<meta property="og:image" content="/logo.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
-    <div class="container template-article">
+<body data-spy="scroll" data-target="#toc">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -40,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -56,8 +63,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rensa/collateral">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rensa/collateral/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,16 +77,12 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="collateral" class="section level1">
+      </header><div class="row">
+  <div class="contents col-md-9">
+<div id="collateral-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#collateral" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
+<a href="#collateral-" class="anchor"></a>collateral <img src="reference/figures/logo.svg" align="right" width="180px">
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
@@ -91,72 +94,68 @@
 <li>helpers for summarising side effects or filtering tibbles and lists for present side effects.</li>
 </ul>
 <p>If you’re not familiar with <code>purrr</code> or haven’t used a list-column workflow in R before, the <a href="https://rensa.co/collateral/articles/collateral.html"><code>collateral</code> vignette</a> shows you how it works, the benefits for your analysis and how <code>collateral</code> simplifies the process of handling complex mapped operations.</p>
-<p>If you’re already familiar with <code>purrr</code>, the <a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read">tl;dr</a> is that <a href="https://rensa.co/collateral/reference/collateral_mappers.html"><code><a href="reference/collateral_mappers.html">collateral::map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">collateral::map_quietly()</a></code> (and their <code>map2</code> and <code>pmap</code> variants)</a> will automatically wrap your supplied function in <code>safely()</code> or <code>quietly()</code> and will provide enhanced <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code>ed output and tibble displays. You can then use the <a href="https://rensa.co/collateral/reference/has.html"><code>has_*()</code></a> and <a href="https://rensa.co/collateral/reference/tally.html"><code>tally_*()</code></a> functions to filter or summarise the returned tibbles or lists.</p>
+<p>If you’re already familiar with <code>purrr</code>, the <a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read">tl;dr</a> is that <a href="https://rensa.co/collateral/reference/collateral_mappers.html"><code><a href="reference/collateral_mappers.html">collateral::map_safely()</a></code> and <code><a href="reference/collateral_mappers.html">collateral::map_quietly()</a></code> (and their <code>map2</code> and <code>pmap</code> variants)</a> will automatically wrap your supplied function in <code>safely()</code> or <code>quietly()</code> and will provide enhanced <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>ed output and tibble displays. You can then use the <a href="https://rensa.co/collateral/reference/has.html"><code>has_*()</code></a> and <a href="https://rensa.co/collateral/reference/tally.html"><code>tally_*()</code></a> functions to filter or summarise the returned tibbles or lists.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of collateral from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"collateral"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"collateral"</span>)</pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("devtools")</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"rensa/collateral"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"rensa/collateral"</span>)</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>This example uses the famous <code>mtcars</code> dataset—but first, we’re going to sabotage a few of the rows by making them negative. The <code>log</code> function produces <code>NaN</code> with a warning when you give it a neagtive number.</p>
+<p>This example uses the famous <code>mtcars</code> dataset—but first, we’re going to sabotage a few of the rows by making them negative. The <code>log</code> function produces <code>NaN</code> with a warning when you give it a negative number.</p>
 <p>It’d be easy to miss this in a non-interactive script if you didn’t explicitly test for the presence of <code>NaN</code>! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/message">suppressPackageStartupMessages</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse))</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; Warning: package 'tibble' was built under R version 3.6.3</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; Warning: package 'tidyr' was built under R version 3.6.3</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; Warning: package 'purrr' was built under R version 3.6.3</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; Warning: package 'forcats' was built under R version 3.6.3</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(collateral)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a>test =</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="co"># tidy up and trim down for the example</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span>mtcars <span class="op">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">"car"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="st">  </span><span class="kw">select</span>(car, cyl, disp, wt) <span class="op">%&gt;%</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="st">  </span><span class="co"># spike some rows in cyl == 4 to make them fail</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wt =</span> dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(</span>
-<span id="cb3-16"><a href="#cb3-16"></a>    wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span><span class="op">-</span>wt,</span>
-<span id="cb3-17"><a href="#cb3-17"></a>    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>wt)) <span class="op">%&gt;%</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="st">  </span><span class="co"># nest and do some operations peacefully</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="st">  </span><span class="kw">nest</span>(<span class="dt">data =</span> <span class="op">-</span>cyl) <span class="op">%&gt;%</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qlog =</span> <span class="kw"><a href="reference/collateral_mappers.html">map_peacefully</a></span>(data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(.<span class="op">$</span>wt)))</span>
-<span id="cb3-21"><a href="#cb3-21"></a></span>
-<span id="cb3-22"><a href="#cb3-22"></a>test</span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt; # A tibble: 3 x 3</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#&gt;     cyl data              qlog     </span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">collateral</span>)
+
+<span class="no">test</span> <span class="kw">=</span>
+  <span class="co"># tidy up and trim down for the example</span>
+  <span class="no">mtcars</span> <span class="kw">%&gt;%</span>
+  <span class="fu">rownames_to_column</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="st">"car"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">as_tibble</span>() <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(<span class="no">car</span>, <span class="no">cyl</span>, <span class="no">disp</span>, <span class="no">wt</span>) <span class="kw">%&gt;%</span>
+  <span class="co"># spike some rows in cyl == 4 to make them fail</span>
+  <span class="fu">mutate</span>(<span class="kw">wt</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(
+    <span class="no">wt</span> <span class="kw">&lt;</span> <span class="fl">2</span> ~ -<span class="no">wt</span>,
+    <span class="fl">TRUE</span> ~ <span class="no">wt</span>)) <span class="kw">%&gt;%</span>
+  <span class="co"># nest and do some operations peacefully</span>
+  <span class="fu">nest</span>(<span class="kw">data</span> <span class="kw">=</span> -<span class="no">cyl</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">qlog</span> <span class="kw">=</span> <span class="fu"><a href="reference/collateral_mappers.html">map_peacefully</a></span>(<span class="no">data</span>, ~ <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">.</span>$<span class="no">wt</span>)))
+
+<span class="no">test</span>
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;     cyl data              qlog     </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
+<span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span>
+<span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _</span>
+<span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></pre></div>
 <p>Here, we can see that all operations produced output (because <code>NaN</code> is still output)—but a few of them also produced warnings! You can then see those warnings…</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">qlog_warning =</span> <span class="kw">map_chr</span>(qlog, <span class="st">'warnings'</span>, <span class="dt">.null =</span> <span class="ot">NA</span>))</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; # A tibble: 3 x 4</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt;     cyl data              qlog      qlog_warning </span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _ &lt;NA&gt;         </span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _ NaNs produced</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _ &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu">mutate</span>(<span class="kw">qlog_warning</span> <span class="kw">=</span> <span class="fu">map_chr</span>(<span class="no">qlog</span>, <span class="st">'warnings'</span>, <span class="kw">.null</span> <span class="kw">=</span> <span class="fl">NA</span>))
+<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt;     cyl data              qlog      qlog_warning </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span>
+<span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _ &lt;NA&gt;         </span>
+<span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _ NaNs produced</span>
+<span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _ &lt;NA&gt;</span></pre></div>
 <p>… filter on them…</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(<span class="op">!</span><span class="kw"><a href="reference/has.html">has_warnings</a></span>(qlog))</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; # A tibble: 2 x 3</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;     cyl data              qlog     </span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 2     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="fu"><a href="reference/has.html">has_warnings</a></span>(<span class="no">qlog</span>))
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;     cyl data              qlog     </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
+<span class="co">#&gt; 1     6 &lt;tibble [7 x 3]&gt;  R _ _ _ _</span>
+<span class="co">#&gt; 2     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></pre></div>
 <p>… or summarise them, for either interactive or non-interactive purposes:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="reference/summary.html">summary</a></span>(test<span class="op">$</span>qlog)</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; 3 elements in total.</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; 3 elements returned results,</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; 3 elements delivered output,</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; 0 elements delivered messages,</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; 1 element delivered warnings, and</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; 0 elements threw an error.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/summary.html">summary</a></span>(<span class="no">test</span>$<span class="no">qlog</span>)
+<span class="co">#&gt; 3 elements in total.</span>
+<span class="co">#&gt; 3 elements returned results,</span>
+<span class="co">#&gt; 3 elements delivered output,</span>
+<span class="co">#&gt; 0 elements delivered messages,</span>
+<span class="co">#&gt; 1 element delivered warnings, and</span>
+<span class="co">#&gt; 0 elements threw an error.</span></pre></div>
 </div>
 <div id="other-features" class="section level2">
 <h2 class="hasAnchor">
@@ -171,13 +170,13 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=collateral">https://​cloud.r-project.org/​package=collateral</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/rensa/collateral">https://​github.com/​rensa/​collateral</a>
+<li>Browse source code at <br><a href="https://github.com/rensa/collateral/">https://​github.com/​rensa/​collateral/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/rensa/collateral/issues">https://​github.com/​rensa/​collateral/​issues</a>
 </li>
@@ -195,13 +194,12 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://rensa.co"><img src="https://rensa.co/assets/me.jpg" height="48"></a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5024-6207" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<a href="https://rensa.co"><img src="https://rensa.co/assets/me.jpg" height="48"></a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5024-6207" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-      </div>
-
+  </div>
 </div>
 
 
@@ -210,12 +208,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

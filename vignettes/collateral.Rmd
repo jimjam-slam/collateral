@@ -38,7 +38,11 @@ The biggest downside of being able to do complex analysis on many list elements 
 The aim of this vignette isn't just to get you acquainted with `collateral`'s tools: it's also to demonstrate the value of a tidy list-column workflow. We'll be using the `diamonds` dataset, which comes with the [`ggplot2`](https://ggplot2.tidyverse.org) package. Let's take a look:
 
 ```{r}
-library(tidyverse)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
 
 diamonds
 ```
@@ -106,7 +110,7 @@ Yuck. Nested data frames, which are supported by tibbles, make this much easier 
 nested_diamonds =
   diamonds %>%
   select(cut, color, clarity, depth, price) %>%
-  nest(-cut, -color)
+  nest(data = c(clarity, depth, price))
 
 nested_diamonds
 ```
@@ -131,7 +135,6 @@ nested_diamonds %>%
 We can even do complex things like build regression models on the groups:
 
 ```{r}
-
 diamonds_models =
   nested_diamonds %>%
   mutate(
@@ -203,7 +206,7 @@ nested_diamonds$data[[5]] = nested_diamonds$data[[5]] %>% filter(price < 300)
 
 collat_models =
   nested_diamonds %>%
-  mutate(price_mod = map_safely(data, ~ lm(.$price ~ .$depth)))
+  mutate(price_mod = map_safely(data, ~ lm(.x$price ~ .x$depth)))
 
 print(collat_models)
 ```
@@ -233,7 +236,7 @@ collat_models %>%
 
 # Filtering on, and summarising, side effects {#helpers}
 
-`collateral` also comes with some additional helpers. You can get a quick `summary` of the side effects (which also invisibly returns a named vecotr for non-interactive use):
+`collateral` also comes with some additional helpers. You can get a quick `summary` of the side effects (which also invisibly returns a named vector for non-interactive use):
 
 ```{r}
 summary(collat_models$price_mod) 
@@ -262,6 +265,6 @@ Together, these tools make debugging problems drastically easier, even if you ne
 
 # Further tools
 
-Occasionally, you may find that an operation could return either errors, warnings or _both_. For example, `log` outputs a warning when it's given negative numebrs but throws an error if its input is non-numeric. Regression functions are particularly prone to this.
+Occasionally, you may find that an operation could return either errors, warnings or _both_. For example, `log` outputs a warning when it's given negative numbers but throws an error if its input is non-numeric. Regression functions are particularly prone to this.
 
 For these purposes, use `map_peacefully`, which works in the same way as `map_safely` and `map_quietly` but returns the side effects from both. If you aren't sure which collateral mapper to reach for, start with this one!

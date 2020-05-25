@@ -1,6 +1,9 @@
 context("Mapping functions return correctly structured data")
 
-library(tidyverse)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(purrr)
 library(collateral)
 
 # test data -------------------------------------------------------------------
@@ -19,7 +22,7 @@ test_spiked <-
     wt < 2 ~ -wt,
     TRUE ~ wt))
 
-test_dfs <- nest(test_spiked, -cyl)$data
+test_dfs <- test_spiked %>% nest(data = -cyl) %>% pull(data)
 test_subset <- test_spiked %>% dplyr::filter(cyl == 4)
 
 # map variant structure tests -------------------------------------------------

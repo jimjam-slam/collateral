@@ -80,7 +80,7 @@ present.}
 }
 \value{
 A list of the same length as \code{.x}. Each element of the returned list
-is itself a named list, s tructured according to the captured side effects.
+is itself a named list, structured according to the captured side effects.
 The Details section elaborates on these side effects.
 }
 \description{
@@ -98,7 +98,7 @@ string of two (spaced) columns:
 \item If an \code{error} component is present, \code{E} appears.
 }
 
-If either component is missing, an underscore (\code{_}) appears in its
+If either component is missing, an underscore (\verb{_}) appears in its
 place.
 
 Similarly, \code{map_quietly()} will summarise the returned list with a
@@ -110,7 +110,7 @@ fixed-width string of four (spaced) columns:
 \item If a \code{warnings} component is present, \code{W} appears.
 }
 
-If any is missing, an underscore (\code{_}) appears in its
+If any is missing, an underscore (\verb{_}) appears in its
 place.
 
 Variants for \href{https://purrr.tidyverse.org/reference/map2.html}{iterating over two or more inputs simultaneously}
@@ -123,7 +123,7 @@ are also provided and function identically to their \code{purrr} counterparts:
 }
 
 Further variants, prefixed by \code{future_}, allow safe or quiet mapping to
-happen in parallel if you have the \href{https://cran.r-project.org/package=furrr}{furrr}
+happen in parallel if you have the \href{https://cran.r-project.org/package=furrr}{\code{furrr}}
 package installed:
 \enumerate{
 \item \code{future_map_safely()}
@@ -136,13 +136,14 @@ package installed:
 }
 \examples{
 
-library(magrittr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(collateral)
 
 # like map(), these can be used to iterate over vectors or lists
 list("a", 10, 100) \%>\% map_safely(log)
 list(5, -12, 103) \%>\% map_quietly(log)
-
-suppressMessages(library(tidyverse))
 
 # if you're using tibbles, you can also iterate over list-columns,
 # such as nested data frames

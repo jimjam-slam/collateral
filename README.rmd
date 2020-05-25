@@ -46,12 +46,14 @@ devtools::install_github("rensa/collateral")
 ```
 ## Example
 
-This example uses the famous `mtcars` dataset---but first, we're going to sabotage a few of the rows by making them negative. The `log` function produces `NaN` with a warning when you give it a neagtive number.
+This example uses the famous `mtcars` dataset---but first, we're going to sabotage a few of the rows by making them negative. The `log` function produces `NaN` with a warning when you give it a negative number.
 
 It'd be easy to miss this in a non-interactive script if you didn't explicitly test for the presence of `NaN`! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output: 
 
 ```{r}
-suppressPackageStartupMessages(library(tidyverse))
+library(tibble)
+library(dplyr)
+library(tidyr)
 library(collateral)
 
 test =

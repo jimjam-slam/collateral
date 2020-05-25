@@ -32,17 +32,18 @@ effect. If you have a large data frame or list, you can use this to isolate
 the element that contain warnings, for example, or messages.s
 }
 \details{
-The \code{has_*()} functions power the `tally_*()`` functions and, in turn,
+The \verb{has_*()} functions power the `tally_*()`` functions and, in turn,
 the \code{\link[=summary]{summary()}} method.
 }
 \examples{
 
-library(magrittr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(collateral)
 
 list("a", 10, 100) \%>\% map_safely(log) \%>\% has_errors()
 list(5, -12, 103) \%>\% map_quietly(log) \%>\% has_warnings()
-
-suppressMessages(library(tidyverse))
 
 # if you're working with list-columns, the tally functions are useful
 # in conjunction with dplyr::summarise()
