@@ -13,6 +13,7 @@
 
 * Added `map_peacefully` variants that combine `map_safely` and `map_quietly`
 * Added `future_` variants that integrate with the [`furrr`](https://cran.r-project.org/package=furrr) package to allow parallel processing
+* [Internal changes](https://github.com/rensa/collateral/issues/18) to maintain compatibility with `tibble`, `vctrs`, `pillar` and `tidyr` updates
 
 ## Minor changes
 

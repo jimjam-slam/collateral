@@ -109,22 +109,24 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This example uses the famous <code>mtcars</code> dataset—but first, we’re going to sabotage a few of the rows by making them negative. The <code>log</code> function produces <code>NaN</code> with a warning when you give it a negative number.</p>
 <p>It’d be easy to miss this in a non-interactive script if you didn’t explicitly test for the presence of <code>NaN</code>! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>))
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tibble</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">collateral</span>)
 
 <span class="no">test</span> <span class="kw">=</span>
   <span class="co"># tidy up and trim down for the example</span>
   <span class="no">mtcars</span> <span class="kw">%&gt;%</span>
-  <span class="fu">rownames_to_column</span>(<span class="kw">var</span> <span class="kw">=</span> <span class="st">"car"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">as_tibble</span>() <span class="kw">%&gt;%</span>
-  <span class="fu">select</span>(<span class="no">car</span>, <span class="no">cyl</span>, <span class="no">disp</span>, <span class="no">wt</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="kw">var</span> <span class="kw">=</span> <span class="st">"car"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">car</span>, <span class="no">cyl</span>, <span class="no">disp</span>, <span class="no">wt</span>) <span class="kw">%&gt;%</span>
   <span class="co"># spike some rows in cyl == 4 to make them fail</span>
-  <span class="fu">mutate</span>(<span class="kw">wt</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">wt</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(
     <span class="no">wt</span> <span class="kw">&lt;</span> <span class="fl">2</span> ~ -<span class="no">wt</span>,
     <span class="fl">TRUE</span> ~ <span class="no">wt</span>)) <span class="kw">%&gt;%</span>
   <span class="co"># nest and do some operations peacefully</span>
-  <span class="fu">nest</span>(<span class="kw">data</span> <span class="kw">=</span> -<span class="no">cyl</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">qlog</span> <span class="kw">=</span> <span class="fu"><a href="reference/collateral_mappers.html">map_peacefully</a></span>(<span class="no">data</span>, ~ <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">.</span>$<span class="no">wt</span>)))
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(<span class="kw">data</span> <span class="kw">=</span> -<span class="no">cyl</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">qlog</span> <span class="kw">=</span> <span class="fu"><a href="reference/collateral_mappers.html">map_peacefully</a></span>(<span class="no">data</span>, ~ <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="no">.</span>$<span class="no">wt</span>)))
 
 <span class="no">test</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
@@ -134,7 +136,7 @@
 <span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _</span>
 <span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _</span></pre></div>
 <p>Here, we can see that all operations produced output (because <code>NaN</code> is still output)—but a few of them also produced warnings! You can then see those warnings…</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu">mutate</span>(<span class="kw">qlog_warning</span> <span class="kw">=</span> <span class="fu">map_chr</span>(<span class="no">qlog</span>, <span class="st">'warnings'</span>, <span class="kw">.null</span> <span class="kw">=</span> <span class="fl">NA</span>))
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">qlog_warning</span> <span class="kw">=</span> <span class="fu">map_chr</span>(<span class="no">qlog</span>, <span class="st">'warnings'</span>, <span class="kw">.null</span> <span class="kw">=</span> <span class="fl">NA</span>))
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;     cyl data              qlog      qlog_warning </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span>
@@ -142,7 +144,7 @@
 <span class="co">#&gt; 2     4 &lt;tibble [11 x 3]&gt; R _ _ W _ NaNs produced</span>
 <span class="co">#&gt; 3     8 &lt;tibble [14 x 3]&gt; R _ _ _ _ &lt;NA&gt;</span></pre></div>
 <p>… filter on them…</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="fu"><a href="reference/has.html">has_warnings</a></span>(<span class="no">qlog</span>))
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">test</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(!<span class="fu"><a href="reference/has.html">has_warnings</a></span>(<span class="no">qlog</span>))
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;     cyl data              qlog     </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
