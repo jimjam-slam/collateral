@@ -42,7 +42,10 @@ example, and these are not counted separately.
 }
 \examples{
 
-library(magrittr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(collateral)
 
 list("a", 10, 100) \%>\% map_safely(log) \%>\% summary()
 list(5, -12, 103) \%>\% map_quietly(log) \%>\% summary()

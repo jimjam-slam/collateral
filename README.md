@@ -1,10 +1,11 @@
----
-output: github_document
----
+<!-- README.md is manually copied from README.Rmd. Please edit that file first -->
 
 # collateral <img src="man/figures/logo.svg" align="right" width="180px" />
 
-Map complex operations `safely` or `quietly` (or both!), quickly see the captured side effectsand quickly spot and isolate captured side effects.
+<!-- badges: start -->
+<!-- badges: end -->
+
+Map complex operations `safely` or `quietly` (or both: `peacefully`!), quickly see the captured side effects, and quickly spot and isolate captured side effects.
 
 The `collateral` package extends the power of [`purrr`'s side effect-capturing functions](https://purrr.tidyverse.org/reference/safely.html), giving you:
 
@@ -16,45 +17,31 @@ If you're not familiar with `purrr` or haven't used a list-column workflow in R 
 
 If you're already familiar with `purrr`, the [tl;dr](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read) is that [`collateral::map_safely()` and `collateral::map_quietly()` (and their `map2` and `pmap` variants)](https://rensa.co/collateral/reference/collateral_mappers.html) will automatically wrap your supplied function in `safely()` or `quietly()` and will provide enhanced `print()`ed output and tibble displays. You can then use the [`has_*()`](https://rensa.co/collateral/reference/has.html) and [`tally_*()`](https://rensa.co/collateral/reference/tally.html) functions to filter or summarise the returned tibbles or lists.
 
+
 ## Installation
 
-You can install `collateral` on CRAN:
+You can install the released version of collateral from [CRAN](https://CRAN.R-project.org) with:
 
 ```r
-install.packages('collateral')
+install.packages("collateral")
 ```
 
-Or install the development version using  [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html):
+And the development version from [GitHub](https://github.com/) with:
 
 ```r
-devtools::install_github('rensa/collateral')
+# install.packages("devtools")
+devtools::install_github("rensa/collateral")
 ```
-
 ## Example
 
+This example uses the famous `mtcars` dataset---but first, we're going to sabotage a few of the rows by making them negative. The `log` function produces `NaN` with a warning when you give it a negative number.
+
+It'd be easy to miss this in a non-interactive script if you didn't explicitly test for the presence of `NaN`! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output:
 
 ```r
-library(tidyverse)
-```
-
-```
-## [37m-- [1mAttaching packages[22m --------------------------------------- tidyverse 1.2.1 --[39m
-```
-
-```
-## [37m[32mv[37m [34mggplot2[37m 3.2.0     [32mv[37m [34mpurrr  [37m 0.3.2
-## [32mv[37m [34mtibble [37m 2.1.3     [32mv[37m [34mdplyr  [37m 0.8.3
-## [32mv[37m [34mtidyr  [37m 0.8.3     [32mv[37m [34mstringr[37m 1.4.0
-## [32mv[37m [34mreadr  [37m 1.3.1     [32mv[37m [34mforcats[37m 0.4.0[39m
-```
-
-```
-## [37m-- [1mConflicts[22m ------------------------------------------ tidyverse_conflicts() --
-## [31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
-## [31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m
-```
-
-```r
+library(tibble)
+library(dplyr)
+library(tidyr)
 library(collateral)
 
 test =
@@ -67,25 +54,57 @@ test =
   mutate(wt = dplyr::case_when(
     wt < 2 ~ -wt,
     TRUE ~ wt)) %>%
-  # nest and do some operations quietly()
-  nest(-cyl) %>%
-  mutate(qlog = map_quietly(data, ~ log(.$wt)))
+  # nest and do some operations peacefully
+  nest(data = -cyl) %>%
+  mutate(qlog = map_peacefully(data, ~ log(.$wt)))
 
 test
+#> # A tibble: 3 x 3
+#>     cyl data              qlog     
+#>   <dbl> <list>            <collat> 
+#> 1     6 <tibble [7 x 3]>  R _ _ _ _
+#> 2     4 <tibble [11 x 3]> R _ _ W _
+#> 3     8 <tibble [14 x 3]> R _ _ _ _
 ```
 
-```
-## [38;5;246m# A tibble: 3 x 3[39m
-##     cyl data              qlog    
-##   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<list>[39m[23m            [3m[38;5;246m<collat>[39m[23m
-## [38;5;250m1[39m     6 [38;5;246m<tibble [7 x 3]>[39m  [32mR[39m [90m_[39m [90m_[39m [90m_[39m 
-## [38;5;250m2[39m     4 [38;5;246m<tibble [11 x 3]>[39m [32mR[39m [90m_[39m [90m_[39m [38;5;214mW[39m 
-## [38;5;250m3[39m     8 [38;5;246m<tibble [14 x 3]>[39m [32mR[39m [90m_[39m [90m_[39m [90m_[39m
+Here, we can see that all operations produced output (because `NaN` is still output)---but a few of them also produced warnings! You can then see those warnings...
+
+```r
+test %>% mutate(qlog_warning = map_chr(qlog, 'warnings', .null = NA))
+#> # A tibble: 3 x 4
+#>     cyl data              qlog      qlog_warning 
+#>   <dbl> <list>            <collat>  <chr>        
+#> 1     6 <tibble [7 x 3]>  R _ _ _ _ <NA>         
+#> 2     4 <tibble [11 x 3]> R _ _ W _ NaNs produced
+#> 3     8 <tibble [14 x 3]> R _ _ _ _ <NA>
 ```
 
-<!-- ![Example of styled `collateral` output](man/figures/collateral_example.png)
+... filter on them...
 
-`collateral` uses `pillar` to style output, so supported terminals will also color the output! -->
+```r
+test %>% filter(!has_warnings(qlog))
+#> # A tibble: 2 x 3
+#>     cyl data              qlog     
+#>   <dbl> <list>            <collat> 
+#> 1     6 <tibble [7 x 3]>  R _ _ _ _
+#> 2     8 <tibble [14 x 3]> R _ _ _ _
+```
+
+... or summarise them, for either interactive or non-interactive purposes:
+
+```r
+summary(test$qlog)
+#> 3 elements in total.
+#> 3 elements returned results,
+#> 3 elements delivered output,
+#> 0 elements delivered messages,
+#> 1 element delivered warnings, and
+#> 0 elements threw an error.
+```
+
+## Other features
+
+The collateral package is now fully integrated with the `furrr` package, so you can safely and quietly iterate operations across CPUs cores or remote nodes. All collateral mappers have `future_*`-prefixed variants for this purpose.
 
 ## Support
 

@@ -1,6 +1,7 @@
-pandoc: 2.3.1
-pkgdown: 1.1.0
+pandoc: 2.9.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   collateral: collateral.html
+last_built: 2020-07-20T09:25Z
 

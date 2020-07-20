@@ -127,20 +127,21 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #' @param ... Other arguments supplied to [purrr::map()] or its variants, or to
 #'   [furrr::future_map()] or its variants..
 #' @return A list of the same length as `.x`. Each element of the returned list
-#'   is itself a named list, s tructured according to the captured side effects.
+#'   is itself a named list, structured according to the captured side effects.
 #'   The Details section elaborates on these side effects.
 #'
 #' @name collateral_mappers
 #'
 #' @examples
 #'
-#' library(magrittr)
+#' library(tibble)
+#' library(dplyr)
+#' library(tidyr)
+#' library(collateral)
 #'
 #' # like map(), these can be used to iterate over vectors or lists
 #' list("a", 10, 100) %>% map_safely(log)
 #' list(5, -12, 103) %>% map_quietly(log)
-#'
-#' suppressMessages(library(tidyverse))
 #'
 #' # if you're using tibbles, you can also iterate over list-columns,
 #' # such as nested data frames
@@ -153,7 +154,7 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #'     wt < 2 ~ -wt,
 #'     TRUE ~ wt)) %>%
 #'   # nest and do some operations quietly()
-#'   nest(-cyl) %>%
+#'   nest(data = -cyl) %>%
 #'   mutate(qlog = map_quietly(data, ~ log(.$wt)))
 #'
 NULL

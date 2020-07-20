@@ -26,19 +26,19 @@ peacefully_mapped <- function(x) {
 #' @rdname collateral_extras
 #' @export
 as_safely_mapped <- function(x) {
-  structure(x, class = "safely_mapped")
+  structure(x, class = c("safely_mapped", "list"))
 }
 
 #' @rdname collateral_extras
 #' @export
 as_quietly_mapped <- function(x) {
-  structure(x, class = "quietly_mapped")
+  structure(x, class = c("quietly_mapped", "list"))
 }
 
 #' @rdname collateral_extras
 #' @export
 as_peacefully_mapped <- function(x) {
-  structure(x, class = "peacefully_mapped")
+  structure(x, class = c("peacefully_mapped", "list"))
 }
 
 #' @rdname collateral_extras

@@ -2,9 +2,22 @@
 output: github_document
 ---
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 # collateral <img src="man/figures/logo.svg" align="right" width="180px" />
 
-Map complex operations `safely` or `quietly` (or both!), quickly see the captured side effectsand quickly spot and isolate captured side effects.
+<!-- badges: start -->
+<!-- badges: end -->
+
+Map complex operations `safely` or `quietly` (or both: `peacefully`!), quickly see the captured side effects, and quickly spot and isolate captured side effects.
 
 The `collateral` package extends the power of [`purrr`'s side effect-capturing functions](https://purrr.tidyverse.org/reference/safely.html), giving you:
 
@@ -16,24 +29,31 @@ If you're not familiar with `purrr` or haven't used a list-column workflow in R 
 
 If you're already familiar with `purrr`, the [tl;dr](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read) is that [`collateral::map_safely()` and `collateral::map_quietly()` (and their `map2` and `pmap` variants)](https://rensa.co/collateral/reference/collateral_mappers.html) will automatically wrap your supplied function in `safely()` or `quietly()` and will provide enhanced `print()`ed output and tibble displays. You can then use the [`has_*()`](https://rensa.co/collateral/reference/has.html) and [`tally_*()`](https://rensa.co/collateral/reference/tally.html) functions to filter or summarise the returned tibbles or lists.
 
+
 ## Installation
 
-You can install `collateral` on CRAN:
+You can install the released version of collateral from [CRAN](https://CRAN.R-project.org) with:
 
-```r
-install.packages('collateral')
+``` r
+install.packages("collateral")
 ```
 
-Or install the development version using  [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html):
+And the development version from [GitHub](https://github.com/) with:
 
-```r
-devtools::install_github('rensa/collateral')
+``` r
+# install.packages("devtools")
+devtools::install_github("rensa/collateral")
 ```
-
 ## Example
 
+This example uses the famous `mtcars` dataset---but first, we're going to sabotage a few of the rows by making them negative. The `log` function produces `NaN` with a warning when you give it a negative number.
+
+It'd be easy to miss this in a non-interactive script if you didn't explicitly test for the presence of `NaN`! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output: 
+
 ```{r}
-library(tidyverse)
+library(tibble)
+library(dplyr)
+library(tidyr)
 library(collateral)
 
 test =
@@ -46,16 +66,34 @@ test =
   mutate(wt = dplyr::case_when(
     wt < 2 ~ -wt,
     TRUE ~ wt)) %>%
-  # nest and do some operations quietly()
-  nest(-cyl) %>%
-  mutate(qlog = map_quietly(data, ~ log(.$wt)))
+  # nest and do some operations peacefully
+  nest(data = -cyl) %>%
+  mutate(qlog = map_peacefully(data, ~ log(.$wt)))
 
 test
 ```
 
-<!-- ![Example of styled `collateral` output](man/figures/collateral_example.png)
+Here, we can see that all operations produced output (because `NaN` is still output)---but a few of them also produced warnings! You can then see those warnings...
 
-`collateral` uses `pillar` to style output, so supported terminals will also color the output! -->
+```{r}
+test %>% mutate(qlog_warning = map_chr(qlog, 'warnings', .null = NA))
+```
+
+... filter on them...
+
+```{r}
+test %>% filter(!has_warnings(qlog))
+```
+
+... or summarise them, for either interactive or non-interactive purposes:
+
+```{r}
+summary(test$qlog)
+```
+
+## Other features
+
+The collateral package is now fully integrated with the `furrr` package, so you can safely and quietly iterate operations across CPUs cores or remote nodes. All collateral mappers have `future_*`-prefixed variants for this purpose.
 
 ## Support
 
