@@ -86,8 +86,8 @@ The Details section elaborates on these side effects.
 \description{
 \code{map_safely()}, \code{map_quietly()} and \code{map_peacefully()} are variants of
 \code{\link[purrr:map]{purrr::map()}} that wrap the supplied function \code{.f} using \code{\link[purrr:safely]{purrr::safely()}}
-and \code{\link[purrr:quietly]{purrr::quietly()}} in order to capture various side effects. Lists mapped
-in this way have an associated class added to them, allowing them to
+and/or \code{purrr::quietly()} in order to capture various side effects. Lists
+mapped in this way have an associated class added to them, allowing them to
 succinctly summarise captured side effects when displayed in a tibble.
 }
 \details{

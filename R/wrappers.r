@@ -73,8 +73,8 @@ pmap_wrapper <- function(.l, .parallel = FALSE) {
 #'
 #' `map_safely()`, `map_quietly()` and `map_peacefully()` are variants of
 #' [purrr::map()] that wrap the supplied function `.f` using [purrr::safely()]
-#' and [purrr::quietly()] in order to capture various side effects. Lists mapped
-#' in this way have an associated class added to them, allowing them to
+#' and/or `purrr::quietly()` in order to capture various side effects. Lists
+#' mapped in this way have an associated class added to them, allowing them to
 #' succinctly summarise captured side effects when displayed in a tibble.
 #'
 #'
