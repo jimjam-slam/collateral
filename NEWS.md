@@ -1,3 +1,13 @@
+# collateral 0.5.2
+
+## Minor changes
+
+* Change licence from GPL-3 to MIT
+* Change author's contact email
+* Minor changes to the vignette and documentation
+* Change to the Description field of the DESCRIPTION
+* Change URL field of the DESCRIPTION to point to new personal website
+
 # collateral 0.5.1
 
 ## Minor changes
