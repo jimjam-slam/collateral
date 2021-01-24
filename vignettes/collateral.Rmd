@@ -35,7 +35,9 @@ The biggest downside of being able to do complex analysis on many list elements 
 
 # Basic exploratory analysis {#eda}
 
-The aim of this vignette isn't just to get you acquainted with `collateral`'s tools: it's also to demonstrate the value of a tidy list-column workflow. We'll be using the `diamonds` dataset, which comes with the [`ggplot2`](https://ggplot2.tidyverse.org) package. Let's take a look:
+The aim of this vignette isn't just to get you acquainted with `collateral`'s tools: it's also to demonstrate the value of a tidy list-column workflow. (If you're already a pro at this stuff, skip ahead to [section 4](#collateraluse)!)
+
+We'll be using the `diamonds` dataset, which comes with the [`ggplot2`](https://ggplot2.tidyverse.org) package. Let's take a look:
 
 ```{r}
 library(tibble)
@@ -66,13 +68,13 @@ ggplot(diamonds) +
   geom_histogram(aes(x = price, y = stat(count))) +
   facet_wrap(vars(cut), ncol = 1) +
   scale_x_log10() +
-  ggtitle('Price vs. cut')
+  ggtitle("Price vs. cut")
 
 ggplot(diamonds) +
   geom_histogram(aes(x = price, y = stat(count))) +
   facet_wrap(vars(color), ncol = 1) +
   scale_x_log10() +
-  ggtitle('Price vs. color')
+  ggtitle("Price vs. color")
 
 ```
 
@@ -80,11 +82,19 @@ ggplot(diamonds) +
 
 It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot. In fact, there may be lots of activities we want to do that don't involve plotting at all.
 
-This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/): _split_ data up into groups, _apply_ operations to those groups and _combine_ the results. One way of doing this with base R is to use [`split()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise according to the values of the grouping variables.
+This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/):
+
+* _split_ data up into groups,
+* _apply_ operations to those groups, and
+* _combine_ the results.
+
+One way of doing this with base R is to use [`split()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise according to the values of the grouping variables.
 
 ```{r}
 diamonds %>% split(diamonds$cut)
 ```
+
+We could use a loop to iterate over each of these data frames and perform our analysis, adding the results to a larger data frame or list as we go, but there's a better solution.
 
 As it happens, the `purrr::map()` functions work quite well on the output of `split()`:
 
@@ -98,7 +108,7 @@ diamonds %>%
 But this starts to get really unwieldy as you add more grouping variables. In particular, "meta data"— data about the groups—are either stuck inside the original data frames or are encoded in the name of each data frame in the list. It's also difficult to do a sequence of operations and keep everything associated with the original groupings:
 
 ```{r}
-diamonds_list = diamonds %>% split(list(diamonds$cut, diamonds$color))
+diamonds_list <- diamonds %>% split(list(diamonds$cut, diamonds$color))
 
 map_dbl(diamonds_list, ~ mean(.$price))
 map_dbl(diamonds_list, ~ cor(.$price, .$depth))
@@ -107,7 +117,7 @@ map_dbl(diamonds_list, ~ cor(.$price, .$depth))
 Yuck. Nested data frames, which are supported by tibbles, make this much easier to handle:
 
 ```{r}
-nested_diamonds =
+nested_diamonds <-
   diamonds %>%
   select(cut, color, clarity, depth, price) %>%
   nest(data = c(clarity, depth, price))
@@ -115,7 +125,9 @@ nested_diamonds =
 nested_diamonds
 ```
 
-What are we looking at here? We still have our grouping variables as columns, but each unique combination only takes up one row—and we have another, `data`, that says it's a tibble. The column isn't a vector but a list, and if we look at the elements in it we can see the other columns:
+What are we looking at here? We still have our grouping variables as columns, but each unique combination only takes up one row—and we have another, `data`, that says it's a tibble. The column isn't a vector but a list, and if we look at the elements in it we can see the other columns.
+
+Let's see the first two elements of `nested_diamonds$data`:
 
 ```{r}
 nested_diamonds$data[[1]]
@@ -123,24 +135,26 @@ nested_diamonds$data[[1]]
 nested_diamonds$data[[2]]
 ```
 
-Not only do we have our group identifiers associated with each data frame now, but we can create other outputs and keep _them_ associated with the groups too:
+Not only do we have our group identifiers associated with each data frame now, but we can create other outputs and keep _them_ associated with the groups too.
+
+For example, let's extract some summary statistics from each group:
 
 ```{r}
 nested_diamonds %>%
   mutate(
-    mean_price = map_dbl(data, ~ mean(.$price)),
-    pd_cor =     map_dbl(data, ~ cor(.$price, .$depth)))
+    mean_price     = map_dbl(data, ~ mean(.$price)),
+    pricedepth_cor = map_dbl(data, ~ cor(.$price, .$depth)))
 ```
 
-We can even do complex things like build regression models on the groups:
+We can even do complex things like build regression models on the groups. (Note that we use the regular `map` when we're returning a complex object or data frame for each group, where as we use the typed variants, like `map_dbl` or `map_chr`, when we're returning atomic elements like numbers and strings.)
 
 ```{r}
-diamonds_models =
+diamonds_models <-
   nested_diamonds %>%
   mutate(
-    price_mod = map(data, ~ lm(.$price ~ .$depth)),
+    price_mod     = map(data, ~ lm(.$price ~ .$depth)),
     price_summary = map(price_mod, summary),
-    price_rsq = map_dbl(price_summary, 'r.squared'))
+    price_rsq     = map_dbl(price_summary, "r.squared"))
 
 diamonds_models
 ```
@@ -154,14 +168,18 @@ We can carry on like this, adding analyses to the groups, but it's also a pretty
 For example, if we remove all of the rows in one of the `data` groups, we'll get this error:
 
 ```{r, eval=FALSE}
-nested_diamonds$data[[5]] = nested_diamonds$data[[5]] %>% filter(price < 300)
+# sabotage a group by removing all its rows
+nested_diamonds$data[[5]] <-
+  nested_diamonds$data[[5]] %>%
+  filter(price < 300)
 
+# now attempt to calculate summary statistics
 diamonds_models =
   nested_diamonds %>%
   mutate(
     price_mod = map(data, ~ lm(.$price ~ .$depth)),
     price_summary = map(price_mod, summary),
-    price_rsq = map_dbl(price_summary, 'r.squared'))
+    price_rsq = map_dbl(price_summary, "r.squared"))
 
 diamonds_models
 #> Error in mutate_impl(.data, dots) : Evaluation error: 0 (non-NA) cases.
@@ -169,26 +187,27 @@ diamonds_models
 
 We can see that there's _a_ problem here, but we have no idea which group is causing it without inspecting them (at least, we wouldn't if we hadn't just set this up!).
 
-`purrr` tries to tackle this with two functions: [`safely()` and `quietly()`](https://purrr.tidyverse.org/reference/safely.html). The former catches errors; the latter catches warnings, messages and other output. You use it like this:
+`purrr` tries to tackle this problem with two functions: [`safely()` and `quietly()`](https://purrr.tidyverse.org/reference/safely.html). The former catches errors; the latter catches warnings, messages and other output. You use them by wrapping other functions with them, like this:
 
 ```{r}
-safe_lm = safely(lm)
-safe_summary = safely(summary)
+safe_lm <- safely(lm)
 
-purrr_models =
+purrr_models <-
   nested_diamonds %>%
   mutate(price_mod = map(data, ~ safe_lm(.$price ~ .$depth)))
 
 purrr_models
 ```
-This is great! We bulldozed our way through the error, so we still have the other 34 models! In lieu of a list of model objects, `price_mod` is now a list of _lists_: each element of the column is a list with two elements: `$result` and `$error` (`quietly()` returns four components).
+This is great! We bulldozed our way through the error, so we still have the other 34 models! In lieu of a list of model objects, `price_mod` is now a list of _lists_: each element of the column is a list with two elements: `result` and `error` (`quietly()` returns four components).
+
+Let's see what our first two component lists, corresponding to the first two groups, look like:
 
 ```{r}
 purrr_models$price_mod[[1]]
 
 purrr_models$price_mod[[5]]
 
-purrr_models %>% mutate(mod_result = map(price_mod, 'result'))
+purrr_models %>% mutate(mod_result = map(price_mod, "result"))
 ```
 We can now extract the `result` element using `map()`, and there's a `NULL` value for the group that failed. But there are still some big problems here:
 
@@ -202,22 +221,20 @@ The idea of `collateral` is to both make these functions easier to use and to ma
 ```{r}
 library(collateral)
 
-nested_diamonds$data[[5]] = nested_diamonds$data[[5]] %>% filter(price < 300)
+nested_diamonds$data[[5]] <- nested_diamonds$data[[5]] %>% filter(price < 300)
 
-collat_models =
+collat_models <-
   nested_diamonds %>%
-  mutate(price_mod = map_safely(data, ~ lm(.x$price ~ .x$depth)))
+  mutate(price_mod = map_peacefully(data, ~ lm(.x$price ~ .x$depth)))
 
 print(collat_models)
 ```
 
-Now `price_mod` is a list of class `collat`, and scanning down it we can see which group hit an error immediately, all rows but the fifth are labelled `R`, for result, but the fifth is labelled `E`, for error.
+The `price_mod` column is still a list of lists containing `result` and `error` components, but it now prints nicely when we view the entire tibble. Scanning down it, we can see:
 
-If you're working in a terminal that supports colour, this stands out even more:
-
-![collat_models output, as seen in a terminal with colour](../man/figures/diamonds_models.png)
-
-This `collateral` list-column is actually completely identical to the manually wrapped-and-mapped solution from `purrr`, other than the class name. The fancy tibble printing is totally separate from the content of the column and is handled using the `pillar` package (which provides extensions for tibble output), so if you're already familiar with the `purrr` workflow you get immediate benefits.
+* which group hit an error immediately,
+* that all rows but the fifth result a result (labelled "R"), and
+* that the fifth row threw an error (labelled "E").
 
 You can, of course, pull out the results you would've gotten from a regular map (assuming you didn't hit any errors), and you'll probably _want_ to do that in order to continue operating on those results. You can also extract other side effects, although keep in mind that:
 
@@ -229,9 +246,9 @@ You can, of course, pull out the results you would've gotten from a regular map 
 collat_models %>%
   mutate(
     # this returns a list of `lm` objects
-    mod_result = map(price_mod, 'result'),
+    mod_result = map(price_mod, "result"),
     # this returns a character vector
-    mod_error = map_chr(price_mod, ~ paste(.x$error$message, collapse = ' ')))
+    mod_error = map_chr(price_mod, c("error", "message"), .null = NA))
 ```
 
 # Filtering on, and summarising, side effects {#helpers}
@@ -263,8 +280,10 @@ collat_models %>%
 
 Together, these tools make debugging problems drastically easier, even if you need to run a thousand statistical models or analyse 500 datasets.
 
-# Further tools
+# Safely + quietly = peacefully
 
-Occasionally, you may find that an operation could return either errors, warnings or _both_. For example, `log` outputs a warning when it's given negative numbers but throws an error if its input is non-numeric. Regression functions are particularly prone to this.
+You might've noticed that our `map` variant was called `map_peacefully`, not `map_safely` or `map_quietly`. Those functions are available too, but `map_peacefully` does both; giving you returned results, errors, warnings, messages and other output.
 
-For these purposes, use `map_peacefully`, which works in the same way as `map_safely` and `map_quietly` but returns the side effects from both. If you aren't sure which collateral mapper to reach for, start with this one!
+Why combine the two? We find that, more often that not operations can return either errors, warnings or _both_. For example, `log` outputs a warning when it's given negative numbers but throws an error if its input is non-numeric. Regression functions are particularly prone to this.
+
+You're welcome to use `map_safely` or `map_quietly` if you prefer, but for nearly all use cases, `map_peacefully` is the easier option. Good luck!
