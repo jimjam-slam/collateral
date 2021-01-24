@@ -82,7 +82,7 @@ ggplot(diamonds) +
 
 It looks like there might be several relationships here, but let's focus on `cut` and `color` for now. `ggplot2` makes it very easy to visualise differences across a couple of grouping variables, but we may not always want to create a facetted plot. In fact, there may be lots of activities we want to do that don't involve plotting at all.
 
-This is a broad class of problem in data analysis called ['split-apply-combine'](https://4dpiecharts.com/2011/12/16/a-quick-primer-on-split-apply-combine-problems/):
+This is a broad class of problem in data analysis called **split-apply-combine**:
 
 * _split_ data up into groups,
 * _apply_ operations to those groups, and
