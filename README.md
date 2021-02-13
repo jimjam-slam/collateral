@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![packageversion](https://img.shields.io/badge/Package%20version-0.5.2-orange.svg?style=flat-square)](commits/master)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--01--24-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--02--13-yellowgreen.svg)](/commits/master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/collateral)](https://cran.r-project.org/package=collateral)
@@ -163,4 +163,4 @@ for this purpose.
 
 If you have a problem with `collateral`, please don’t hesitate to [file
 an issue](https://github.com/rensa/collateral/issues/new) or [contact
-me](twitter.com/jimjam_slam)!
+me](https://twitter.com/jimjam_slam)!

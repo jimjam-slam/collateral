@@ -111,4 +111,4 @@ The collateral package is now fully integrated with the `furrr` package, so you 
 
 ## Support
 
-If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [contact me](twitter.com/jimjam_slam)!
+If you have a problem with `collateral`, please don't hesitate to [file an issue](https://github.com/rensa/collateral/issues/new) or [contact me](https://twitter.com/jimjam_slam)!
