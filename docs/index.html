@@ -47,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -64,7 +64,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rensa/collateral/">
-    <span class="fab fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -98,20 +98,20 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of collateral from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"collateral"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"collateral"</span><span class="op">)</span></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"rensa/collateral"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"rensa/collateral"</span><span class="op">)</span></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This example uses the famous <code>mtcars</code> dataset—but first, we’re going to sabotage a few of the rows by making them negative. The <code>log</code> function produces <code>NaN</code> with a warning when you give it a negative number.</p>
 <p>It’d be easy to miss this in a non-interactive script if you didn’t explicitly test for the presence of <code>NaN</code>! Thankfully, with collateral, you can see which operations threw errors, which threw warnings, and which produced output:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://collateral.jamesgoldie.dev">collateral</a></span><span class="op">)</span>
@@ -137,33 +137,33 @@
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _</span>
 <span class="co">#&gt; 2     4 &lt;tibble [11 × 3]&gt; R _ _ W _</span>
-<span class="co">#&gt; 3     8 &lt;tibble [14 × 3]&gt; R _ _ _ _</span></code></pre></div>
+<span class="co">#&gt; 3     8 &lt;tibble [14 × 3]&gt; R _ _ _ _</span></pre></div>
 <p>Here, we can see that all operations produced output (because <code>NaN</code> is still output)—but a few of them also produced warnings! You can then see those warnings…</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>qlog_warning <span class="op">=</span> <span class="fu">map_chr</span><span class="op">(</span><span class="va">qlog</span>, <span class="st">"warnings"</span>, .null <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>qlog_warning <span class="op">=</span> <span class="fu">map_chr</span><span class="op">(</span><span class="va">qlog</span>, <span class="st">"warnings"</span>, .null <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;     cyl data              qlog      qlog_warning </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _ &lt;NA&gt;         </span>
 <span class="co">#&gt; 2     4 &lt;tibble [11 × 3]&gt; R _ _ W _ NaNs produced</span>
-<span class="co">#&gt; 3     8 &lt;tibble [14 × 3]&gt; R _ _ _ _ &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt; 3     8 &lt;tibble [14 × 3]&gt; R _ _ _ _ &lt;NA&gt;</span></pre></div>
 <p>… filter on them…</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="reference/has.html">has_warnings</a></span><span class="op">(</span><span class="va">qlog</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="reference/has.html">has_warnings</a></span><span class="op">(</span><span class="va">qlog</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 2 x 3</span>
 <span class="co">#&gt;     cyl data              qlog     </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _</span>
-<span class="co">#&gt; 2     8 &lt;tibble [14 × 3]&gt; R _ _ _ _</span></code></pre></div>
+<span class="co">#&gt; 2     8 &lt;tibble [14 × 3]&gt; R _ _ _ _</span></pre></div>
 <p>… or get a summary of them, for either interactive or non-interactive purposes:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/summary.html">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">qlog</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="reference/summary.html">summary</a></span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">qlog</span><span class="op">)</span>
 <span class="co">#&gt; 3 elements in total.</span>
 <span class="co">#&gt; 3 elements returned results,</span>
 <span class="co">#&gt; 3 elements delivered output,</span>
 <span class="co">#&gt; 0 elements delivered messages,</span>
 <span class="co">#&gt; 1 element delivered warnings, and</span>
-<span class="co">#&gt; 0 elements threw an error.</span></code></pre></div>
+<span class="co">#&gt; 0 elements threw an error.</span></pre></div>
 </div>
 <div id="other-features" class="section level2">
 <h2 class="hasAnchor">

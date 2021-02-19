@@ -47,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -64,7 +64,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rensa/collateral/">
-    <span class="fab fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -78,13 +78,13 @@
 
       
 
-      </header><script src="collateral_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="collateral_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Accelerating tidy list-column workflows with collateral</h1>
                         <h4 class="author">James Goldie</h4>
             
-            <h4 class="date">2021-02-13</h4>
+            <h4 class="date">2021-02-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rensa/collateral/blob/master/vignettes/collateral.Rmd"><code>vignettes/collateral.Rmd</code></a></small>
       <div class="hidden name"><code>collateral.Rmd</code></div>
@@ -112,8 +112,8 @@
 <a href="#eda" class="anchor"></a>Basic exploratory analysis</h1>
 <p>The aim of this vignette isn’t just to get you acquainted with <code>collateral</code>’s tools: it’s also to demonstrate the value of a tidy list-column workflow. (If you’re already a pro at this stuff, skip ahead to <a href="#collateraluse">section 4</a>!)</p>
 <p>We’ll be using the <code>diamonds</code> dataset, which comes with the <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> package. Let’s take a look:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -125,7 +125,7 @@
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="va">diamonds</span>
 <span class="co">#&gt; # A tibble: 53,940 x 10</span>
@@ -141,37 +141,37 @@
 <span class="co">#&gt;  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53</span>
 <span class="co">#&gt;  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49</span>
 <span class="co">#&gt; 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39</span>
-<span class="co">#&gt; # … with 53,930 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 53,930 more rows</span></pre></div>
 <p>This dataset describes the prices and properties of about fifty thousand diamonds. We can see a number of categorical variables, including <code>cut</code>, <code>color</code> and <code>clarity</code>, and several continuous variables, like the <code>price</code>.</p>
 <p>How is <code>price</code> distributed?</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></pre></div>
 <p><img src="collateral_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb3"><pre class="downlit">
+
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></pre></div>
 <p><img src="collateral_files/figure-html/unnamed-chunk-2-2.png" width="700"> Looking at a histogram with a logarithmic scale, we can see that it has multiple peaks. That probably means that there are several distinct groups in the data. Maybe there’s a relationship between <code>price</code> and one (or more) of the categorical variables.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Price vs. cut"</span><span class="op">)</span>
-<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></pre></div>
 <p><img src="collateral_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb5"><pre class="downlit">
+
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Price vs. color"</span><span class="op">)</span>
-<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></pre></div>
 <p><img src="collateral_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
 </div>
 <div id="basegrouping" class="section level1">
@@ -188,8 +188,8 @@
 <em>combine</em> the results.</li>
 </ul>
 <p>One way of doing this with base R is to use <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html"><code>split()</code></a>, which takes in a data frame and some grouping variables and gives you back a list of identically-structured data frames broken up row-wise according to the values of the grouping variables.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">diamonds</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span><span class="op">)</span>
 <span class="co">#&gt; $Fair</span>
 <span class="co">#&gt; # A tibble: 1,610 x 10</span>
 <span class="co">#&gt;    carat cut   color clarity depth table price     x     y     z</span>
@@ -268,18 +268,18 @@
 <span class="co">#&gt;  8  0.23 Ideal G     VS1      61.9    54   404  3.93  3.95  2.44</span>
 <span class="co">#&gt;  9  0.32 Ideal I     SI1      60.9    55   404  4.45  4.48  2.72</span>
 <span class="co">#&gt; 10  0.3  Ideal I     SI2      61      59   405  4.3   4.33  2.63</span>
-<span class="co">#&gt; # … with 21,541 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 21,541 more rows</span></pre></div>
 <p>We could use a loop to iterate over each of these data frames and perform our analysis, adding the results to a larger data frame or list as we go, but there’s a better solution.</p>
 <p>As it happens, the <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> functions work quite well on the output of <code><a href="https://rdrr.io/r/base/split.html">split()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="va">diamonds</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;      Fair      Good Very Good   Premium     Ideal </span>
-<span class="co">#&gt;  4358.758  3928.864  3981.760  4584.258  3457.542</span></code></pre></div>
+<span class="co">#&gt;  4358.758  3928.864  3981.760  4584.258  3457.542</span></pre></div>
 <p>But this starts to get really unwieldy as you add more grouping variables. In particular, “meta data”— data about the groups—are either stuck inside the original data frames or are encoded in the name of each data frame in the list. It’s also difficult to do a sequence of operations and keep everything associated with the original groupings:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds_list</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span>, <span class="va">diamonds</span><span class="op">$</span><span class="va">color</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="va">diamonds_list</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span>, <span class="va">diamonds</span><span class="op">$</span><span class="va">color</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">diamonds_list</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;      Fair.D      Good.D Very Good.D   Premium.D     Ideal.D      Fair.E </span>
@@ -308,10 +308,10 @@
 <span class="co">#&gt;        Fair.I        Good.I   Very Good.I     Premium.I       Ideal.I </span>
 <span class="co">#&gt;  0.0398190356 -0.2020227152 -0.1033508965 -0.0836557999  0.0077703288 </span>
 <span class="co">#&gt;        Fair.J        Good.J   Very Good.J     Premium.J       Ideal.J </span>
-<span class="co">#&gt;  0.0192386809 -0.0709194473 -0.0789113617 -0.0156086436  0.0347510368</span></code></pre></div>
+<span class="co">#&gt;  0.0192386809 -0.0709194473 -0.0789113617 -0.0156086436  0.0347510368</span></pre></div>
 <p>Yuck. Nested data frames, which are supported by tibbles, make this much easier to handle:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nested_diamonds</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="va">nested_diamonds</span> <span class="op">&lt;-</span>
   <span class="va">diamonds</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">cut</span>, <span class="va">color</span>, <span class="va">clarity</span>, <span class="va">depth</span>, <span class="va">price</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clarity</span>, <span class="va">depth</span>, <span class="va">price</span><span class="op">)</span><span class="op">)</span>
@@ -330,11 +330,11 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt;</span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;  </span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;  </span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>What are we looking at here? We still have our grouping variables as columns, but each unique combination only takes up one row—and we have another, <code>data</code>, that says it’s a tibble. The column isn’t a vector but a list, and if we look at the elements in it we can see the other columns.</p>
 <p>Let’s see the first two elements of <code>nested_diamonds$data</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3,903 x 3</span>
 <span class="co">#&gt;    clarity depth price</span>
 <span class="co">#&gt;    &lt;ord&gt;   &lt;dbl&gt; &lt;int&gt;</span>
@@ -364,11 +364,11 @@
 <span class="co">#&gt;  8 VS2      62.7  2776</span>
 <span class="co">#&gt;  9 VS2      61.1  2777</span>
 <span class="co">#&gt; 10 SI1      60    2777</span>
-<span class="co">#&gt; # … with 2,327 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 2,327 more rows</span></pre></div>
 <p>Not only do we have our group identifiers associated with each data frame now, but we can create other outputs and keep <em>them</em> associated with the groups too.</p>
 <p>For example, let’s extract some summary statistics from each group:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nested_diamonds</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">nested_diamonds</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     mean_price     <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>,
     pricedepth_cor <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span>, <span class="va">.</span><span class="op">$</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -385,10 +385,10 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt;      4535.       -0.00783</span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;        3682.        0.0251 </span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;        4918.        0.0348 </span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>We can even do complex things like build regression models on the groups. (Note that we use the regular <code>map</code> when we’re returning a complex object or data frame for each group, where as we use the typed variants, like <code>map_dbl</code> or <code>map_chr</code>, when we’re returning atomic elements like numbers and strings.)</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds_models</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="va">diamonds_models</span> <span class="op">&lt;-</span>
   <span class="va">nested_diamonds</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     price_mod     <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span> <span class="op">~</span> <span class="va">.</span><span class="op">$</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span>,
@@ -409,7 +409,7 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt; &lt;lm&gt;      &lt;smmry.lm&gt;    0.0000613 </span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;   &lt;lm&gt;      &lt;smmry.lm&gt;    0.000629  </span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;   &lt;lm&gt;      &lt;smmry.lm&gt;    0.00121   </span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>(These are pretty lousy models, but they’ll do for our purposes!)</p>
 </div>
 <div id="purrrnesting" class="section level1">
@@ -417,8 +417,8 @@
 <a href="#purrrnesting" class="anchor"></a>Nesting and handling side effects with purrr</h1>
 <p>We can carry on like this, adding analyses to the groups, but it’s also a pretty reckless way to operate. There could be anything going on in these list columns, and without being able to see them from the outside it’d be easy to miss a problem that turns up. In addition, we might hit an error and be unsure which group is causing it.</p>
 <p>For example, if we remove all of the rows in one of the <code>data</code> groups, we’ll get this error:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># sabotage a group by removing all its rows</span>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="co"># sabotage a group by removing all its rows</span>
 <span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span>
   <span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">price</span> <span class="op">&lt;</span> <span class="fl">300</span><span class="op">)</span>
@@ -432,11 +432,11 @@
     price_rsq <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">price_summary</span>, <span class="st">"r.squared"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">diamonds_models</span>
-<span class="co">#&gt; Error in mutate_impl(.data, dots) : Evaluation error: 0 (non-NA) cases.</span></code></pre></div>
+<span class="co">#&gt; Error in mutate_impl(.data, dots) : Evaluation error: 0 (non-NA) cases.</span></pre></div>
 <p>We can see that there’s <em>a</em> problem here, but we have no idea which group is causing it without inspecting them (at least, we wouldn’t if we hadn’t just set this up!).</p>
 <p><code>purrr</code> tries to tackle this problem with two functions: <a href="https://purrr.tidyverse.org/reference/safely.html"><code>safely()</code> and <code>quietly()</code></a>. The former catches errors; the latter catches warnings, messages and other output. You use them by wrapping other functions with them, like this:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">safe_lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">lm</span><span class="op">)</span>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="va">safe_lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html">safely</a></span><span class="op">(</span><span class="va">lm</span><span class="op">)</span>
 
 <span class="va">purrr_models</span> <span class="op">&lt;-</span>
   <span class="va">nested_diamonds</span> <span class="op">%&gt;%</span>
@@ -456,11 +456,11 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt; &lt;named list [2]&gt;</span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;   &lt;named list [2]&gt;</span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;   &lt;named list [2]&gt;</span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>This is great! We bulldozed our way through the error, so we still have the other 34 models! In lieu of a list of model objects, <code>price_mod</code> is now a list of <em>lists</em>: each element of the column is a list with two elements: <code>result</code> and <code>error</code> (<code><a href="https://purrr.tidyverse.org/reference/safely.html">quietly()</a></code> returns four components).</p>
 <p>Let’s see what our first two component lists, corresponding to the first two groups, look like:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">purrr_models</span><span class="op">$</span><span class="va">price_mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="va">purrr_models</span><span class="op">$</span><span class="va">price_mod</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $result</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
@@ -502,7 +502,7 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt; &lt;named list [2]&gt; &lt;lm&gt;      </span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;   &lt;named list [2]&gt; &lt;lm&gt;      </span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;   &lt;named list [2]&gt; &lt;lm&gt;      </span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>We can now extract the <code>result</code> element using <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, and there’s a <code>NULL</code> value for the group that failed. But there are still some big problems here:</p>
 <ol style="list-style-type: decimal">
 <li>We have to remember to wrap each function in <code><a href="https://purrr.tidyverse.org/reference/safely.html">safely()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/safely.html">quietly()</a></code> ahead of time; and</li>
@@ -513,8 +513,8 @@
 <h1 class="hasAnchor">
 <a href="#collateraluse" class="anchor"></a>Collateral: capture, identify and isolate side effects</h1>
 <p>The idea of <code>collateral</code> is to both make these functions easier to use and to make them more powerful. Instead of wrapping our functions ourselves, we use <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> variants:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://collateral.jamesgoldie.dev">collateral</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://collateral.jamesgoldie.dev">collateral</a></span><span class="op">)</span>
 
 <span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">price</span> <span class="op">&lt;</span> <span class="fl">300</span><span class="op">)</span>
 
@@ -536,7 +536,7 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt; R _ _ _ _</span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;   R _ _ _ _</span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;   R _ _ _ _</span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 <p>The <code>price_mod</code> column is still a list of lists containing <code>result</code> and <code>error</code> components, but it now prints nicely when we view the entire tibble. Scanning down it, we can see:</p>
 <ul>
 <li>which group hit an error immediately,</li>
@@ -549,8 +549,8 @@
 <li>Unlike other kinds of output, errors aren’t just simple character vectors. Generally, you’ll want the <code>error$message</code>.</li>
 <li>Sometimes an operation might deliver more than one warning, message or output per row. That means that you may need to concatenate several warnings together—using the <code>paste</code> function with the <code>collapse</code> option, for example.</li>
 </ol>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">collat_models</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="va">collat_models</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     <span class="co"># this returns a list of `lm` objects</span>
     mod_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">price_mod</span>, <span class="st">"result"</span><span class="op">)</span>,
@@ -569,30 +569,31 @@
 <span class="co">#&gt;  8 Very Good H     &lt;tibble [1,824 × 3]&gt; R _ _ _ _ &lt;lm&gt;       &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 Fair      E     &lt;tibble [224 × 3]&gt;   R _ _ _ _ &lt;lm&gt;       &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 Ideal     J     &lt;tibble [896 × 3]&gt;   R _ _ _ _ &lt;lm&gt;       &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 25 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 25 more rows</span></pre></div>
 </div>
 <div id="helpers" class="section level1">
 <h1 class="hasAnchor">
 <a href="#helpers" class="anchor"></a>Filtering on, and summarising, side effects</h1>
 <p><code>collateral</code> also comes with some additional helpers. You can get a quick <code>summary</code> of the side effects (which also invisibly returns a named vector for non-interactive use):</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">collat_models</span><span class="op">$</span><span class="va">price_mod</span><span class="op">)</span> 
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">collat_models</span><span class="op">$</span><span class="va">price_mod</span><span class="op">)</span> 
 <span class="co">#&gt; 35 elements in total.</span>
 <span class="co">#&gt; 34 elements returned results,</span>
 <span class="co">#&gt; 35 elements delivered output,</span>
 <span class="co">#&gt; 0 elements delivered messages,</span>
 <span class="co">#&gt; 0 elements delivered warnings, and</span>
-<span class="co">#&gt; 1 element threw an error.</span></code></pre></div>
+<span class="co">#&gt; 1 element threw an error.</span></pre></div>
 <p>You can also use the <code>tally_*()</code> functions in conjunction with <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>dplyr::summarise()</code></a> to get a count of each component (even if the top-level data frame grouped again!) or <code>has_*()</code> to <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>dplyr::filter()</code></a> out the rows that didn’t make it (or the ones that did):</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">collat_models</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="va">collat_models</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
     n_res <span class="op">=</span> <span class="fu"><a href="../reference/tally.html">tally_results</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span>,
     n_err <span class="op">=</span> <span class="fu"><a href="../reference/tally.html">tally_errors</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span>
 <span class="co">#&gt; # A tibble: 7 x 3</span>
 <span class="co">#&gt;   color n_res n_err</span>
-<span class="co">#&gt; * &lt;ord&gt; &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;ord&gt; &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1 D         5     0</span>
 <span class="co">#&gt; 2 E         5     0</span>
 <span class="co">#&gt; 3 F         5     0</span>
@@ -613,7 +614,7 @@
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   cut   color data             price_mod</span>
 <span class="co">#&gt;   &lt;ord&gt; &lt;ord&gt; &lt;list&gt;           &lt;collat&gt; </span>
-<span class="co">#&gt; 1 Good  J     &lt;tibble [0 × 3]&gt; _ _ _ _ E</span></code></pre></div>
+<span class="co">#&gt; 1 Good  J     &lt;tibble [0 × 3]&gt; _ _ _ _ E</span></pre></div>
 <p>Together, these tools make debugging problems drastically easier, even if you need to run a thousand statistical models or analyse 500 datasets.</p>
 </div>
 <div id="safely-quietly-peacefully" class="section level1">

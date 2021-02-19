@@ -11,4 +11,7 @@ There are currently no downstream dependencies for this package.
 Note: this package was previously archived (it failed checks with a new version
 of R and I was not able to respond in time).
 
-Responding to reviewer feedback: unqualified URL in README.md and README.rmd fixed
+Responding to reviewer feedback: invalid URLs fixed in README.rmd and README.rmd
+(jamesgoldie.dev/collateral changed to collateral.jamesgoldie.dev, trailing
+slash added to twitter link, tidyverse.org/lifecycle changed to
+lifecycle.r-lib.org/articles).
