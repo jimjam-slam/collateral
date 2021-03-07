@@ -14,4 +14,4 @@ of R and I was not able to respond in time).
 Responding to reviewer feedback: invalid URLs fixed in README.rmd and README.rmd
 (jamesgoldie.dev/collateral changed to collateral.jamesgoldie.dev, trailing
 slash added to twitter link, tidyverse.org/lifecycle changed to
-lifecycle.r-lib.org/articles).
+lifecycle.r-lib.org/articles, README badge links removed).

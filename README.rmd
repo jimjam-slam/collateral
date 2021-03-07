@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 version <- as.vector(read.dcf("DESCRIPTION")[, "Version"])
 version <- gsub("-", ".", version)
 ```                                               
-[![packageversion](https://img.shields.io/badge/Package%20version-`r version`-orange.svg?style=flat-square)](commits/master)
-[![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
+![packageversion](https://img.shields.io/badge/Package%20version-`r version`-orange.svg?style=flat-square)]
+![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN status](https://www.r-pkg.org/badges/version/collateral)](https://cran.r-project.org/package=collateral)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
