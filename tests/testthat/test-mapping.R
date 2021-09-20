@@ -28,14 +28,14 @@ test_subset <- test_spiked %>% dplyr::filter(cyl == 4)
 # map variant structure tests -------------------------------------------------
 
 test_that("map_safely correctly structures output", {
-  expect_type(
+  expect_warning(expect_type(
     map_safely(test_dfs, ~ log(.$wt)),
-    'list')
-  expect_s3_class(
+    'list'))
+  expect_warning(expect_s3_class(
     map_safely(test_dfs, ~ log(.$wt)),
-    'safely_mapped')
+    'safely_mapped'))
   walk(
-    map_safely(test_dfs, ~ log(.$wt)),
+    expect_warning(map_safely(test_dfs, ~ log(.$wt))),
     expect_named,
     ignore.order = TRUE,
     expected = c('result', 'error'))
@@ -72,14 +72,15 @@ test_that("map_peacefully correctly structures output", {
 # map2 variant structure tests ------------------------------------------------
 
 test_that("map2_safely correctly structures output", {
-  expect_type(
+  expect_warning(expect_type(
     map2_safely(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
-    'list')
-  expect_s3_class(
+    'list'))
+  expect_warning(expect_s3_class(
     map2_safely(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
-    'safely_mapped')
+    'safely_mapped'))
   map(
-    map2_safely(test_subset$cyl, test_subset$wt, ~ .x * log(.y)),
+    expect_warning(
+      map2_safely(test_subset$cyl, test_subset$wt, ~ .x * log(.y))),
     expect_named,
     ignore.order = TRUE,
     expected = c('result', 'error'))
@@ -116,20 +117,20 @@ test_that("map2_peacefully correctly structures output", {
 # pmap variant structure tests ------------------------------------------------
 
 test_that("pmap_safely correctly structures output", {
-  expect_type(
+  expect_warning(expect_type(
     pmap_safely(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
-    'list')
-  expect_s3_class(
+    'list'))
+  expect_warning(expect_s3_class(
     pmap_safely(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
       ~ ..1 * log(..2) / ..3),
-    'safely_mapped')
-  map(
-    pmap_safely(
+    'safely_mapped'))
+  walk(
+    expect_warning(pmap_safely(
       list(test_subset$cyl, test_subset$wt, test_subset$disp),
-      ~ ..1 * log(..2) / ..3),
+      ~ ..1 * log(..2) / ..3)),
     expect_named,
     ignore.order = TRUE,
     expected = c('result', 'error'))
