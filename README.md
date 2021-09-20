@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.5.2-orange.svg?style=flat-square)](commits/master)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--02--13-yellowgreen.svg)](/commits/master)
-[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+![packageversion](https://img.shields.io/badge/Package%20version-0.5.2-orange.svg?style=flat-square)\]
+![Last-changedate](https://img.shields.io/badge/last%20change-2021--09--20-yellowgreen.svg)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable-1)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/collateral)](https://cran.r-project.org/package=collateral)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
@@ -40,7 +40,7 @@ collateral](man/figures/collateral_example.png)
 
 If you’re not familiar with `purrr` or haven’t used a list-column
 workflow in R before, the [`collateral`
-vignette](https://jamesgoldie.dev/collateral/articles/collateral.html)
+vignette](https://collateral.jamesgoldie.dev/articles/collateral.html)
 shows you how it works, the benefits for your analysis and how
 `collateral` simplifies the process of handling complex mapped
 operations.
@@ -49,12 +49,12 @@ If you’re already familiar with `purrr`, the
 [tl;dr](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read)
 is that [`collateral::map_safely()` and `collateral::map_quietly()` (and
 their `map2` and `pmap`
-variants)](https://jamesgoldie.dev/collateral/reference/collateral_mappers.html)
+variants)](https://collateral.jamesgoldie.dev/reference/collateral_mappers.html)
 will automatically wrap your supplied function in `safely()` or
 `quietly()` (or both: `peacefully()`) and will provide enhanced printed
 output and tibble displays. You can then use the
-[`has_*()`](https://jamesgoldie.dev/collateral/reference/has.html) and
-[`tally_*()`](https://jamesgoldie.dev/collateral/reference/tally.html)
+[`has_*()`](https://collateral.jamesgoldie.dev/reference/has.html) and
+[`tally_*()`](https://collateral.jamesgoldie.dev/reference/tally.html)
 functions to filter or summarise the returned tibbles or lists.
 
 ## Installation
@@ -87,6 +87,14 @@ which produced output:
 ``` r
 library(tibble)
 library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 library(tidyr)
 library(collateral)
 
@@ -106,7 +114,7 @@ test <-
 
 # look at the results
 test
-#> # A tibble: 3 x 3
+#> # A tibble: 3 × 3
 #>     cyl data              qlog     
 #>   <dbl> <list>            <collat> 
 #> 1     6 <tibble [7 × 3]>  R _ _ _ _
@@ -120,7 +128,7 @@ those warnings…
 
 ``` r
 test %>% mutate(qlog_warning = map_chr(qlog, "warnings", .null = NA))
-#> # A tibble: 3 x 4
+#> # A tibble: 3 × 4
 #>     cyl data              qlog      qlog_warning 
 #>   <dbl> <list>            <collat>  <chr>        
 #> 1     6 <tibble [7 × 3]>  R _ _ _ _ <NA>         
@@ -132,7 +140,7 @@ test %>% mutate(qlog_warning = map_chr(qlog, "warnings", .null = NA))
 
 ``` r
 test %>% filter(!has_warnings(qlog))
-#> # A tibble: 2 x 3
+#> # A tibble: 2 × 3
 #>     cyl data              qlog     
 #>   <dbl> <list>            <collat> 
 #> 1     6 <tibble [7 × 3]>  R _ _ _ _
@@ -162,5 +170,5 @@ for this purpose.
 ## Support
 
 If you have a problem with `collateral`, please don’t hesitate to [file
-an issue](https://github.com/jimjam-slam/collateral/issues/new) or [contact
-me](https://twitter.com/jimjam_slam)!
+an issue](https://github.com/jimjam-slam/collateral/issues/new) or
+[contact me](https://twitter.com/jimjam_slam/)!

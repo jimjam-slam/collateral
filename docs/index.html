@@ -92,8 +92,8 @@
 <p>You can even filter or summarise a data frame based on these side effects to automatically continue analysis without failed groups (or perhaps to show a report of the failed ones).</p>
 <p>For example, this screenshot shows a data frame that’s been nested using groups of the <code>cyl</code> column. The <code>qlog</code> column shows the results of an operation that’s returned results for all three groups but also printed a warning for one of them:</p>
 <p><img src="reference/figures/collateral_example.png" alt="Screenshot of a nested dataframe, including a column that shows the results of an operation quietly mapped with collateral"></p>
-<p>If you’re not familiar with <code>purrr</code> or haven’t used a list-column workflow in R before, the <a href="https://jamesgoldie.dev/collateral/articles/collateral.html"><code>collateral</code> vignette</a> shows you how it works, the benefits for your analysis and how <code>collateral</code> simplifies the process of handling complex mapped operations.</p>
-<p>If you’re already familiar with <code>purrr</code>, the <a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read">tl;dr</a> is that <a href="https://jamesgoldie.dev/collateral/reference/collateral_mappers.html"><code>collateral::map_safely()</code> and <code>collateral::map_quietly()</code> (and their <code>map2</code> and <code>pmap</code> variants)</a> will automatically wrap your supplied function in <code>safely()</code> or <code>quietly()</code> (or both: <code>peacefully()</code>) and will provide enhanced printed output and tibble displays. You can then use the <a href="https://jamesgoldie.dev/collateral/reference/has.html"><code>has_*()</code></a> and <a href="https://jamesgoldie.dev/collateral/reference/tally.html"><code>tally_*()</code></a> functions to filter or summarise the returned tibbles or lists.</p>
+<p>If you’re not familiar with <code>purrr</code> or haven’t used a list-column workflow in R before, the <a href="https://collateral.jamesgoldie.dev/articles/collateral.html"><code>collateral</code> vignette</a> shows you how it works, the benefits for your analysis and how <code>collateral</code> simplifies the process of handling complex mapped operations.</p>
+<p>If you’re already familiar with <code>purrr</code>, the <a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read">tl;dr</a> is that <a href="https://collateral.jamesgoldie.dev/reference/collateral_mappers.html"><code>collateral::map_safely()</code> and <code>collateral::map_quietly()</code> (and their <code>map2</code> and <code>pmap</code> variants)</a> will automatically wrap your supplied function in <code>safely()</code> or <code>quietly()</code> (or both: <code>peacefully()</code>) and will provide enhanced printed output and tibble displays. You can then use the <a href="https://collateral.jamesgoldie.dev/reference/has.html"><code>has_*()</code></a> and <a href="https://collateral.jamesgoldie.dev/reference/tally.html"><code>tally_*()</code></a> functions to filter or summarise the returned tibbles or lists.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -113,6 +113,14 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://collateral.jamesgoldie.dev">collateral</a></span><span class="op">)</span>
 
@@ -132,7 +140,7 @@
 
 <span class="co"># look at the results</span>
 <span class="va">test</span>
-<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # A tibble: 3 × 3</span>
 <span class="co">#&gt;     cyl data              qlog     </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _</span>
@@ -141,7 +149,7 @@
 <p>Here, we can see that all operations produced output (because <code>NaN</code> is still output)—but a few of them also produced warnings! You can then see those warnings…</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>qlog_warning <span class="op">=</span> <span class="fu">map_chr</span><span class="op">(</span><span class="va">qlog</span>, <span class="st">"warnings"</span>, .null <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt; # A tibble: 3 × 4</span>
 <span class="co">#&gt;     cyl data              qlog      qlog_warning </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt;  &lt;chr&gt;        </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _ &lt;NA&gt;         </span>
@@ -150,7 +158,7 @@
 <p>… filter on them…</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="reference/has.html">has_warnings</a></span><span class="op">(</span><span class="va">qlog</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt; # A tibble: 2 × 3</span>
 <span class="co">#&gt;     cyl data              qlog     </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;            &lt;collat&gt; </span>
 <span class="co">#&gt; 1     6 &lt;tibble [7 × 3]&gt;  R _ _ _ _</span>
@@ -173,7 +181,7 @@
 <div id="support" class="section level2">
 <h2 class="hasAnchor">
 <a href="#support" class="anchor"></a>Support</h2>
-<p>If you have a problem with <code>collateral</code>, please don’t hesitate to <a href="https://github.com/jimjam-slam/collateral/issues/new">file an issue</a> or <a href="https://twitter.com/jimjam_slam">contact me</a>!</p>
+<p>If you have a problem with <code>collateral</code>, please don’t hesitate to <a href="https://github.com/jimjam-slam/collateral/issues/new">file an issue</a> or <a href="https://twitter.com/jimjam_slam/">contact me</a>!</p>
 </div>
 </div>
   </div>
@@ -209,9 +217,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="commits/master"><img src="https://img.shields.io/badge/Package%20version-0.5.2-orange.svg?style=flat-square" alt="packageversion"></a></li>
-<li><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2021--02--13-yellowgreen.svg" alt="Last-changedate"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="lifecycle"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable-1"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="lifecycle"></a></li>
 <li><a href="https://cran.r-project.org/package=collateral"><img src="https://www.r-pkg.org/badges/version/collateral" alt="CRAN status"></a></li>
 <li><a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license"></a></li>
 </ul>
