@@ -70,7 +70,7 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rensa/collateral")
+devtools::install_github("jimjam-slam/collateral")
 ```
 
 ## Example
@@ -162,5 +162,5 @@ for this purpose.
 ## Support
 
 If you have a problem with `collateral`, please don’t hesitate to [file
-an issue](https://github.com/rensa/collateral/issues/new) or [contact
+an issue](https://github.com/jimjam-slam/collateral/issues/new) or [contact
 me](https://twitter.com/jimjam_slam)!

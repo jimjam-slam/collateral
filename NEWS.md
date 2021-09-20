@@ -15,7 +15,7 @@
 * Minor changes to the vignette and documentation
 * Changed the use of `purrr::nest` in examples to maintain compatibility with updates to purrr
 * Added the `list` class to returned output to ensure compatibility with tibble 3.0
-* Fixed bug in `pmap_*()` functions ([issue #11](https://github.com/rensa/collateral/issues/11))
+* Fixed bug in `pmap_*()` functions ([issue #11](https://github.com/jimjam-slam/collateral/issues/11))
 
 # collateral 0.5.0
 
@@ -23,7 +23,7 @@
 
 * Added `map_peacefully` variants that combine `map_safely` and `map_quietly`
 * Added `future_` variants that integrate with the [`furrr`](https://cran.r-project.org/package=furrr) package to allow parallel processing
-* [Internal changes](https://github.com/rensa/collateral/issues/18) to maintain compatibility with `tibble`, `vctrs`, `pillar` and `tidyr` updates
+* [Internal changes](https://github.com/jimjam-slam/collateral/issues/18) to maintain compatibility with `tibble`, `vctrs`, `pillar` and `tidyr` updates
 
 ## Minor changes
 

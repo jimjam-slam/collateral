@@ -1,12 +1,13 @@
 ---
-title: "Accelerating tidy list-column workflows with collateral"
+title: "Get started with collateral"
 author: "James Goldie"
 date: "`r Sys.Date()`"
+description: "Learn how collateral can help you manage large, repetitive analysis tasks on groups of data."
 editor_options:
   chunk_output_type: console
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Accelerating tidy list-column workflows with collateral}
+  %\VignetteIndexEntry{Get started with collateral}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---

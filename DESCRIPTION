@@ -13,7 +13,7 @@ Authors@R: c(
     email = "mikhail.balyasin+blog@gmail.com",
     role = "ctb"))
 Description: Map functions while capturing results, errors, warnings, messages and other output tidily, then filter and summarise data frames or lists on the basis of those side effects.
-URL: https://collateral.jamesgoldie.dev, https://github.com/rensa/collateral
+URL: https://collateral.jamesgoldie.dev, https://github.com/jimjam-slam/collateral
 Language: en-AU
 Depends: R (>= 3.1.0)
 Imports:
@@ -25,7 +25,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-BugReports: https://github.com/rensa/collateral/issues
+BugReports: https://github.com/jimjam-slam/collateral/issues
 Suggests:
     dplyr,
     tibble,
