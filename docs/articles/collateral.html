@@ -78,13 +78,13 @@
 
       
 
-      </header><script src="collateral_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="collateral_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get started with collateral</h1>
                         <h4 class="author">James Goldie</h4>
             
-            <h4 class="date">2021-09-20</h4>
+            <h4 class="date">2021-10-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jimjam-slam/collateral/blob/master/vignettes/collateral.Rmd"><code>vignettes/collateral.Rmd</code></a></small>
       <div class="hidden name"><code>collateral.Rmd</code></div>
@@ -128,7 +128,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="va">diamonds</span>
-<span class="co">#&gt; # A tibble: 53,940 × 10</span>
+<span class="co">#&gt; # A tibble: 53,940 x 10</span>
 <span class="co">#&gt;    carat cut       color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43</span>
@@ -191,7 +191,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">diamonds</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">cut</span><span class="op">)</span>
 <span class="co">#&gt; $Fair</span>
-<span class="co">#&gt; # A tibble: 1,610 × 10</span>
+<span class="co">#&gt; # A tibble: 1,610 x 10</span>
 <span class="co">#&gt;    carat cut   color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.22 Fair  E     VS2      65.1    61   337  3.87  3.78  2.49</span>
@@ -207,7 +207,7 @@
 <span class="co">#&gt; # … with 1,600 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $Good</span>
-<span class="co">#&gt; # A tibble: 4,906 × 10</span>
+<span class="co">#&gt; # A tibble: 4,906 x 10</span>
 <span class="co">#&gt;    carat cut   color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.23 Good  E     VS1      56.9    65   327  4.05  4.07  2.31</span>
@@ -223,7 +223,7 @@
 <span class="co">#&gt; # … with 4,896 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`Very Good`</span>
-<span class="co">#&gt; # A tibble: 12,082 × 10</span>
+<span class="co">#&gt; # A tibble: 12,082 x 10</span>
 <span class="co">#&gt;    carat cut       color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</span>
@@ -239,7 +239,7 @@
 <span class="co">#&gt; # … with 12,072 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $Premium</span>
-<span class="co">#&gt; # A tibble: 13,791 × 10</span>
+<span class="co">#&gt; # A tibble: 13,791 x 10</span>
 <span class="co">#&gt;    carat cut     color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt;   &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.21 Premium E     SI1      59.8    61   326  3.89  3.84  2.31</span>
@@ -255,7 +255,7 @@
 <span class="co">#&gt; # … with 13,781 more rows</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $Ideal</span>
-<span class="co">#&gt; # A tibble: 21,551 × 10</span>
+<span class="co">#&gt; # A tibble: 21,551 x 10</span>
 <span class="co">#&gt;    carat cut   color clarity depth table price     x     y     z</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1  0.23 Ideal E     SI2      61.5    55   326  3.95  3.98  2.43</span>
@@ -317,7 +317,7 @@
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clarity</span>, <span class="va">depth</span>, <span class="va">price</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">nested_diamonds</span>
-<span class="co">#&gt; # A tibble: 35 × 3</span>
+<span class="co">#&gt; # A tibble: 35 x 3</span>
 <span class="co">#&gt;    cut       color data                </span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;              </span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt;</span>
@@ -335,7 +335,7 @@
 <p>Let’s see the first two elements of <code>nested_diamonds$data</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 3,903 × 3</span>
+<span class="co">#&gt; # A tibble: 3,903 x 3</span>
 <span class="co">#&gt;    clarity depth price</span>
 <span class="co">#&gt;    &lt;ord&gt;   &lt;dbl&gt; &lt;int&gt;</span>
 <span class="co">#&gt;  1 SI2      61.5   326</span>
@@ -351,7 +351,7 @@
 <span class="co">#&gt; # … with 3,893 more rows</span>
 
 <span class="va">nested_diamonds</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 2,337 × 3</span>
+<span class="co">#&gt; # A tibble: 2,337 x 3</span>
 <span class="co">#&gt;    clarity depth price</span>
 <span class="co">#&gt;    &lt;ord&gt;   &lt;dbl&gt; &lt;int&gt;</span>
 <span class="co">#&gt;  1 SI1      59.8   326</span>
@@ -372,7 +372,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     mean_price     <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>,
     pricedepth_cor <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span>, <span class="va">.</span><span class="op">$</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 35 × 5</span>
+<span class="co">#&gt; # A tibble: 35 x 5</span>
 <span class="co">#&gt;    cut       color data                 mean_price pricedepth_cor</span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;                    &lt;dbl&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt;      2598.       -0.00174</span>
@@ -396,7 +396,7 @@
     price_rsq     <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">price_summary</span>, <span class="st">"r.squared"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">diamonds_models</span>
-<span class="co">#&gt; # A tibble: 35 × 6</span>
+<span class="co">#&gt; # A tibble: 35 x 6</span>
 <span class="co">#&gt;    cut       color data                 price_mod price_summary  price_rsq</span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;               &lt;list&gt;    &lt;list&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt; &lt;lm&gt;      &lt;smmry.lm&gt;    0.00000304</span>
@@ -443,7 +443,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>price_mod <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu">safe_lm</span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">price</span> <span class="op">~</span> <span class="va">.</span><span class="op">$</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">purrr_models</span>
-<span class="co">#&gt; # A tibble: 35 × 4</span>
+<span class="co">#&gt; # A tibble: 35 x 4</span>
 <span class="co">#&gt;    cut       color data                 price_mod       </span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;               &lt;list&gt;          </span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt; &lt;named list [2]&gt;</span>
@@ -489,7 +489,7 @@
 <span class="co">#&gt; NULL</span>
 
 <span class="va">purrr_models</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mod_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">price_mod</span>, <span class="st">"result"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 35 × 5</span>
+<span class="co">#&gt; # A tibble: 35 x 5</span>
 <span class="co">#&gt;    cut       color data                 price_mod        mod_result</span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;               &lt;list&gt;           &lt;list&gt;    </span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt; &lt;named list [2]&gt; &lt;lm&gt;      </span>
@@ -523,7 +523,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>price_mod <span class="op">=</span> <span class="fu"><a href="../reference/collateral_mappers.html">map_peacefully</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">price</span> <span class="op">~</span> <span class="va">.x</span><span class="op">$</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">collat_models</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 35 × 4</span>
+<span class="co">#&gt; # A tibble: 35 x 4</span>
 <span class="co">#&gt;    cut       color data                 price_mod</span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;               &lt;collat&gt; </span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt; R _ _ _ _</span>
@@ -556,7 +556,7 @@
     mod_result <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">price_mod</span>, <span class="st">"result"</span><span class="op">)</span>,
     <span class="co"># this returns a character vector</span>
     mod_error <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">price_mod</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"message"</span><span class="op">)</span>, .null <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 35 × 6</span>
+<span class="co">#&gt; # A tibble: 35 x 6</span>
 <span class="co">#&gt;    cut       color data                 price_mod mod_result mod_error       </span>
 <span class="co">#&gt;    &lt;ord&gt;     &lt;ord&gt; &lt;list&gt;               &lt;collat&gt;  &lt;list&gt;     &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 Ideal     E     &lt;tibble [3,903 × 3]&gt; R _ _ _ _ &lt;lm&gt;       &lt;NA&gt;            </span>
@@ -590,7 +590,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
     n_res <span class="op">=</span> <span class="fu"><a href="../reference/tally.html">tally_results</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span>,
     n_err <span class="op">=</span> <span class="fu"><a href="../reference/tally.html">tally_errors</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 × 3</span>
+<span class="co">#&gt; # A tibble: 7 x 3</span>
 <span class="co">#&gt;   color n_res n_err</span>
 <span class="co">#&gt;   &lt;ord&gt; &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1 D         5     0</span>
@@ -603,14 +603,14 @@
     
 <span class="va">collat_models</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/has.html">has_errors</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 4</span>
+<span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   cut   color data             price_mod</span>
 <span class="co">#&gt;   &lt;ord&gt; &lt;ord&gt; &lt;list&gt;           &lt;collat&gt; </span>
 <span class="co">#&gt; 1 Good  J     &lt;tibble [0 × 3]&gt; _ _ _ _ E</span>
 
 <span class="va">collat_models</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="../reference/has.html">has_results</a></span><span class="op">(</span><span class="va">price_mod</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 4</span>
+<span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   cut   color data             price_mod</span>
 <span class="co">#&gt;   &lt;ord&gt; &lt;ord&gt; &lt;list&gt;           &lt;collat&gt; </span>
 <span class="co">#&gt; 1 Good  J     &lt;tibble [0 × 3]&gt; _ _ _ _ E</span></code></pre></div>

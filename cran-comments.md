@@ -1,6 +1,7 @@
 ## Test environments
 * Local ubuntu 20.04 install: R 4.1.0
 * win-builder (devel and release)
+* macOS 11.6: R 4.1.0
 
 ## R CMD check results
 

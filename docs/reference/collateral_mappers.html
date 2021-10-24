@@ -293,7 +293,7 @@ package installed:</p><ol>
   <span class='co'># nest and do some operations quietly()</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='op'>-</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>qlog <span class='op'>=</span> <span class='fu'>map_quietly</span><span class='op'>(</span><span class='va'>data</span>, <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>wt</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 × 3</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;     cyl data              qlog    
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;collat&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span>     6 <span style='color: #949494;'>&lt;tibble [7 × 3]&gt;</span>  <span style='color: #00BB00;'>R</span> <span style='color: #555555;'>_</span> <span style='color: #555555;'>_</span> <span style='color: #555555;'>_</span> 
