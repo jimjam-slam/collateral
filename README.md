@@ -59,18 +59,25 @@ functions to filter or summarise the returned tibbles or lists.
 
 ## Installation
 
-You can install the released version of collateral from
-[CRAN](https://CRAN.R-project.org) with:
+You can install collateral in several ways:
+
+1. The release version of collateral is available [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("collateral")
 ```
 
-And the development version from [GitHub](https://github.com/) with:
+2. The development version is available on my R-Universe with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("jimjam-slam/collateral")
+install.packages("collateral", repos = "https://jimjam-slam.r-universe.dev")
+```
+
+3. Or you can get the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("jimjam-slam/collateral")
 ```
 
 ## Example
